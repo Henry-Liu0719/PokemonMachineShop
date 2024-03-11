@@ -7,7 +7,7 @@
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <router-link class="nav-item nav-link me-4" to="products">admin/products</router-link>
+      <router-link class="nav-item nav-link me-4" to="/admin/products">admin/products</router-link>
       <router-link class="nav-item nav-link me-4" to="/products">products</router-link>
       <router-link class="nav-item nav-link me-4" to="/product?id=1">product?id=1</router-link>
       <router-link class="nav-item nav-link me-4" to="/checkout">checkout</router-link>

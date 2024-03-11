@@ -6,96 +6,89 @@
 <script>
 import axios from 'axios'
 
-const { VITE_URL, VITE_PATH, POKEMON_API } = import.meta.env
+const { VITE_URL, VITE_PATH, VITE_POKEMON_API } = import.meta.env
 
 export default {
   data () {
     return {
+      summarizedProductList: [],
       products: [],
-      carts: {},
-      tempProduct: {},
-      productModal: null,
-      isLoading: true,
-      isUpdating: true,
-      isCartAdded: false,
-      cartAddedMessage: '',
-      qty: 1,
-      // orderData:{
-      //   "data": {
-      //     "user": {
-      //       "name": "",
-      //       "email": "",
-      //       "tel": "",
-      //       "address": ""
-      //     },
-      //     "message": ""
-      //   }
-      // },
-      orderData: {
-        data: {
-          user: {
-            name: 'test',
-            email: 'test@gmail.com',
-            tel: '0912346768',
-            address: 'kaohsiung'
-          },
-          message: '這是留言'
-        }
-      }
+      machines: [],
+      machineList: []
     }
   },
   components: {
     // UserProductModal
   },
+  mounted () {
+    this.summarizeProductList()
+  },
   methods: {
-    getPokemons () {
+    async summarizeProductList () {
+      await this.getMachines()
+      // console.log(this.machines)
+      await this.getMachineList()
+      this.createSummarizedProductList()
+      console.log(this.machineList)
+      // console.log(this.summarizedProductList)
+      this.filterText()
     },
-    openModal (product) {
-      this.tempProduct = product
-      this.$refs.userModal.open()
-    },
-    addToCart (id, value = 1) {
-      const data = {
-        data: {
-          product_id: id,
-          qty: Number(value)
-        }
+    async getMachines () {
+      try {
+        const res = await axios.get(`${VITE_POKEMON_API}/item-category/37`)
+        // console.log(res)
+        this.machines = res.data.items || []
+      } catch (err) {
+        console.dir(err)
       }
-      // console.log(data);
-      this.isUpdating = true
-      axios
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
-        .then((res) => {
-          console.log(res)
-          this.isUpdating = false
-          this.cartAddedMessage = `${res.data.data.product.title}加入購物車成功。`
-          this.isCartAdded = true
-          setTimeout(() => {
-            this.isCartAdded = false
-          }, 3000)
-          this.$refs.userModal.close()
-          // this.getCarts();
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
+    },
+    async getMachineList () {
+      try {
+        await Promise.all(this.machines.map(async (item, index) => {
+          const res = await axios.get(item.url)
+          // console.log(res)
+          if (res.data.flavor_text_entries.length) {
+            this.machineList.push(res.data)
+          }
+          // this.summarizedProductList[index] = { text: res.data.flavor_text_entries[19].text }
+        }))
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    createSummarizedProductList () {
+      this.machineList.forEach(item => {
+        this.summarizedProductList.push({})
+      })
+    },
+    filterText () {
+      const flavorArr = []
+      this.machineList.forEach(item => {
+        flavorArr.push(item.flavor_text_entries)
+      })
+      const entriesArr = []
+      flavorArr.forEach(item => {
+        entriesArr.push(item.filter(element => element.language.name === 'zh-Hant')[0] || item[0])
+      })
+      // const textArr = flavorArr.map(item => item.language.name === 'zh-Hant')
+      // console.log(flavorArr)
+      // console.log(entriesArr)
+      // console.log(this.summarizedProductList)
+      entriesArr.forEach((item, index) => {
+        this.summarizedProductList[index].text = item.text
+      })
+      // console.log(this.summarizedProductList)
     },
     getAllProducts () {
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
         .then((res) => {
-          console.log(res)
-          this.isLoading = false
-          this.isUpdating = false
-          this.products = res.data.products
+          // this.products = res.data.products
         })
         .catch((error) => {
           console.dir(error)
         })
     }
-  },
-  mounted () {
-    this.getAllProducts()
   }
 }
 </script>
