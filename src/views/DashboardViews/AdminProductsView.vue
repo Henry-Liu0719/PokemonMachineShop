@@ -14,11 +14,13 @@ export default {
       summarizedProductList: [],
       products: [],
       machines: [],
-      machineList: []
+      machineList: [],
+      moveUrlList: [],
+      moveList: [],
+      typeUrlList: [],
+      typeList: [],
+      typeNameList: {}
     }
-  },
-  components: {
-    // UserProductModal
   },
   mounted () {
     this.summarizeProductList()
@@ -29,9 +31,21 @@ export default {
       // console.log(this.machines)
       await this.getMachineList()
       this.createSummarizedProductList()
-      console.log(this.machineList)
-      // console.log(this.summarizedProductList)
-      this.filterText()
+      console.log('machineList', this.machineList)
+      this.addMachineName()
+      this.addCost()
+      this.addId()
+      this.addMachinePhoto()
+      await this.getMoveUrlList()
+      await this.getMoveList()
+      this.addMoveName()
+      this.addMoveText()
+      await this.createTypeUrlList()
+      await this.getTypeList()
+      this.getTypeNamesList()
+      console.log('typeNameList', this.typeNameList)
+      this.addMoveType()
+      console.log('summarizedProductList', this.summarizedProductList)
     },
     async getMachines () {
       try {
@@ -56,14 +70,88 @@ export default {
         console.dir(err)
       }
     },
+    async getMoveUrlList () {
+      try {
+        await Promise.all(this.machineList.map(async (item, index) => {
+          const res = await axios.get(item.machines[0].machine.url)
+          if (res.data) {
+            this.moveUrlList.push(res.data)
+          }
+        }))
+        // console.log(this.moveUrlList)
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    async getMoveList () {
+      try {
+        await Promise.all(this.moveUrlList.map(async (item, index) => {
+          const res = await axios.get(item.move.url)
+          if (res.data) {
+            this.moveList.push(res.data)
+          }
+        }))
+        console.log('moveList', this.moveList)
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    async createTypeUrlList () {
+      try {
+        const res = await axios.get(`${VITE_POKEMON_API}/type`)
+        // console.log(res)
+        res.data.results.forEach((item, index) => {
+          // const name = item.name
+          // this.typeUrlList.push({ name: item.name })
+          this.typeUrlList.push({ url: item.url })
+          this.typeUrlList[index].name = item.name
+        })
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    async getTypeList () {
+      try {
+        await Promise.all(this.typeUrlList.map(async (item, index) => {
+          const res = await axios.get(item.url)
+          if (res.data) {
+            this.typeList.push(res.data)
+          }
+        }))
+        console.log('typeList', this.typeList)
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    getTypeNamesList () {
+      const namesArr = []
+      this.typeList.forEach(item => {
+        namesArr.push(item.names)
+      })
+      const chineseNameArr = []
+      namesArr.forEach(item => {
+        chineseNameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0].name || item[0].name)
+      })
+      // console.log('chineseNameArr', chineseNameArr)
+      const engNameArr = []
+      namesArr.forEach(item => {
+        engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
+      })
+      // console.log('engNameArr', engNameArr)
+      engNameArr.forEach((element, index) => {
+        // this.typeNameList.push({})
+        this.typeNameList[element.toLowerCase()] = chineseNameArr[index]
+      })
+      // console.log('typeNameList', this.typeNameList)
+    },
     createSummarizedProductList () {
       this.machineList.forEach(item => {
         this.summarizedProductList.push({})
       })
     },
-    filterText () {
+    addMoveText () {
       const flavorArr = []
-      this.machineList.forEach(item => {
+      this.moveList.forEach(item => {
         flavorArr.push(item.flavor_text_entries)
       })
       const entriesArr = []
@@ -71,13 +159,58 @@ export default {
         entriesArr.push(item.filter(element => element.language.name === 'zh-Hant')[0] || item[0])
       })
       // const textArr = flavorArr.map(item => item.language.name === 'zh-Hant')
-      // console.log(flavorArr)
-      // console.log(entriesArr)
-      // console.log(this.summarizedProductList)
       entriesArr.forEach((item, index) => {
-        this.summarizedProductList[index].text = item.text
+        this.summarizedProductList[index].text = item.flavor_text
       })
       // console.log(this.summarizedProductList)
+    },
+    addMoveName () {
+      const namesArr = []
+      this.moveList.forEach(item => {
+        namesArr.push(item.names)
+      })
+      const entriesArr = []
+      namesArr.forEach(item => {
+        entriesArr.push(item.filter(element => element.language.name === 'zh-Hant')[0] || item[0])
+      })
+      entriesArr.forEach((item, index) => {
+        this.summarizedProductList[index].move_name = item.name
+      })
+      // console.log(this.summarizedProductList)
+    },
+    addMoveType () {
+      this.moveList.forEach((item, index) => {
+        this.summarizedProductList[index].type = this.typeNameList[item.type.name.toLowerCase()]
+      })
+    },
+    addMachineName () {
+      const namesArr = []
+      this.machineList.forEach(item => {
+        namesArr.push(item.names)
+      })
+      const nameArr = []
+      namesArr.forEach(item => {
+        nameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0] || item[0])
+      })
+      nameArr.forEach((item, index) => {
+        this.summarizedProductList[index].machine_name = item.name
+      })
+      // console.log(this.summarizedProductList)
+    },
+    addCost () {
+      this.machineList.forEach((item, index) => {
+        this.summarizedProductList[index].cost = item.cost
+      })
+    },
+    addId () {
+      this.machineList.forEach((item, index) => {
+        this.summarizedProductList[index].id = item.name
+      })
+    },
+    addMachinePhoto () {
+      this.machineList.forEach((item, index) => {
+        this.summarizedProductList[index].photo = item.sprites.default
+      })
     },
     getAllProducts () {
       axios
