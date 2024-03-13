@@ -78,7 +78,7 @@
       <div class="row">
         <div class="col-md-6" v-for="product in products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
+            <img :src="product.imageUrl" class="card-img-top rounded-0" alt="...">
             <a href="#" class="text-dark">
               <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
             </a>

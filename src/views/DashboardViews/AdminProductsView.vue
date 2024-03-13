@@ -70,6 +70,9 @@ export default {
           }
           // this.summarizedProductList[index] = { text: res.data.flavor_text_entries[19].text }
         }))
+        this.machineList = this.machineList.sort(function (a, b) {
+          return a.id < b.id ? -1 : 1// 升序排序
+        })
       } catch (err) {
         console.dir(err)
       }
@@ -95,6 +98,9 @@ export default {
             this.moveList.push(res.data)
           }
         }))
+        this.moveList = this.moveList.sort(function (a, b) {
+          return a.machines[0].machine.url < b.machines[0].machine.url ? -1 : 1// 升序排序
+        })
         console.log('moveList', this.moveList)
       } catch (err) {
         console.dir(err)

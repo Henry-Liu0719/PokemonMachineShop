@@ -60,7 +60,7 @@ export default defineStore('counter', {
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
         .then((res) => {
-          console.log(res)
+          console.log(res.data.products)
           this.isLoading = false
           this.isUpdating = false
           this.products = res.data.products
