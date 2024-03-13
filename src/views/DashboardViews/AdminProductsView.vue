@@ -1,6 +1,6 @@
 <template>
   <div>
-    AdminProductsView
+    <button class="btn btn-danger" @click="deleteAllProducts()">deleteAllProducts</button>
   </div>
 </template>
 <script>
@@ -29,22 +29,21 @@ export default {
   methods: {
     async summarizeProductList () {
       await this.getMachines()
-      // console.log(this.machines)
       await this.getMachineList()
       this.createSummarizedProductList()
-      console.log('machineList', this.machineList)
+      // console.log('machineList', this.machineList)
       this.addMachineName()
       this.addCost()
       this.addId()
       this.addMachinePhoto()
       await this.getMoveUrlList()
       await this.getMoveList()
+      // console.log('moveList', this.moveList)
       this.addMoveName()
       this.addMoveText()
       await this.createTypeUrlList()
       await this.getTypeList()
       this.getTypeNamesList()
-      // console.log('typeNameList', this.typeNameList)
       this.addMoveType()
       this.addLearnedByPokemon()
       this.createProductList()
@@ -101,7 +100,6 @@ export default {
         this.moveList = this.moveList.sort(function (a, b) {
           return a.machines[0].machine.url < b.machines[0].machine.url ? -1 : 1// 升序排序
         })
-        console.log('moveList', this.moveList)
       } catch (err) {
         console.dir(err)
       }
@@ -198,6 +196,13 @@ export default {
         this.summarizedProductList[index].learned_by_pokemon = item.learned_by_pokemon
       })
     },
+    stringifyLearnedByPokemon (arr) {
+      const stringifiedArr = []
+      arr.forEach(item => {
+        stringifiedArr.push(JSON.stringify(item))
+      })
+      return stringifiedArr
+    },
     addMachineName () {
       const namesArr = []
       this.machineList.forEach(item => {
@@ -237,21 +242,73 @@ export default {
           console.dir(error)
         })
     },
+    deleteAllProducts () {
+      axios
+        .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
+        .then((res) => {
+          console.log(res)
+          const idList = []
+          res.data.products.forEach(item => {
+            idList.push(item.id)
+          })
+          login(idList)
+        })
+        .catch((error) => {
+          console.dir(error)
+        })
+      function login (idList) {
+        axios.post(`${VITE_URL}/admin/signin`, {
+          username: 'hungminliu@gmail.com',
+          password: 'gopopov'
+        })
+          .then(res => {
+            const { token, expired } = res.data
+            if (document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1') !== 'true') {
+              document.cookie = `loginToken=${token}; expires=${new Date(expired)}; path=/`
+            }
+            const loginToken = document.cookie.replace(
+              /(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1'
+            )
+            axios.defaults.headers.common.Authorization = loginToken
+            console.log(res)
+            idList.forEach(item => {
+              deleteAll(item)
+            })
+          })
+          .catch(err => {
+            // console.dir();
+            alert(err.response.data.error.message)
+          })
+      }
+      // eslint-disable-next-line no-unused-vars
+      function deleteAll (id) {
+        axios
+          .delete(`${VITE_URL}/api/${VITE_PATH}/admin/product/${id}`)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((error) => {
+            console.dir(error)
+          })
+      }
+    },
     createProductList () {
       this.summarizedProductList.forEach(item => {
         this.productList.push({
-          origin_price: item.cost,
-          id: item.id,
-          learned_by_pokemon: item.learned_by_pokemon,
+          origin_price: item.cost || 9999,
+          content: item.id,
+          imagesUrl: this.stringifyLearnedByPokemon(item.learned_by_pokemon),
+          // imagesUrl: item.learned_by_pokemon,
           title: item.machine_name,
           category: item.move_name,
-          text: item.text,
           imageUrl: item.photo,
+          description: item.text,
           unit: item.type,
-          price: item.cost * 0.8
-          // description: item.text,
-          // content: '這是內容',
-          // is_enabled: 1,
+          price: item.cost * 0.8 || 9999,
+          is_enabled: 1
+
+          // machine_id: item.id,
+          // text: item.text,
           // imagesUrl: [
           //   '圖片網址一',
           //   '圖片網址二',
