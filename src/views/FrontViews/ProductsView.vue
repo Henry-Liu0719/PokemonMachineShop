@@ -76,98 +76,7 @@
     </div>
     <div class="col-md-8">
       <div class="row">
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card border-0 mb-4 position-relative position-relative">
-            <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
-            <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
-              <p class="text-muted mt-3"></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-6" v-for="product in products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" class="card-img-top rounded-0" alt="...">
             <a href="#" class="text-dark">
@@ -203,96 +112,28 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
+import { mapActions, mapState } from 'pinia'
+import productStore from '../../stores/productStore.js'
 
-const { VITE_URL, VITE_PATH } = import.meta.env
+// import axios from 'axios'
 
+// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
-      products: [],
-      carts: {},
-      tempProduct: {},
-      productModal: null,
-      isLoading: true,
-      isUpdating: true,
-      isCartAdded: false,
-      cartAddedMessage: '',
-      qty: 1,
-      // orderData:{
-      //   "data": {
-      //     "user": {
-      //       "name": "",
-      //       "email": "",
-      //       "tel": "",
-      //       "address": ""
-      //     },
-      //     "message": ""
-      //   }
-      // },
-      orderData: {
-        data: {
-          user: {
-            name: 'test',
-            email: 'test@gmail.com',
-            tel: '0912346768',
-            address: 'kaohsiung'
-          },
-          message: '這是留言'
-        }
-      }
     }
   },
   components: {
     // UserProductModal
   },
   methods: {
-    openModal (product) {
-      this.tempProduct = product
-      this.$refs.userModal.open()
-    },
-    addToCart (id, value = 1) {
-      const data = {
-        data: {
-          product_id: id,
-          qty: Number(value)
-        }
-      }
-      // console.log(data);
-      this.isUpdating = true
-      axios
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
-        .then((res) => {
-          console.log(res)
-          this.isUpdating = false
-          this.cartAddedMessage = `${res.data.data.product.title}加入購物車成功。`
-          this.isCartAdded = true
-          setTimeout(() => {
-            this.isCartAdded = false
-          }, 3000)
-          this.$refs.userModal.close()
-          // this.getCarts();
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    },
-    getAllProducts () {
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
-        .then((res) => {
-          console.log(res)
-          this.isLoading = false
-          this.isUpdating = false
-          this.products = res.data.products
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    }
+    ...mapActions(productStore, ['openModal', 'addToCart', 'getAllProducts'])
   },
   mounted () {
     this.getAllProducts()
+  },
+  computed: {
+    ...mapState(productStore, ['products'])
   }
 }
 </script>

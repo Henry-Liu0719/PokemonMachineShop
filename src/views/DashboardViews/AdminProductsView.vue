@@ -12,6 +12,7 @@ export default {
   data () {
     return {
       summarizedProductList: [],
+      productList: [],
       products: [],
       machines: [],
       machineList: [],
@@ -43,9 +44,12 @@ export default {
       await this.createTypeUrlList()
       await this.getTypeList()
       this.getTypeNamesList()
-      console.log('typeNameList', this.typeNameList)
+      // console.log('typeNameList', this.typeNameList)
       this.addMoveType()
-      console.log('summarizedProductList', this.summarizedProductList)
+      this.addLearnedByPokemon()
+      this.createProductList()
+      // console.log('summarizedProductList', this.summarizedProductList)
+      console.log('productList', this.productList)
     },
     async getMachines () {
       try {
@@ -118,7 +122,7 @@ export default {
             this.typeList.push(res.data)
           }
         }))
-        console.log('typeList', this.typeList)
+        // console.log('typeList', this.typeList)
       } catch (err) {
         console.dir(err)
       }
@@ -183,6 +187,11 @@ export default {
         this.summarizedProductList[index].type = this.typeNameList[item.type.name.toLowerCase()]
       })
     },
+    addLearnedByPokemon () {
+      this.moveList.forEach((item, index) => {
+        this.summarizedProductList[index].learned_by_pokemon = item.learned_by_pokemon
+      })
+    },
     addMachineName () {
       const namesArr = []
       this.machineList.forEach(item => {
@@ -221,6 +230,31 @@ export default {
         .catch((error) => {
           console.dir(error)
         })
+    },
+    createProductList () {
+      this.summarizedProductList.forEach(item => {
+        this.productList.push({
+          origin_price: item.cost,
+          id: item.id,
+          learned_by_pokemon: item.learned_by_pokemon,
+          title: item.machine_name,
+          category: item.move_name,
+          text: item.text,
+          imageUrl: item.photo,
+          unit: item.type,
+          price: item.cost * 0.8
+          // description: item.text,
+          // content: '這是內容',
+          // is_enabled: 1,
+          // imagesUrl: [
+          //   '圖片網址一',
+          //   '圖片網址二',
+          //   '圖片網址三',
+          //   '圖片網址四',
+          //   '圖片網址五'
+          // ]
+        })
+      })
     }
   }
 }
