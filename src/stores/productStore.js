@@ -2,7 +2,7 @@ import axios from 'axios'
 import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
 
-export default defineStore('counter', {
+export default defineStore('product', {
   state: () => ({
     products: [],
     carts: {},
@@ -56,19 +56,34 @@ export default defineStore('counter', {
           console.dir(error)
         })
     },
-    getAllProducts (page = 1, selector = false) {
-      // console.log(page)
+    async getAllProducts (page = 1, yOffset = false, category = '') {
+      //
+      // try {
+      //   const res = await axios.get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}`)
+      //   // console.log(res)
+      //   this.products = res.data
+      //   console.log('res.data', res.data)
+      //   this.isLoading = false
+      //   this.isUpdating = false
+      //   if (selector) {
+      //     // selector.scrollIntoView({ behavior: 'smooth' })
+      //     window.scrollTo({ top: selector, behavior: 'smooth' })
+      //   }
+      // } catch (err) {
+      //   console.dir(err)
+      // }
+      //
       axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}`)
+        .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}&category=${category}`)
         .then((res) => {
           console.log(res.data)
           this.isLoading = false
           this.isUpdating = false
           this.products = res.data
           // console.log(selector)
-          if (selector) {
+          if (yOffset) {
             // selector.scrollIntoView({ behavior: 'smooth' })
-            window.scrollTo({ top: selector, behavior: 'smooth' })
+            window.scrollTo({ top: yOffset, behavior: 'smooth' })
           }
         })
         .catch((error) => {

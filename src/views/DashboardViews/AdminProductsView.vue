@@ -300,10 +300,10 @@ export default {
           imagesUrl: this.stringifyLearnedByPokemon(item.learned_by_pokemon),
           // imagesUrl: item.learned_by_pokemon,
           title: item.machine_name,
-          category: item.move_name,
+          category: item.type,
           imageUrl: item.photo,
           description: item.text,
-          unit: item.type,
+          unit: item.move_name,
           price: item.cost * 0.8 || 9999,
           is_enabled: 1
 
