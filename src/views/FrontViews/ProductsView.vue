@@ -22,7 +22,7 @@
             <div class="card-body py-0">
               <ul class="list-unstyled">
                 <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
-                <button href="#" class="m-2 page-link py-2 d-block text-muted" @click="getAllProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
+                <button href="#" class="m-2 page-link py-2 d-block text-muted" @click="isLoading = true;getAllProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
               </ul>
             </div>
           </div>
