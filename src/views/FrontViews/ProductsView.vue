@@ -3,7 +3,7 @@
 </div>
 <div class="position-relative d-flex align-items-center justify-content-center" style="min-height: 400px;">
   <div class="position-absolute" style="top:0; bottom: 0; left: 0; right: 0; background-image: url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80); background-position: center center; opacity: 0.1;"></div>
-  <h2 class="fw-bold">Lorem ipsum.</h2>
+  <h2 class="fw-bold">神奇寶貝招式機百貨商店</h2>
 </div>
 <div class="container mt-md-5 mt-3 mb-7">
   <div class="row">
@@ -13,7 +13,7 @@
           <div class="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
             <div class="d-flex justify-content-between align-items-center pe-1">
               <h4 class="mb-0">
-                Lorem ipsum
+                屬性瀏覽
               </h4>
               <i class="fas fa-chevron-down"></i>
             </div>
@@ -76,15 +76,16 @@
     </div>
     <div class="col-md-8">
       <div class="row">
-        <div class="col-md-6" v-for="product in products" :key="product.id">
+        <div class="col-md-6" v-for="product in products.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
-            <img :src="product.imageUrl" class="card-img-top rounded-0" alt="...">
+            <img :src="product.imageUrl" class="card-img-top rounded-0 object-fit-contain" alt="product.description" style="width: 10rem;">
             <a href="#" class="text-dark">
               <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
             </a>
             <div class="card-body p-0">
-              <h4 class="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-              <p class="card-text mb-0">NT$1,080 <span class="text-muted "><del>NT$1,200</del></span></p>
+              <h4 class="mb-0 mt-3"><router-link :to="{ path: 'product', query: { id: product.id }}">{{ product.category }}</router-link></h4>
+              <!-- <h4 class="mb-0 mt-3"><a @click="router.push({ path: '/product', query: { plan: 'private' } })">{{ product.category }}</a></h4> -->
+              <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
           </div>
@@ -92,18 +93,19 @@
       </div>
       <nav class="d-flex justify-content-center">
         <ul class="pagination">
+          <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
+          </template> -->
           <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
+            <button class="page-link" aria-label="Previous" :class="{disabled:!products?.pagination?.has_pre}" @click="getAllProducts(products.pagination.current_page-1,yOffset)">
               <span aria-hidden="true">&laquo;</span>
-            </a>
+            </button>
           </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item active" v-for="index in products.pagination?.total_pages" :key="index"><a class="page-link" href="#">{{ index }}</a></li>
+          <!-- {{ products.pagination }} -->
           <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
+            <button class="page-link" aria-label="Next" :class="{disabled:!products?.pagination?.has_next}" @click="getAllProducts(products.pagination.current_page+1,yOffset)">
               <span aria-hidden="true">&raquo;</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
@@ -115,12 +117,15 @@
 import { mapActions, mapState } from 'pinia'
 import productStore from '../../stores/productStore.js'
 
+// const { VITE_URL, VITE_PATH } = import.meta.env
 // import axios from 'axios'
 
 // const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
+      // products: []
+      yOffset: 0
     }
   },
   components: {
@@ -128,12 +133,27 @@ export default {
   },
   methods: {
     ...mapActions(productStore, ['openModal', 'addToCart', 'getAllProducts'])
+    // getAllProducts (page = 1) {
+    //   this.axios
+    //     .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}`)
+    //     .then((res) => {
+    //       console.log(res.data)
+    //       this.isLoading = false
+    //       this.isUpdating = false
+    //       this.products = res.data
+    //     })
+    //     .catch((error) => {
+    //       console.dir(error)
+    //     })
+    // }
   },
   mounted () {
     this.getAllProducts()
+    this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7').getBoundingClientRect().top + window.pageYOffset
+    // console.log(this.yOffset)
   },
   computed: {
-    ...mapState(productStore, ['products'])
+    ...mapState(productStore, ['products', 'isLoading'])
   }
 }
 </script>

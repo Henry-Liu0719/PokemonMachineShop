@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <div class="bg-light mt-7">
+  <!-- <div class="bg-light mt-7">
     <div class="container">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -114,7 +114,7 @@
         </a>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="container my-7">
     <div class="row">
       <div class="col-md-6">

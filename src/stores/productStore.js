@@ -56,14 +56,20 @@ export default defineStore('counter', {
           console.dir(error)
         })
     },
-    getAllProducts () {
+    getAllProducts (page = 1, selector = false) {
+      // console.log(page)
       axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
+        .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}`)
         .then((res) => {
-          console.log(res.data.products)
+          console.log(res.data)
           this.isLoading = false
           this.isUpdating = false
-          this.products = res.data.products
+          this.products = res.data
+          // console.log(selector)
+          if (selector) {
+            // selector.scrollIntoView({ behavior: 'smooth' })
+            window.scrollTo({ top: selector, behavior: 'smooth' })
+          }
         })
         .catch((error) => {
           console.dir(error)
