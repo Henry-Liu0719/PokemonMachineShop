@@ -1,78 +1,57 @@
 <template>
 <div class="container">
   <div class="mt-3">
-    <h3 class="mt-3 mb-4">Lorem ipsum</h3>
+    <h3 class="mt-3 mb-4">購物車</h3>
     <div class="row">
       <div class="col-md-8">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col" class="border-0 ps-0">Lorem ipsum</th>
-              <th scope="col" class="border-0">Lorem ipsum</th>
-              <th scope="col" class="border-0">Lorem ipsum</th>
+              <th scope="col" class="border-0 ps-0">品名</th>
+              <th scope="col" class="border-0">數量</th>
+              <th scope="col" class="border-0">單價</th>
               <th scope="col" class="border-0"></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-bottom border-top">
-              <th scope="row" class="border-0 px-0 font-weight-normal py-4">
-                <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" style="width: 72px; height: 72px; object-fit: cover;">
-                <p class="mb-0 fw-bold ms-3 d-inline-block">Lorem ipsum</p>
-              </th>
-              <td class="border-0 align-middle" style="max-width: 160px;">
-                <div class="input-group pe-5">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
-                      <i class="fas fa-minus"></i>
-                    </button>
+            <template v-for="cart in carts.carts" :key="cart.id">
+              <tr class="border-bottom border-top">
+                <th scope="row" class="border-0 px-0 font-weight-normal py-4">
+                  <img :src="cart.product.imageUrl" alt="" style="width: 72px; height: 72px; object-fit: cover;">
+                  <p class="mb-0 fw-bold ms-3 d-inline-block">{{cart.product.title}} {{cart.product.unit}}</p>
+                </th>
+                <td class="border-0 align-middle" style="max-width: 160px;">
+                  <div class="input-group pe-5">
+                    <!-- <div class="input-group-prepend">
+                      <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                    </div> -->
+                    <input type="text" class="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" :value="cart.qty" readonly>
+                    <!-- <div class="input-group-append">
+                      <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div> -->
                   </div>
-                  <input type="text" class="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value="1">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </td>
-              <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT$12,000</p></td>
-              <td class="border-0 align-middle"><i class="fas fa-times"></i></td>
-            </tr>
-            <tr class="border-bottom">
-              <th scope="row" class="border-0 px-0 font-weight-normal py-4">
-                <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" style="width: 72px; height: 72px; object-fit: cover;">
-                <p class="mb-0 fw-bold ms-3 d-inline-block">Lorem ipsum</p>
-              </th>
-              <td class="border-0 align-middle" style="max-width: 160px;">
-                <div class="input-group pe-5">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value="1">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </td>
-              <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT$12,000</p></td>
-              <td class="border-0 align-middle"><i class="fas fa-times"></i></td>
-            </tr>
+                </td>
+                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total}}</p></td>
+                <!-- <td class="border-0 align-middle"><i class="bi bi-x"></i></td> -->
+              </tr>
+            </template>
           </tbody>
         </table>
-        <div class="input-group w-50 mb-3">
+        <!-- <div class="input-group w-50 mb-3">
           <input type="text" class="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none" placeholder="Coupon Code" aria-label="Recipient's username" aria-describedby="button-addon2">
           <div class="input-group-append">
             <button class="btn btn-outline-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0" type="button" id="button-addon2"><i class="fas fa-paper-plane"></i></button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="col-md-4">
         <div class="border p-4 mb-4">
-          <h4 class="fw-bold mb-4">Order Detail</h4>
-          <table class="table text-muted border-bottom">
+          <h4 class="fw-bold mb-4">訂單詳情</h4>
+          <!-- <table class="table text-muted border-bottom">
             <tbody>
               <tr>
                 <th scope="row" class="border-0 px-0 pt-4 font-weight-normal">Subtotal</th>
@@ -83,16 +62,16 @@
                 <td class="text-end border-0 px-0 pt-0 pb-4">ApplePay</td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold">Total</p>
-            <p class="mb-0 h4 fw-bold">NT$24,000</p>
+            <p class="mb-0 h4 fw-bold">NT${{ carts.total }}</p>
           </div>
-          <a href="./checkout.html" class="btn btn-dark w-100 mt-4">Lorem ipsum</a>
+          <a href="./checkout.html" class="btn btn-dark w-100 mt-4">送出訂單</a>
         </div>
       </div>
     </div>
-    <div class="my-5">
+    <!-- <div class="my-5">
       <h3 class="fw-bold">Lorem ipsum dolor sit amet</h3>
       <div class="swiper-container mt-4 mb-5">
         <div class="swiper-wrapper">
@@ -158,7 +137,61 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 </template>
+<script>
+import axios from 'axios'
+// import { defineStore } from 'pinia'
+const { VITE_URL, VITE_PATH } = import.meta.env
+export default {
+  data () {
+    return {
+      productId: '',
+      carts: {},
+      num: 1
+    }
+  },
+  mounted () {
+    this.getCart()
+  },
+  methods: {
+    getCart () {
+      // console.log(id)
+      axios
+        .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
+        .then((res) => {
+          console.log(res)
+          this.carts = res.data.data
+        })
+        .catch((error) => {
+          console.dir(error)
+        })
+    },
+    addToCart (id) {
+      const data = {
+        data: {
+          product_id: `${id}`,
+          qty: this.num
+        }
+      }
+      console.log(id)
+      axios
+        .get(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
+        .then((res) => {
+          console.log(res)
+          this.product = res.data.product
+        })
+        .catch((error) => {
+          console.dir(error)
+        })
+    }
+  },
+  watch: {
+    num () {
+      this.num = this.num < 1 ? 1 : this.num
+    }
+  }
+}
+</script>

@@ -172,10 +172,9 @@ export default {
       }
       console.log(id)
       axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
+        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
         .then((res) => {
           console.log(res)
-          this.product = res.data.product
         })
         .catch((error) => {
           console.dir(error)
