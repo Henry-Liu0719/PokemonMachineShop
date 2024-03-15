@@ -67,7 +67,7 @@
             <p class="mb-0 h4 fw-bold">Total</p>
             <p class="mb-0 h4 fw-bold">NT${{ carts.total }}</p>
           </div>
-          <a href="./checkout.html" class="btn btn-dark w-100 mt-4">送出訂單</a>
+          <router-link to="checkout" class="btn btn-dark w-100 mt-4">送出訂單</router-link>
         </div>
       </div>
     </div>
@@ -143,13 +143,14 @@
 </template>
 <script>
 import axios from 'axios'
+import { mapActions, mapState } from 'pinia'
+import cartStore from '../../stores/cartStore'
 // import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
       productId: '',
-      carts: {},
       num: 1
     }
   },
@@ -157,18 +158,7 @@ export default {
     this.getCart()
   },
   methods: {
-    getCart () {
-      // console.log(id)
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
-        .then((res) => {
-          console.log(res)
-          this.carts = res.data.data
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    },
+    ...mapActions(cartStore, ['getCart']),
     addToCart (id) {
       const data = {
         data: {
@@ -187,6 +177,9 @@ export default {
           console.dir(error)
         })
     }
+  },
+  computed: {
+    ...mapState(cartStore, ['carts'])
   },
   watch: {
     num () {

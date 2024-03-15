@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <div class="row justify-content-center">
+  <!-- <div class="row justify-content-center">
     <div class="col-md-10">
       <nav class="navbar navbar-expand-lg navbar-light px-0">
         <a class="navbar-brand" href="./index.html">Navbar</a>
@@ -11,16 +11,26 @@
         </ul>
       </nav>
     </div>
-  </div>
+  </div> -->
   <div class="row justify-content-center">
     <div class="col-md-10">
-      <h3 class="fw-bold mb-4 pt-3">Checkout</h3>
+      <h3 class="fw-bold mb-4 pt-3">送出訂單</h3>
     </div>
   </div>
   <div class="row flex-row-reverse justify-content-center pb-5">
     <div class="col-md-4">
       <div class="border p-4 mb-4">
-        <div class="d-flex">
+        <div class="d-flex" v-for="cart in carts.carts" :key="cart.id">
+          <img :src="cart.product.imageUrl" alt="" class="me-2" style="width: 48px; height: 48px; object-fit: cover">
+          <div class="w-100">
+            <div class="d-flex justify-content-between">
+              <p class="mb-0 fw-bold">{{cart.product.title}} {{cart.product.unit}}</p>
+              <p class="mb-0">NT${{cart.total}}</p>
+            </div>
+            <p class="mb-0 fw-bold">x{{cart.qty}}</p>
+          </div>
+        </div>
+        <!-- <div class="d-flex mt-2">
           <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" class="me-2" style="width: 48px; height: 48px; object-fit: cover">
           <div class="w-100">
             <div class="d-flex justify-content-between">
@@ -29,18 +39,8 @@
             </div>
             <p class="mb-0 fw-bold">x1</p>
           </div>
-        </div>
-        <div class="d-flex mt-2">
-          <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" class="me-2" style="width: 48px; height: 48px; object-fit: cover">
-          <div class="w-100">
-            <div class="d-flex justify-content-between">
-              <p class="mb-0 fw-bold">Lorem ipsum</p>
-              <p class="mb-0">NT$12,000</p>
-            </div>
-            <p class="mb-0 fw-bold">x1</p>
-          </div>
-        </div>
-        <table class="table mt-4 border-top border-bottom text-muted">
+        </div> -->
+        <!-- <table class="table mt-4 border-top border-bottom text-muted">
           <tbody>
             <tr>
               <th scope="row" class="border-0 px-0 pt-4 font-weight-normal">Subtotal</th>
@@ -51,39 +51,122 @@
               <td class="text-end border-0 px-0 pt-0 pb-4">ApplePay</td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
         <div class="d-flex justify-content-between mt-4">
           <p class="mb-0 h4 fw-bold">Total</p>
-          <p class="mb-0 h4 fw-bold">NT$24,000</p>
+          <p class="mb-0 h4 fw-bold">NT${{ carts.total }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-6">
-      <form>
-        <p>Contact information</p>
+      <v-form v-slot="{ errors }">
+        <p>聯絡資訊</p>
         <div class="mb-0">
-          <label for="ContactMail" class="text-muted mb-0">Email</label>
-          <input type="email" class="form-control" id="ContactMail" aria-describedby="emailHelp" placeholder="example@gmail.com">
+          <label for="ContactMail" class="text-muted mb-0 form-label">Email</label>
+          <v-field type="email" class="form-control" id="ContactMail" aria-describedby="emailHelp" placeholder="example@gmail.com" name="email" :class="{ 'is-invalid': errors['email'] }" rules="email|required" v-model="orderData.data.user.email"></v-field>
+          <error-message
+            name="email"
+            class="invalid-feedback"
+          ></error-message>
         </div>
-        <p class="mt-4">Shipping address</p>
+        <p class="mt-4">送件資訊</p>
         <div class="mb-2">
           <label for="ContactName" class="text-muted mb-0">Name</label>
-          <input type="text" class="form-control" id="ContactName" placeholder="Carmen A. Rose">
+          <v-field type="text" class="form-control" id="ContactName"  placeholder="Carmen A. Rose"
+          name="姓名"
+          :class="{ 'is-invalid': errors['姓名'] }"
+          rules="required" v-model="orderData.data.user.name"></v-field>
+        <error-message
+          name="姓名"
+          class="invalid-feedback"
+        ></error-message>
         </div>
         <div class="mb-2">
           <label for="ContactPhone" class="text-muted mb-0">Phone</label>
-          <input type="text" class="form-control" id="ContactPhone" placeholder="Password">
+          <v-field type="tel" class="form-control" id="ContactPhone" placeholder="ContactPhone" name="電話" :class="{ 'is-invalid': errors['電話'] }" :rules="isPhone" v-model="orderData.data.user.tel"></v-field>
+          <error-message
+            name="電話"
+            class="invalid-feedback"
+          ></error-message>
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">收件人地址</label>
+          <v-field
+            id="address"
+            name="地址"
+            type="text"
+            class="form-control"
+            :class="{ 'is-invalid': errors['地址'] }"
+            placeholder="請輸入地址"
+            rules="required"
+            v-model="orderData.data.user.address"
+          ></v-field>
+          <error-message
+            name="地址"
+            class="invalid-feedback"
+          ></error-message>
         </div>
         <div class="mb-2">
           <label for="ContactMessage" class="text-muted mb-0">Message</label>
-          <textarea class="form-control" rows="3" id="ContactMessage" placeholder="message ... "></textarea>
+          <textarea class="form-control" rows="3" id="ContactMessage" placeholder="message ... " v-model="orderData.data.message"></textarea>
         </div>
-      </form>
+      </v-form>
       <div class="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
-        <a href="./product.html" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> Lorem ipsum</a>
-        <a href="./checkout-1.html" class="btn btn-dark py-3 px-7">Lorem ipsum</a>
+        <router-link to="products" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> 回到產品頁</router-link>
+        <button class="btn btn-dark py-3 px-7">完成訂單</button>
       </div>
     </div>
   </div>
 </div>
 </template>
+<script>
+import axios from 'axios'
+import { mapActions, mapState } from 'pinia'
+import cartStore from '../../stores/cartStore'
+// import { defineStore } from 'pinia'
+const { VITE_URL, VITE_PATH } = import.meta.env
+export default {
+  data () {
+    return {
+      orderData: {
+        // data: {
+        //   user: {
+        //     name: 'testName',
+        //     email: 'test@gmail.com',
+        //     tel: '0912346768',
+        //     address: 'Kaohsiung'
+        //   },
+        //   message: '這是留言'
+        // },
+        data: {
+          user: {
+            name: 'testName',
+            email: 'test@gmail.com',
+            tel: '0912346768',
+            address: 'Kaohsiung'
+          },
+          message: '這是留言'
+        }
+      }
+    }
+  },
+  mounted () {
+    this.getCart()
+  },
+  methods: {
+    ...mapActions(cartStore, ['getCart']),
+    getOrder () {
+      console.log(axios, VITE_URL, VITE_PATH)
+    },
+    isPhone (value) {
+      const phoneNumber = /^(09)[0-9]{8}$/
+      return phoneNumber.test(value) ? true : '需要正確的電話號碼'
+    }
+  },
+  computed: {
+    ...mapState(cartStore, ['carts'])
+  },
+  watch: {
+  }
+}
+</script>
