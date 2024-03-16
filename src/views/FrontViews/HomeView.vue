@@ -1,12 +1,12 @@
 <template>
 <body>
   <div class="position-relative">
-    <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');
-    background-position: center center; opacity: 0.2;"></div>
-    <div class="container d-flex flex-column" style="min-height: 100vh;">
-
+    <!-- <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');    background-position: center center; opacity: 0.2;"></div> -->
+    <div class="container d-flex flex-column " style="min-height: 50vh;">
       <div class="row justify-content-center my-auto">
-        <div class="col-md-4 text-center" style="z-index: 1">
+        <img src="/src/assets/Gotcha.png" alt="背景图像"
+        style="/*width: 100%; height: 100%; */opacity: 0.15;" class="w-50">
+        <div class="col-md-6 text-center position-absolute" style="z-index: 1">
           <h2>歡迎來到寶可夢招式機商店！</h2>
           <p class="text-muted mb-0">在我們的商店裡，你可以找到各種強大的寶可夢招式機，這些招式將幫助你的寶可夢在戰鬥中更加強大。無論是火焰、水流、雷電，還是其他超能力，我們都擁有最新、最強大的招式供你選擇。</p>
           <router-link class="btn btn-dark rounded-0 mt-6" to="products">瀏覽產品</router-link>
