@@ -1,7 +1,7 @@
 <template>
 <body>
   <div class="position-relative">
-    <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/pngwing.png');
+    <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');
     background-position: center center; opacity: 0.2;"></div>
     <div class="container d-flex flex-column" style="min-height: 100vh;">
 
