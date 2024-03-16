@@ -39,7 +39,7 @@ export default defineStore('product', {
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}&category=${category}`)
         .then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
           this.isProductsLoading = false
           // this.isUpdating = false
           this.products = res.data
@@ -62,11 +62,11 @@ export default defineStore('product', {
     },
     getProduct (id) {
       this.isProductLoading = true
-      console.log(id)
+      // console.log(id)
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           this.product = res.data.product
           this.isProductLoading = false
         })

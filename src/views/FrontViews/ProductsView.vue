@@ -96,7 +96,7 @@ export default {
     ...mapActions(pokemonStore, ['exportTypeNamesList']),
     async init () {
       const category = this.$route.query.category || ''
-      console.log(category)
+      // console.log(category)
       await this.getAllProducts(1, 0, category)
       // this.filterdProducts = this.products
       this.exportTypeNamesList()
@@ -105,8 +105,8 @@ export default {
       // this.getAllProducts()
       // console.log(type)
       this.filterdProducts.products = this.products.products.filter(item => item.unit === type)
-      console.log('products', this.products)
-      console.log('filterdProducts', this.filterdProducts)
+      // console.log('products', this.products)
+      // console.log('filterdProducts', this.filterdProducts)
       window.scrollTo({ top: this.yOffset, behavior: 'smooth' })
       // console.log('filterdProducts', this.filterdProducts)
     }

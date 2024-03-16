@@ -159,7 +159,7 @@ export default {
   methods: {
     ...mapActions(cartStore, ['getCart']),
     getOrder () {
-      console.log(axios, VITE_URL, VITE_PATH)
+      // console.log(axios, VITE_URL, VITE_PATH)
     },
     isPhone (value) {
       const phoneNumber = /^(09)[0-9]{8}$/
@@ -214,7 +214,7 @@ export default {
               }).then((result) => {
                 /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
-                  console.log('I was closed by the timer')
+                  // console.log('I was closed by the timer')
                 }
               }).then(() => {
                 this.$router.push('/products')
@@ -240,7 +240,7 @@ export default {
                 timer: 1000
               })
             })
-          console.log(data)
+          // console.log(data)
         } else if (
         /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
