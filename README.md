@@ -1,12 +1,15 @@
 # 本專案為練習作品，跟大家分享好用的神奇寶貝資源
 
 [The RESTful Pokémon API](https://pokeapi.co/)
+
 福音啊!省去了自己做資料的時間
 
 [PNGWING](https://www.pngwing.com/en/search?q=pokemon)
+
 神奇寶貝圖庫
 
-[LottiFiles]([https://www.pngwing.com/en/search?q=pokemon](https://lottiefiles.com/search?q=pokemon&category=animations)
+[LottiFiles](https://www.pngwing.com/en/search?q=pokemon](https://lottiefiles.com/search?q=pokemon&category=animations)
+
 寶可夢球Loading圖是這裡下載的
 
 ## 安裝與使用
