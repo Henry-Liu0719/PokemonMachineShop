@@ -8,7 +8,7 @@
 
 神奇寶貝圖庫
 
-[LottiFiles](https://www.pngwing.com/en/search?q=pokemon](https://lottiefiles.com/search?q=pokemon&category=animations)
+[LottiFiles](https://lottiefiles.com/search?q=pokemon&category=animations)
 
 寶可夢球Loading圖是這裡下載的
 
