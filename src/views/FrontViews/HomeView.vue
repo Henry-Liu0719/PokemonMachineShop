@@ -20,10 +20,12 @@
         <!-- <img src="https://w7.pngwing.com/pngs/957/958/png-transparent-free-type-pokemon.png" alt="" class="img-fluid"> -->
         <img src="/src/assets/pokemonAttributs.png" alt="" class="img-fluid">
       </div>
-      <div class="col-md-4 m-auto text-center">
+      <div class="col-md-4 m-auto text-center vl-parent">
         <h4 class="mt-4">根據屬性篩選</h4>
+        <loadingOverlay :active="isAttributesLoading"
+        :is-full-page="false"><img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid"></loadingOverlay>
         <!-- {{ typeNameList }} -->
-        <button type="button" v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary" @click="isLoading = true;getAllProducts(1,yOffset,type[1])">{{ type[1] }}</button>
+        <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary"><router-link :to="{ path: 'products', query: { category: type[1] }}">{{ type[1] }}</router-link></button>
       </div>
     </div>
     <div class="row flex-row-reverse justify-content-between mt-4">
@@ -36,7 +38,10 @@
       </div>
     </div>
   </div>
-  <div class="container">
+  <div class="container vl-parent">
+    <loadingOverlay :active="isProductsLoading" :is-full-page="false">
+      <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    </loadingOverlay>
     <div class="row mt-5">
       <div class="col-md-4 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
         <div class="card border-0 mb-4">
@@ -46,7 +51,7 @@
             alt="..."
           />
           <div class="card-body text-center">
-            <h4>{{ product.unit }}</h4>
+            <h4><router-link :to="{ path: 'product', query: { id: product.id }}">{{ product.content }} {{ product.unit }}</router-link></h4>
             <div class="d-flex justify-content-between">
               <p class="card-text text-muted mb-0">
                 {{ product.description }}
@@ -118,17 +123,14 @@ export default {
   },
   computed: {
     ...mapState(productStore, ['products']),
-    ...mapState(pokemonStore, ['summarizedProductList', 'typeNameList'])
+    ...mapState(pokemonStore, ['typeNameList', 'isAttributesLoading', 'isProductsLoading'])
   },
   mounted () {
-    this.summarizeProductList()
+    this.exportTypeNamesList()
     this.getAllProducts()
-    // this.exportTypeNamesList()
-    // console.log('summarizedProductList', this.summarizedProductList)
-    // console.log('typeNameList', this.typeNameList)
   },
   methods: {
-    ...mapActions(pokemonStore, ['summarizeProductList', 'exportTypeNamesList']),
+    ...mapActions(pokemonStore, ['exportTypeNamesList']),
     ...mapActions(productStore, ['getAllProducts'])
   },
   watch: {

@@ -1,14 +1,18 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
+import Swal from 'sweetalert2'
+
 const { VITE_URL, VITE_PATH } = import.meta.env
 
 export default defineStore('product', {
   state: () => ({
     products: [],
+    product: {},
     carts: {},
     tempProduct: {},
     productModal: null,
-    isLoading: true,
+    isProductsLoading: true,
+    isProductLoading: true,
     isUpdating: true,
     isCartAdded: false,
     cartAddedMessage: '',
@@ -30,64 +34,52 @@ export default defineStore('product', {
       this.tempProduct = product
       this.$refs.userModal.open()
     },
-    addToCart (id, value = 1) {
-      const data = {
-        data: {
-          product_id: id,
-          qty: Number(value)
-        }
-      }
-      // console.log(data);
-      this.isUpdating = true
-      axios
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
-        .then((res) => {
-          console.log(res)
-          this.isUpdating = false
-          this.cartAddedMessage = `${res.data.data.product.title}加入購物車成功。`
-          this.isCartAdded = true
-          setTimeout(() => {
-            this.isCartAdded = false
-          }, 3000)
-          this.$refs.userModal.close()
-          // this.getCarts();
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    },
     async getAllProducts (page = 1, yOffset = false, category = '') {
-      //
-      // try {
-      //   const res = await axios.get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}`)
-      //   // console.log(res)
-      //   this.products = res.data
-      //   console.log('res.data', res.data)
-      //   this.isLoading = false
-      //   this.isUpdating = false
-      //   if (selector) {
-      //     // selector.scrollIntoView({ behavior: 'smooth' })
-      //     window.scrollTo({ top: selector, behavior: 'smooth' })
-      //   }
-      // } catch (err) {
-      //   console.dir(err)
-      // }
-      //
+      this.isProductsLoading = true
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}&category=${category}`)
         .then((res) => {
           console.log(res.data)
-          this.isLoading = false
-          this.isUpdating = false
+          this.isProductsLoading = false
+          // this.isUpdating = false
           this.products = res.data
           // console.log(selector)
-          if (yOffset) {
-            // selector.scrollIntoView({ behavior: 'smooth' })
+          if (yOffset !== false) {
             window.scrollTo({ top: yOffset, behavior: 'smooth' })
           }
         })
         .catch((error) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'false',
+            title: '讀取產品失敗，請聯繫管理員',
+            showConfirmButton: false,
+            timer: 1000
+          })
           console.dir(error)
+          this.isProductsLoading = false
+        })
+    },
+    getProduct (id) {
+      this.isProductLoading = true
+      console.log(id)
+      axios
+        .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
+        .then((res) => {
+          console.log(res)
+          this.product = res.data.product
+          this.isProductLoading = false
+        })
+        .catch((error) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'false',
+            title: '讀取產品失敗，請聯繫管理員',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          console.dir(error)
+          this.isProductLoading = false
         })
     }
   }

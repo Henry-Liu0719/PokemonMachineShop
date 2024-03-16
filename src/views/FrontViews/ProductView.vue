@@ -1,5 +1,8 @@
 <template>
 <div class="container">
+  <loadingOverlay :active="isProductLoading" :is-full-page="true">
+    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+  </loadingOverlay>
   <div class="row align-items-center">
     <div class="col-md-7">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -24,11 +27,14 @@
         </a> -->
       </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 vl-parent">
+      <loadingOverlay :active="isUpdating" :is-full-page="false">
+        <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+      </loadingOverlay>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white px-0 mb-0 py-3">
           <li class="breadcrumb-item"><a class="text-muted" href="./index.html">首頁</a></li>
-          <li class="breadcrumb-item"><a class="text-muted" href="./products.html">產品列表</a></li>
+          <li class="breadcrumb-item"><router-link class="text-muted" to="products">產品列表</router-link></li>
           <li class="breadcrumb-item active" aria-current="page">{{product.title}} {{product.unit}}</li>
         </ol>
       </nav>
@@ -52,7 +58,7 @@
           </div>
         </div>
         <div class="col-6">
-          <a @click="addToCart(product.id)" class="text-nowrap btn btn-dark w-100 py-2">加到購物車</a>
+          <a @click="addToCart(product.id, num)" class="text-nowrap btn btn-dark w-100 py-2">加到購物車</a>
         </div>
       </div>
     </div>
@@ -133,15 +139,19 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import Swal from 'sweetalert2'
+// import axios from 'axios'
+// import Swal from 'sweetalert2'
+import { mapActions, mapState } from 'pinia'
+
+import cartStore from '../../stores/cartStore'
+import productStore from '../../stores/productStore'
+
 // import { defineStore } from 'pinia'
-const { VITE_URL, VITE_PATH } = import.meta.env
+// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
       productId: '',
-      product: {},
       num: 1
     }
   },
@@ -152,43 +162,13 @@ export default {
     this.getProduct(this.$route.query.id)
   },
   methods: {
-    getProduct (id) {
-      console.log(id)
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
-        .then((res) => {
-          console.log(res)
-          this.product = res.data.product
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    },
-    addToCart (id) {
-      const data = {
-        data: {
-          product_id: `${id}`,
-          qty: this.num
-        }
-      }
-      console.log(id)
-      axios
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
-        .then((res) => {
-          console.log(res)
-          Swal.fire({
-            title: '加入購物車成功',
-            // text: "You clicked the button!",
-            icon: 'success',
-            timer: 1000,
-            showConfirmButton: false,
-            showCancelButton: false
-          })
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    }
+    ...mapActions(cartStore, ['addToCart']),
+    ...mapActions(productStore, ['getProduct'])
+
+  },
+  computed: {
+    ...mapState(cartStore, ['isUpdating']),
+    ...mapState(productStore, ['isProductLoading', 'product'])
   },
   watch: {
     num () {

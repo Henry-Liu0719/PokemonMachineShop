@@ -1,5 +1,8 @@
 <template>
 <div class="container">
+  <loadingOverlay :active="isCartsLoading" :is-full-page="true">
+    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+  </loadingOverlay>
   <div class="mt-3">
     <h3 class="mt-3 mb-4">購物車</h3>
     <div class="row">
@@ -36,7 +39,7 @@
                   </div>
                 </td>
                 <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total}}</p></td>
-                <!-- <td class="border-0 align-middle"><i class="bi bi-x"></i></td> -->
+                <td class="border-0 align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td>
               </tr>
             </template>
           </tbody>
@@ -67,7 +70,7 @@
             <p class="mb-0 h4 fw-bold">Total</p>
             <p class="mb-0 h4 fw-bold">NT${{ carts.total }}</p>
           </div>
-          <router-link to="checkout" class="btn btn-dark w-100 mt-4">送出訂單</router-link>
+          <router-link to="checkout" class="btn btn-dark w-100 mt-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
         </div>
       </div>
     </div>
@@ -142,12 +145,12 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/cartStore'
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 // import { defineStore } from 'pinia'
-const { VITE_URL, VITE_PATH } = import.meta.env
+// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
@@ -159,35 +162,10 @@ export default {
     this.getCart()
   },
   methods: {
-    ...mapActions(cartStore, ['getCart']),
-    addToCart (id) {
-      const data = {
-        data: {
-          product_id: `${id}`,
-          qty: this.num
-        }
-      }
-      console.log(id)
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
-        .then((res) => {
-          console.log(res)
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: '加入購物車成功',
-            showConfirmButton: false,
-            timer: 1000
-          })
-          // this.product = res.data.product
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-    }
+    ...mapActions(cartStore, ['getCart', 'deleteCart'])
   },
   computed: {
-    ...mapState(cartStore, ['carts'])
+    ...mapState(cartStore, ['carts', 'isCartsLoading'])
   },
   watch: {
     num () {

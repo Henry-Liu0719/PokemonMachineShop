@@ -1,6 +1,7 @@
 <template>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand navbar-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light"> -->
   <router-link class="nav-item nav-link me-4 active" to="/">回首頁 </router-link>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,7 +9,7 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <router-link class="nav-item nav-link me-4" to="products">產品列表</router-link>
-      <router-link class="nav-item nav-link" to="cart"><i class="bi bi-cart2"></i></router-link>
+      <router-link class="nav-item nav-link me-4" to="cart"><i class="bi bi-cart2"></i></router-link>
     </div>
   </div>
 </nav>

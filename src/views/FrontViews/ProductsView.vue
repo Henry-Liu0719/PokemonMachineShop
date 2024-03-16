@@ -6,8 +6,11 @@
   <h2 class="fw-bold">神奇寶貝招式機百貨商店</h2>
 </div> -->
 <div class="container mt-md-5 mt-3 mb-7">
+  <loadingOverlay :active="isProductsLoading" :is-full-page="true">
+    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+  </loadingOverlay>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-4">
       <div class="accordion border border-bottom border-top-0 border-start-0 border-end-0 mb-3" id="accordionExample">
         <div class="card border-0">
           <div class="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
@@ -15,7 +18,7 @@
               <h4 class="mb-0">
                 屬性瀏覽
               </h4>
-              <i class="fas fa-chevron-down"></i>
+              <!-- <i class="fas fa-chevron-down"></i> -->
             </div>
           </div>
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -29,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-8">
       <div class="row">
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!filterdProducts.products?.length}">無相符的查詢結果</h4>
         <div class="col-md-6" v-for="product in filterdProducts.products" :key="product.id">
@@ -92,7 +95,9 @@ export default {
     ...mapActions(productStore, ['openModal', 'addToCart', 'getAllProducts', 'filterType']),
     ...mapActions(pokemonStore, ['exportTypeNamesList']),
     async init () {
-      await this.getAllProducts()
+      const category = this.$route.query.category || ''
+      console.log(category)
+      await this.getAllProducts(1, 0, category)
       // this.filterdProducts = this.products
       this.exportTypeNamesList()
     },
@@ -109,10 +114,10 @@ export default {
   mounted () {
     this.init()
     // console.log(this.filterdProducts)
-    this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-md-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
+    this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
   },
   computed: {
-    ...mapState(productStore, ['products', 'isLoading']),
+    ...mapState(productStore, ['products', 'isProductsLoading']),
     ...mapState(pokemonStore, ['typeNameList'])
   },
   watch: {
