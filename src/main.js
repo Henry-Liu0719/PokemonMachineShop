@@ -1,6 +1,8 @@
 import './assets/all.scss'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+// eslint-disable-next-line no-unused-vars
+import Swal from 'sweetalert2'
 
 import App from './App.vue'
 import router from './router'

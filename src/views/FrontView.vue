@@ -42,6 +42,9 @@
         <div class="mb-md-0 mb-1">
           <!-- <p class="mb-0">02-3456-7890</p> -->
           <p class="mb-0">hugnminliu@gmail.com</p>
+          <div class="col-md3" style="width:10%">
+            <img src="/src/assets/Pikachu.png" alt="" class="img-fluid">
+          </div>
         </div>
         <!-- <p class="mb-0">© 2020 LOGO All Rights Reserved.</p> -->
       </div>

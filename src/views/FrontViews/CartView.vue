@@ -145,6 +145,7 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/cartStore'
+import Swal from 'sweetalert2'
 // import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
@@ -171,7 +172,14 @@ export default {
         .get(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
         .then((res) => {
           console.log(res)
-          this.product = res.data.product
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '加入購物車成功',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          // this.product = res.data.product
         })
         .catch((error) => {
           console.dir(error)

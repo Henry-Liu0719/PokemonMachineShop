@@ -1,20 +1,21 @@
 <template>
 <div class="container">
-  <!-- <div class="row justify-content-center">
-    <div class="col-md-10">
-      <nav class="navbar navbar-expand-lg navbar-light px-0">
-        <a class="navbar-brand" href="./index.html">Navbar</a>
-        <ul class="list-unstyled mb-0 ms-md-auto d-flex align-items-center justify-content-between justify-content-md-end w-100 mt-md-0 mt-4">
-          <li class="me-md-6 me-3 position-relative custom-step-line"><i class="fas fa-check-circle d-md-inline d-block text-center"></i> <span class="text-nowrap">Lorem ipsum</span></li>
-          <li class="me-md-6 me-3 position-relative custom-step-line"><i class="fas fa-check-circle d-md-inline d-block text-center"></i> <span class="text-nowrap">Lorem ipsum</span></li>
-          <li><i class="fas fa-dot-circle d-md-inline d-block text-center"></i> <span class="text-nowrap">Lorem ipsum</span></li>
-        </ul>
-      </nav>
-    </div>
-  </div> -->
   <div class="row justify-content-center">
     <div class="col-md-10">
-      <h3 class="fw-bold mb-4 pt-3">送出訂單</h3>
+      <nav class="navbar navbar-expand-lg navbar-light px-0">
+        <!-- <a class="navbar-brand" href="./index.html">Navbar</a> -->
+        <ul class="list-unstyled mb-0 ms-md-auto d-flex align-items-center justify-content-between justify-content-md-end w-100 mt-md-0 mt-4">
+          <li class="me-md-6 me-3 position-relative custom-step-line"><i class="bi bi-check-circle d-md-inline d-block text-center"></i> <span class="text-nowrap">瀏覽產品</span></li>
+          <li class="me-md-6 me-3 position-relative custom-step-line"><i class="bi bi-check-circle d-md-inline d-block text-center"></i> <span class="text-nowrap">加入購物車</span></li>
+          <li><i class="bi bi-dot d-md-inline d-block text-center"></i> <span class="text-nowrap">送出訂單</span></li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h3 class="fw-bold mb-4 pt-3">填寫資料</h3>
     </div>
   </div>
   <div class="row flex-row-reverse justify-content-center pb-5">
@@ -71,7 +72,7 @@
         </div>
         <p class="mt-4">送件資訊</p>
         <div class="mb-2">
-          <label for="ContactName" class="text-muted mb-0">Name</label>
+          <label for="ContactName" class="text-muted mb-0">姓名</label>
           <v-field type="text" class="form-control" id="ContactName"  placeholder="Carmen A. Rose"
           name="姓名"
           :class="{ 'is-invalid': errors['姓名'] }"
@@ -82,7 +83,7 @@
         ></error-message>
         </div>
         <div class="mb-2">
-          <label for="ContactPhone" class="text-muted mb-0">Phone</label>
+          <label for="ContactPhone" class="text-muted mb-0">電話</label>
           <v-field type="tel" class="form-control" id="ContactPhone" placeholder="ContactPhone" name="電話" :class="{ 'is-invalid': errors['電話'] }" :rules="isPhone" v-model="orderData.data.user.tel"></v-field>
           <error-message
             name="電話"
@@ -107,13 +108,13 @@
           ></error-message>
         </div>
         <div class="mb-2">
-          <label for="ContactMessage" class="text-muted mb-0">Message</label>
+          <label for="ContactMessage" class="text-muted mb-0">備註</label>
           <textarea class="form-control" rows="3" id="ContactMessage" placeholder="message ... " v-model="orderData.data.message"></textarea>
         </div>
       </v-form>
       <div class="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
         <router-link to="products" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> 回到產品頁</router-link>
-        <button class="btn btn-dark py-3 px-7">完成訂單</button>
+        <button class="btn btn-dark py-3 px-7" @click="postOrder()">完成訂單</button>
       </div>
     </div>
   </div>
@@ -122,6 +123,8 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'pinia'
+import Swal from 'sweetalert2'
+
 import cartStore from '../../stores/cartStore'
 // import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
@@ -161,6 +164,103 @@ export default {
     isPhone (value) {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
+    },
+    postOrder () {
+      const data = { ...this.orderData }
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      swalWithBootstrapButtons.fire({
+        title: `請確認以下資訊\nEmail：${data.data.user.email}\n姓名：${data.data.user.name}\n電話：${data.data.user.tel}\n地址：${data.data.user.address}`,
+        text: '點擊送出後將完成交易',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '完成交易',
+        cancelButtonText: '回到結帳頁面',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post(`${VITE_URL}/api/${VITE_PATH}/order`, data)
+            .then((res) => {
+              // res.data = {
+              //   success: true,
+              //   message: '已建立訂單',
+              //   total: 100,
+              //   create_at: 1523539519,
+              //   orderId: '-L9tH8jxVb2Ka_DYPwng'
+              // }
+              // console.log(res)
+              let timerInterval
+              Swal.fire({
+                title: `${res.data.message}\n訂單編號：${res.data.orderId}`,
+                html: '<b></b>秒後回到產品列表',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading()
+                  const timer = Swal.getPopup().querySelector('b')
+                  timerInterval = setInterval(() => {
+                    timer.textContent = `${Math.ceil(Swal.getTimerLeft() / 1000)}`
+                  }, 100)
+                },
+                willClose: () => {
+                  clearInterval(timerInterval)
+                }
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log('I was closed by the timer')
+                }
+              }).then(() => {
+                this.$router.push('/products')
+              })
+              // swalWithBootstrapButtons.fire({
+              //   title: `${res.data.message}\n訂單編號：${res.data.orderId}`,
+              //   text: '3秒後回到產品列表',
+              //   icon: 'success',
+              //   timer: 3000,
+              //   showConfirmButton: false,
+              //   showCancelButton: false
+              // }).then(() => {
+              //   this.$router.push('/products')
+              // })
+            })
+            .catch((error) => {
+              console.dir(error)
+              Swal.fire({
+                position: 'top-end',
+                icon: 'false',
+                title: '送出訂單失敗，請聯繫管理員',
+                showConfirmButton: false,
+                timer: 1000
+              })
+            })
+          console.log(data)
+        } else if (
+        /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: '訂單資料未送出',
+            // text: 'Your imaginary file is safe :)',
+            icon: 'warning'
+          })
+        }
+      })
+      // axios
+      //   .post(`${VITE_URL}/api/${VITE_PATH}/order`, data)
+      //   .then((res) => {
+      //     // console.log(res)
+      //     this.$router.push('checkout-success')
+      //   })
+      //   .catch((error) => {
+      //     console.dir(error)
+      //   })
     }
   },
   computed: {

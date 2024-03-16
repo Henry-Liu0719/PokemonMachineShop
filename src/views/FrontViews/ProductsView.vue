@@ -1,10 +1,10 @@
 <template>
 <div class="container">
 </div>
-<div class="position-relative d-flex align-items-center justify-content-center" style="min-height: 400px;">
+<!-- <div class="position-relative d-flex align-items-center justify-content-center" style="min-height: 400px;">
   <div class="position-absolute" style="top:0; bottom: 0; left: 0; right: 0; background-image: url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80); background-position: center center; opacity: 0.1;"></div>
   <h2 class="fw-bold">神奇寶貝招式機百貨商店</h2>
-</div>
+</div> -->
 <div class="container mt-md-5 mt-3 mb-7">
   <div class="row">
     <div class="col-md-4">

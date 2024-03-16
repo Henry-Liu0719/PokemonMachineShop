@@ -5,7 +5,7 @@
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img :src="product.imageUrl" class="d-block w-100" alt="">
+            <img :src="product.imageUrl" class="d-block w-50" alt="">
           </div>
           <div class="carousel-item">
             <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" class="d-block w-100" alt="...">
@@ -134,6 +134,7 @@
 </template>
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 // import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
@@ -175,6 +176,14 @@ export default {
         .post(`${VITE_URL}/api/${VITE_PATH}/cart`, data)
         .then((res) => {
           console.log(res)
+          Swal.fire({
+            title: '加入購物車成功',
+            // text: "You clicked the button!",
+            icon: 'success',
+            timer: 1000,
+            showConfirmButton: false,
+            showCancelButton: false
+          })
         })
         .catch((error) => {
           console.dir(error)
