@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import Swal from 'sweetalert2'
-
+import { debounce } from 'lodash'
 const { VITE_URL, VITE_PATH } = import.meta.env
 
 export default defineStore('cart', {
@@ -22,6 +22,7 @@ export default defineStore('cart', {
           this.isCartsLoading = false
         })
         .catch((error) => {
+          this.isCartsLoading = false
           Swal.fire({
             position: 'top-end',
             icon: 'false',
@@ -30,7 +31,6 @@ export default defineStore('cart', {
             timer: 1000
           })
           console.dir(error)
-          this.isCartsLoading = false
         })
     },
     addToCart (id, num) {
@@ -59,6 +59,7 @@ export default defineStore('cart', {
           })
         })
         .catch((error) => {
+          this.isUpdating = false
           Swal.fire({
             position: 'top-end',
             icon: 'false',
@@ -67,7 +68,6 @@ export default defineStore('cart', {
             timer: 1000
           })
           console.dir(error)
-          this.isUpdating = false
         })
     },
     deleteCart (id) {
@@ -100,6 +100,36 @@ export default defineStore('cart', {
           console.dir(error)
           this.isCartsLoading = false
         })
-    }
+    },
+    updateCart: debounce(function (cart, qty) {
+      // console.log(cart, qty)
+      this.isUpdating = true
+      const data = {
+        data: {
+          product_id: cart.product_id,
+          qty: Number(qty)
+        }
+      }
+      // this.isUpdating = true
+      // console.log(data)
+      axios
+        .put(`${VITE_URL}/api/${VITE_PATH}/cart/${cart.id}`, data)
+        .then((res) => {
+          // console.log(res);
+          this.getCart()
+          // this.carts = res.data.data;
+        })
+        .catch((error) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'false',
+            title: '修改購物車失敗，請聯繫管理員',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          this.isUpdating = false
+          console.dir(error)
+        })
+    }, 500)
   }
 })

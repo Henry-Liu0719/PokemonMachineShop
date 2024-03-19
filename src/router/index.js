@@ -32,6 +32,10 @@ const routes = [
       {
         path: '/favorites',
         component: () => import('../views/FrontViews/FavoritesView.vue')
+      },
+      {
+        path: '/gopopov',
+        component: () => import('../views/FrontViews/TestView.vue')
       }
     ]
   },

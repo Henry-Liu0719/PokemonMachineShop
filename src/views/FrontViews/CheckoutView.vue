@@ -55,7 +55,7 @@
         </table> -->
         <div class="d-flex justify-content-between mt-4">
           <p class="mb-0 h4 fw-bold">Total</p>
-          <p class="mb-0 h4 fw-bold">NT${{ carts.total }}</p>
+          <p class="mb-0 h4 fw-bold">NT${{ carts.final_total }}</p>
         </div>
       </div>
     </div>

@@ -16,20 +16,19 @@
           <div class="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
             <div class="d-flex justify-content-between align-items-center pe-1">
               <h4 class="mb-0">
-                屬性瀏覽
+                收藏清單
               </h4>
               <!-- <i class="fas fa-chevron-down"></i> -->
             </div>
           </div>
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <!-- <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="card-body py-0">
               <ul class="list-unstyled">
                 <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
-
                 <button href="#" class="m-2 page-link py-2 d-block text-muted" @click="isLoading = true;getAllProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
               </ul>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -38,19 +37,12 @@
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!filterdProducts.products?.length}">無相符的查詢結果</h4>
         <div class="col-md-6" v-for="product in filterdProducts.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
-            <router-link :to="{ path: 'product', query: { id: product.id }}">
-              <img :src="product.imageUrl" class="card-img-top rounded-0 object-fit-contain position-relative" alt="product.description" style="width: 10rem;height: 10rem;">
-              <!-- <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-dark"><i class="bi bi-heart"></i>
-                <span class="visually-hidden">unread messages</span>
-              </span> -->
-            </router-link>
+            <img :src="product.imageUrl" class="card-img-top rounded-0 object-fit-contain" alt="product.description" style="width: 10rem;height: 10rem;">
             <a href="#" class="text-dark">
               <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
             </a>
             <div class="card-body p-0">
-              <router-link :to="{ path: 'product', query: { id: product.id }}">
-                <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
-                </router-link>
+              <h4 class="mb-0 mt-3"><router-link :to="{ path: 'product', query: { id: product.id }}">{{ product.content }} {{ product.unit }}</router-link></h4>
               <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
