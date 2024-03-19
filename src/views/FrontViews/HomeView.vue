@@ -1,6 +1,6 @@
 <template>
-<body>
-  <div class="position-relative">
+<body class=" bg-light">
+  <div class="position-relative bg-light">
     <!-- <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');    background-position: center center; opacity: 0.2;"></div> -->
     <div class="container d-flex flex-column " style="min-height: 50vh;">
       <div class="row justify-content-center my-auto">
@@ -8,7 +8,7 @@
         style="/*width: 100%; height: 100%; */opacity: 0.15;" class="w-50">
         <div class="col-md-6 text-center position-absolute" style="z-index: 1">
           <h2>歡迎來到寶可夢招式機商店！</h2>
-          <p class="text-muted mb-0">在我們的商店裡，你可以找到各種強大的寶可夢招式機，這些招式將幫助你的寶可夢在戰鬥中更加強大。無論是火焰、水流、雷電，還是其他超能力，我們都擁有最新、最強大的招式供你選擇。</p>
+          <p class="text-muted mb-0">在我們的商店裡，你可以找到各種強大的寶可夢招式機，這些招式將幫助你的寶可夢在戰鬥中更加強大。無論是火、水、雷，還是其他屬性，我們都擁有最新、最強大的招式供你選擇。</p>
           <router-link class="btn btn-dark rounded-0 mt-6" to="products">瀏覽產品</router-link>
         </div>
       </div>
@@ -45,11 +45,13 @@
     <div class="row mt-5">
       <div class="col-md-4 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
         <div class="card border-0 mb-4">
+          <router-link :to="{ path: 'product', query: { id: product.id }}">
           <img
             :src="product.imageUrl"
-            class="card-img-top rounded-0"
+            class="card-img-top rounded-0  border border-1 border-dark"
             alt="..."
           />
+          </router-link>
           <div class="card-body text-center">
             <h4><router-link :to="{ path: 'product', query: { id: product.id }}">{{ product.content }} {{ product.unit }}</router-link></h4>
             <div class="d-flex justify-content-between">
