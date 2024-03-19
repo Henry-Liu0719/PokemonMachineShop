@@ -17,7 +17,7 @@ export default defineStore('cart', {
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           this.carts = res.data.data
           this.isCartsLoading = false
         })

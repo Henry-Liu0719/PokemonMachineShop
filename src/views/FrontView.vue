@@ -8,7 +8,7 @@
       <span class="m-2"><strong>回首頁</strong></span>
       <!-- <img src="/src/assets/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
     </router-link>
-    <v-field type="text" class="form-control w-25" id="ContactMail" aria-describedby="emailHelp" placeholder="全站搜尋招式名稱、內容" name="email" required></v-field>
+    <v-field type="text" class="form-control w-25" id="ContactMail" aria-describedby="emailHelp" placeholder="搜尋招式名稱、內容，EX:投擲" name="email" required @keyup.enter="searchMachine" v-model="keyWord"></v-field>
   <!-- </div> -->
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -80,12 +80,27 @@ import utilStore from '../stores/utilStore'
 
 export default {
   data () {
+    return {
+      keyWord: ''
+    }
   },
   mounted () {
     this.getCart()
   },
   methods: {
-    ...mapActions(cartStore, ['getCart'])
+    ...mapActions(cartStore, ['getCart']),
+    searchMachine () {
+      console.log(this.$route)
+      if (this.$route.path === '/products') {
+        // this.init()
+        this.$router.go(0)
+      }
+      this.$router.push(
+        {
+          path: '/products',
+          query: { keyWord: this.keyWord }
+        })
+    }
   },
   computed: {
     ...mapState(cartStore, ['carts']),

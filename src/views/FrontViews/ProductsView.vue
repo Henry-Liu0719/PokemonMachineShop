@@ -62,14 +62,14 @@
           <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
           </template> -->
           <li class="page-item">
-            <button class="page-link" aria-label="Previous" :class="{disabled:!products?.pagination?.has_pre}" @click="getAllProducts(products.pagination.current_page-1,yOffset)">
+            <button class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getAllProducts(products.pagination.current_page-1,yOffset)">
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
-          <li class="page-item" :class="{active:products.pagination.current_page == index}" v-for="index in products.pagination?.total_pages" :key="index" ><button class="page-link" @click="getAllProducts(index,yOffset)">{{ index }}</button></li>
+          <li class="page-item" :class="{active:filterdProducts.pagination.current_page == index}" v-for="index in filterdProducts.pagination?.total_pages" :key="index" ><button class="page-link" @click="getAllProducts(index,yOffset)">{{ index }}</button></li>
           <!-- {{ products.pagination }} -->
           <li class="page-item">
-            <button class="page-link" aria-label="Next" :class="{disabled:!products?.pagination?.has_next}" @click="getAllProducts(products.pagination.current_page+1,yOffset)">
+            <button class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getAllProducts(products.pagination.current_page+1,yOffset)">
               <span aria-hidden="true">&raquo;</span>
             </button>
           </li>
@@ -93,7 +93,8 @@ export default {
     return {
       // products: []
       yOffset: 0,
-      filterdProducts: {}
+      filterdProducts: {},
+      searchedProducts: {}
     }
   },
   components: {
@@ -117,6 +118,29 @@ export default {
       // console.log('filterdProducts', this.filterdProducts)
       window.scrollTo({ top: this.yOffset, behavior: 'smooth' })
       // console.log('filterdProducts', this.filterdProducts)
+    },
+    createSearchedProducts () {
+      const keyWord = this.$route.query.keyWord
+      // console.log(keyWord)
+      // console.log('this.filterdProducts', this.filterdProducts)
+      this.searchedProducts = {
+        success: true,
+        products: [],
+        pagination: {
+          total_pages: 1,
+          current_page: 1,
+          has_pre: false,
+          has_next: false,
+          category: ''
+        },
+        messages: []
+      }
+      this.searchedProducts.products = this.filterdProducts.products.filter(element => {
+        return element.description.includes(keyWord) || element.unit.includes(keyWord)
+      })
+      // console.log('this.searchedProducts', this.searchedProducts)
+      this.filterdProducts = { ...this.searchedProducts }
+      // console.log('this.filterdProducts', this.filterdProducts)
     }
   },
   mounted () {
@@ -132,6 +156,10 @@ export default {
     products () {
       this.filterdProducts = { ...this.products }
       // console.log(this.filterdProducts)
+      // console.log(this.$route.query)
+      if (this.$route.query.keyWord) {
+        this.createSearchedProducts()
+      }
     }
   }
 }
