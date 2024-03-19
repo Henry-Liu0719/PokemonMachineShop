@@ -113,7 +113,7 @@
         </div>
         <div class="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
           <router-link to="products" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> 回到產品頁</router-link>
-          <button class="btn btn-dark py-3 px-7" @click="postOrder()" :disabled="Object.keys(errors).length > 0">完成訂單</button>
+          <button type="button" class="btn btn-dark py-3 px-7" @click="postOrder()" :disabled="Object.keys(errors).length > 0">完成訂單</button>
         </div>
       </v-form>
     </div>
@@ -126,6 +126,7 @@ import { mapActions, mapState } from 'pinia'
 import Swal from 'sweetalert2'
 
 import cartStore from '../../stores/cartStore'
+import utilStore from '../../stores/utilStore'
 // import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
@@ -158,6 +159,7 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['getCart']),
+    ...mapActions(utilStore, ['copyTextToClipboard']),
     getOrder () {
       // console.log(axios, VITE_URL, VITE_PATH)
     },
@@ -195,9 +197,11 @@ export default {
               //   orderId: '-L9tH8jxVb2Ka_DYPwng'
               // }
               // console.log(res)
+              // 复制文本到剪贴板的方法
+              this.copyTextToClipboard(res.data.orderId)
               let timerInterval
               Swal.fire({
-                title: `${res.data.message}\n訂單編號：${res.data.orderId}`,
+                title: `${res.data.message}\n訂單編號：${res.data.orderId}\n自動複製到剪貼簿`,
                 html: '<b></b>秒後回到產品列表',
                 timer: 3000,
                 timerProgressBar: true,

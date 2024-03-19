@@ -28,6 +28,10 @@ const routes = [
       {
         path: '/searchOrder',
         component: () => import('../views/FrontViews/SearchOrderView.vue')
+      },
+      {
+        path: '/favorites',
+        component: () => import('../views/FrontViews/FavoritesView.vue')
       }
     ]
   },

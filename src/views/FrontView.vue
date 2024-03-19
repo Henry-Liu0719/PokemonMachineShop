@@ -8,7 +8,7 @@
       <span class="m-2"><strong>回首頁</strong></span>
       <!-- <img src="/src/assets/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
     </router-link>
-    <v-field type="text" class="form-control w-25" id="ContactMail" aria-describedby="emailHelp" placeholder="搜尋招式名稱、內容" name="email" required></v-field>
+    <v-field type="text" class="form-control w-25" id="ContactMail" aria-describedby="emailHelp" placeholder="全站搜尋招式名稱、內容" name="email" required></v-field>
   <!-- </div> -->
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -18,7 +18,7 @@
       <router-link class="nav-item nav-link me-1 text-white m-1" to="products"><span><strong>產品列表</strong></span></router-link>
       <router-link class="nav-item nav-link me-1 text-white m-1" to="searchOrder"><span><strong>訂單查詢</strong></span></router-link>
       <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to=""><span><strong>寶可夢列表(開發中)</strong></span></router-link> -->
-      <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i></span></router-link> -->
+      <router-link class="nav-item nav-link me-1 text-white m-1" to="favorites"><span><i class="bi bi-heart"></i><span class="badge text-bg-secondary">{{ carts.carts?.length }}</span></span></router-link>
       <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts.carts?.length }}</span></span></router-link>
     </div>
   </div>
@@ -76,6 +76,8 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../stores/cartStore'
+import utilStore from '../stores/utilStore'
+
 export default {
   data () {
   },
@@ -86,7 +88,8 @@ export default {
     ...mapActions(cartStore, ['getCart'])
   },
   computed: {
-    ...mapState(cartStore, ['carts'])
+    ...mapState(cartStore, ['carts']),
+    ...mapState(utilStore, ['favorites'])
   }
 }
 </script>
