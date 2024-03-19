@@ -26,8 +26,8 @@ const routes = [
         component: () => import('../views/FrontViews/CheckoutView.vue')
       },
       {
-        path: '/checkout-success',
-        component: () => import('../views/FrontViews/CheckoutSuccessView.vue')
+        path: '/searchOrder',
+        component: () => import('../views/FrontViews/SearchOrderView.vue')
       }
     ]
   },

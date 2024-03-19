@@ -16,10 +16,10 @@
   <div class="collapse navbar-collapse justify-content-end col-4" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <router-link class="nav-item nav-link me-1 text-white m-1" to="products"><span><strong>產品列表</strong></span></router-link>
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="orders"><span><strong>訂單查詢</strong></span></router-link>
+      <router-link class="nav-item nav-link me-1 text-white m-1" to="searchOrder"><span><strong>訂單查詢</strong></span></router-link>
       <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to=""><span><strong>寶可夢列表(開發中)</strong></span></router-link> -->
       <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i></span></router-link> -->
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts.carts.length }}</span></span></router-link>
+      <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts.carts?.length }}</span></span></router-link>
     </div>
   </div>
 </nav>

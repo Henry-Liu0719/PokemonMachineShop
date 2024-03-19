@@ -47,6 +47,7 @@ export default defineStore('cart', {
         .then((res) => {
           // console.log(res)
           this.isUpdating = false
+          this.getCart()
           Swal.fire({
             title: '加入購物車成功',
             position: 'center-end',

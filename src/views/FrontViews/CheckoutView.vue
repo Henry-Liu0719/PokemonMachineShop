@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container mt-md-5 mt-3 mb-7">
   <div class="row justify-content-center">
     <div class="col-md-10">
       <nav class="navbar navbar-expand-lg navbar-light px-0">
@@ -111,11 +111,11 @@
           <label for="ContactMessage" class="text-muted mb-0">備註</label>
           <textarea class="form-control" rows="3" id="ContactMessage" placeholder="message ... " v-model="orderData.data.message"></textarea>
         </div>
+        <div class="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
+          <router-link to="products" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> 回到產品頁</router-link>
+          <button class="btn btn-dark py-3 px-7" @click="postOrder()" :disabled="Object.keys(errors).length > 0">完成訂單</button>
+        </div>
       </v-form>
-      <div class="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
-        <router-link to="products" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> 回到產品頁</router-link>
-        <button class="btn btn-dark py-3 px-7" @click="postOrder()">完成訂單</button>
-      </div>
     </div>
   </div>
 </div>
