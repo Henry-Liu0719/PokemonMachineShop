@@ -27,7 +27,7 @@
         <!-- {{ typeNameList }} -->
         <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary">
 
-        <router-link :to="{ path: 'products', query: { category: type[1] }}">{{ type[1] }}</router-link></button>
+        <router-link :to="{ path: 'products', query: { category: type[1] }}" class="h4" style="text-decoration: none;">{{ type[1] }}</router-link></button>
       </div>
     </div>
     <div class="row flex-row-reverse justify-content-between mt-4">
@@ -50,12 +50,12 @@
           <router-link :to="{ path: 'product', query: { id: product.id }}">
           <img
             :src="product.imageUrl"
-            class="card-img-top rounded-0  border border-1 border-dark"
+            class="card-img-top rounded border border-1 border-secondary"
             alt="..."
           />
           </router-link>
-          <div class="card-body text-center">
-            <h4><router-link :to="{ path: 'product', query: { id: product.id }}">{{ product.content }} {{ product.unit }}</router-link></h4>
+          <div class="card-body text-center bg-light">
+            <h4><router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">{{ product.content }} {{ product.unit }}</router-link></h4>
             <div class="d-flex justify-content-between">
               <p class="card-text text-muted mb-0">
                 {{ product.description }}

@@ -39,7 +39,7 @@
         <div class="col-md-6" v-for="product in filterdProducts.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <router-link :to="{ path: 'product', query: { id: product.id }}">
-              <img :src="product.imageUrl" class="card-img-top rounded-0 object-fit-contain position-relative" alt="product.description" style="width: 10rem;height: 10rem;">
+              <img :src="product.imageUrl" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 10rem;height: 10rem;">
               <!-- <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-dark"><i class="bi bi-heart"></i>
                 <span class="visually-hidden">unread messages</span>
               </span> -->
@@ -48,7 +48,7 @@
               <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
             </a>
             <div class="card-body p-0">
-              <router-link :to="{ path: 'product', query: { id: product.id }}">
+              <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
                 </router-link>
               <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p>

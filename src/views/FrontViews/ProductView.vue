@@ -73,17 +73,19 @@
   </div>
     <div class="row mt-5">
       <!-- {{ pokemons }} -->
-      <div class="col-md-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.url">
+      <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.url">
         <div class="card border-0 mb-4">
-          <router-link :to="{ path: 'product', query: { id: product.id }}">
+          <!-- <router-link :to="{ path: 'product', query: { id: product.id }}"> -->
           <img
             :src="pokemon.imageUrl"
-            class="card-img-top rounded-0  border border-1 border-dark"
+            class="card-img-top rounded-100 rounded border border-1 border-secondary"
             alt="..."
           />
-          </router-link>
+          <!-- </router-link> -->
           <div class="card-body text-center">
-            <h4><router-link :to="{ path: 'product', query: { id: product.id }}">{{ pokemon.name }}</router-link></h4>
+            <!-- <router-link :to="{ path: 'product', query: { id: product.id }}"> -->
+              <h4>{{ pokemon.name }}</h4>
+            <!-- </router-link> -->
             <!-- <div class="d-flex justify-content-between">
               <p class="card-text text-muted mb-0">
                 {{ product.description }}
