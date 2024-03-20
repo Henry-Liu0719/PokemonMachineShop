@@ -90,11 +90,6 @@ export default {
   methods: {
     ...mapActions(cartStore, ['getCart']),
     searchMachine () {
-      console.log(this.$route)
-      if (this.$route.path === '/products') {
-        // this.init()
-        this.$router.go(0)
-      }
       this.$router.push(
         {
           path: '/products',

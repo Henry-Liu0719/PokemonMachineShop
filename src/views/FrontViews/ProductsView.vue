@@ -26,7 +26,7 @@
               <ul class="list-unstyled">
                 <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
 
-                <button href="#" class="m-2 page-link py-2 d-block text-muted" @click="isLoading = true;getAllProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
+                <button href="#" class="m-2 page-link py-2 d-block text-muted" @click="this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
               </ul>
             </div>
           </div>
@@ -57,19 +57,19 @@
           </div>
         </div>
       </div>
-      <nav class="d-flex justify-content-center">
+      <nav class="d-flex justify-content-center" v-if="!filterdProducts?.length == 0">
         <ul class="pagination">
           <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
           </template> -->
           <li class="page-item">
-            <button class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getAllProducts(products.pagination.current_page-1,yOffset)">
+            <button class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getProducts(products.pagination.current_page-1,yOffset)">
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
-          <li class="page-item" :class="{active:filterdProducts.pagination.current_page == index}" v-for="index in filterdProducts.pagination?.total_pages" :key="index" ><button class="page-link" @click="getAllProducts(index,yOffset)">{{ index }}</button></li>
+          <li class="page-item" :class="{active:filterdProducts.pagination.current_page == index}" v-for="index in filterdProducts.pagination?.total_pages" :key="index" ><button class="page-link" @click="getProducts(index,yOffset)">{{ index }}</button></li>
           <!-- {{ products.pagination }} -->
           <li class="page-item">
-            <button class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getAllProducts(products.pagination.current_page+1,yOffset)">
+            <button class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getProducts(products.pagination.current_page+1,yOffset)">
               <span aria-hidden="true">&raquo;</span>
             </button>
           </li>
@@ -101,17 +101,17 @@ export default {
     // UserProductModal
   },
   methods: {
-    ...mapActions(productStore, ['openModal', 'addToCart', 'getAllProducts', 'filterType']),
+    ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
     ...mapActions(pokemonStore, ['exportTypeNamesList']),
     async init () {
       const category = this.$route.query.category || ''
       // console.log(category)
-      await this.getAllProducts(1, 0, category)
+      await this.getProducts(1, 0, category)
       // this.filterdProducts = this.products
       this.exportTypeNamesList()
     },
     filterType (type = '岩石') {
-      // this.getAllProducts()
+      // this.getProducts()
       // console.log(type)
       this.filterdProducts.products = this.products.products.filter(item => item.unit === type)
       // console.log('products', this.products)
@@ -119,10 +119,11 @@ export default {
       window.scrollTo({ top: this.yOffset, behavior: 'smooth' })
       // console.log('filterdProducts', this.filterdProducts)
     },
-    createSearchedProducts () {
+    async createSearchedProducts () {
       const keyWord = this.$route.query.keyWord
+      // await this.getProducts('', 0, '')
       // console.log(keyWord)
-      // console.log('this.filterdProducts', this.filterdProducts)
+      console.log('this.filterdProducts', this.filterdProducts)
       this.searchedProducts = {
         success: true,
         products: [],
@@ -138,7 +139,7 @@ export default {
       this.searchedProducts.products = this.filterdProducts.products.filter(element => {
         return element.description.includes(keyWord) || element.unit.includes(keyWord)
       })
-      // console.log('this.searchedProducts', this.searchedProducts)
+      console.log('this.searchedProducts', this.searchedProducts)
       this.filterdProducts = { ...this.searchedProducts }
       // console.log('this.filterdProducts', this.filterdProducts)
     }
@@ -149,17 +150,23 @@ export default {
     this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
   },
   computed: {
-    ...mapState(productStore, ['products', 'isProductsLoading']),
+    ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts']),
     ...mapState(pokemonStore, ['typeNameList'])
   },
   watch: {
-    products () {
+    async products () {
       this.filterdProducts = { ...this.products }
+      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
       // console.log(this.filterdProducts)
       // console.log(this.$route.query)
       if (this.$route.query.keyWord) {
-        this.createSearchedProducts()
+        await this.getAllProducts()
       }
+    },
+    allProducts () {
+      this.filterdProducts = { ...this.allProducts }
+      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
+      this.createSearchedProducts()
     }
   }
 }

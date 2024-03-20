@@ -11,7 +11,6 @@
       <router-link class="nav-item nav-link me-4" to="/products">products</router-link>
       <router-link class="nav-item nav-link me-4" to="/product?id=1">product?id=1</router-link>
       <router-link class="nav-item nav-link me-4" to="/checkout">checkout</router-link>
-      <router-link class="nav-item nav-link me-4" to="/checkout-success">checkout-success</router-link>
     </div>
   </div>
 </nav>

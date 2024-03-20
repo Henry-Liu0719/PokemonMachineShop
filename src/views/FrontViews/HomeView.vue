@@ -43,7 +43,7 @@
       <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
     </loadingOverlay>
     <div class="row mt-5">
-      <div class="col-md-4 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
+      <div class="col-md-2 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
         <div class="card border-0 mb-4">
           <router-link :to="{ path: 'product', query: { id: product.id }}">
           <img
@@ -194,7 +194,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(productStore, ['products']),
+    ...mapState(productStore, ['allProducts']),
     ...mapState(pokemonStore, ['typeNameList', 'isAttributesLoading', 'isProductsLoading'])
   },
   mounted () {
@@ -206,8 +206,8 @@ export default {
     ...mapActions(productStore, ['getAllProducts'])
   },
   watch: {
-    products () {
-      this.shuffledProducts = this.products.products.slice().sort(() => 0.5 - Math.random()).slice(0, 3)
+    allProducts () {
+      this.shuffledProducts = this.allProducts.products.slice().sort(() => 0.5 - Math.random()).slice(0, 6)
       // console.log(this.filterdProducts)
     }
   }

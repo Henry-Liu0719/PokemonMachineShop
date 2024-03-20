@@ -20,7 +20,12 @@ export default {
       moveList: [],
       typeUrlList: [],
       typeList: [],
-      typeNameList: {}
+      typeNameList: {},
+      // pokemonUrlList: [],
+      pokemons: {},
+      speciesUrlList: [],
+      speciesList: [],
+      speciesNameList: {}
     }
   },
   mounted () {
@@ -28,6 +33,7 @@ export default {
   },
   methods: {
     async summarizeProductList () {
+      await this.getPokemons()
       await this.getMachines()
       await this.getMachineList()
       this.createSummarizedProductList()
@@ -46,8 +52,14 @@ export default {
       this.getTypeNamesList()
       this.addMoveType()
       this.addLearnedByPokemon()
+      this.updateLearnedByPokemon()
+      await this.createSpeciesUrlList()
+      await this.getSpeciesList()
+      this.getSpeciesNamesList()
+      // console.log('speciesNameList', this.speciesNameList)
+      this.updatePokemonNames()
       this.createProductList()
-      // console.log('summarizedProductList', this.summarizedProductList)
+      console.log('summarizedProductList', this.summarizedProductList)
       console.log('productList', this.productList)
     },
     async getMachines () {
@@ -316,6 +328,91 @@ export default {
           //   '圖片網址四',
           //   '圖片網址五'
           // ]
+        })
+      })
+    },
+    updateLearnedByPokemon () {
+      this.summarizedProductList.forEach(item => {
+        item.learned_by_pokemon.forEach(item => {
+          // item.information = this.pokemons[item.name]
+          item.url = this.pokemons[item.name]?.species?.url
+          item.imageUrl = this.pokemons[item.name]?.sprites?.front_default
+        })
+      })
+    },
+    async getPokemons () {
+      const promises = []
+      for (let index = 1; index <= 1000; index++) {
+        promises.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`))
+      }
+      const responses = await Promise.all(promises)
+      responses.forEach(element => {
+        this.pokemons[element.data.name] = element.data
+      })
+      // for (let index = 1; index <= 1000; index++) {
+      //   axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`)
+      //     .then(res => {
+      //       // console.log(res.data.results)
+      //       this.pokemons[res.data.name] = res.data
+      //     })
+      //     .catch(err => {
+      //       console.dir(err)
+      //     })
+      // }
+      // console.log(this.pokemons)
+    },
+    async createSpeciesUrlList () {
+      try {
+        const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=1000`)
+        // console.log(res)
+        res.data.results.forEach((item, index) => {
+          // const name = item.name
+          // this.typeUrlList.push({ name: item.name })
+          this.speciesUrlList.push({ url: item.url })
+          this.speciesUrlList[index].name = item.name
+        })
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    async getSpeciesList () {
+      try {
+        await Promise.all(this.speciesUrlList.map(async (item, index) => {
+          const res = await axios.get(item.url)
+          if (res.data) {
+            this.speciesList.push(res.data)
+          }
+        }))
+        // console.log('typeList', this.typeList)
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    getSpeciesNamesList () {
+      const namesArr = []
+      this.speciesList.forEach(item => {
+        namesArr.push(item.names)
+      })
+      const chineseNameArr = []
+      namesArr.forEach(item => {
+        chineseNameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0].name || item[0].name)
+      })
+      // console.log('chineseNameArr', chineseNameArr)
+      const engNameArr = []
+      namesArr.forEach(item => {
+        engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
+      })
+      // console.log('engNameArr', engNameArr)
+      engNameArr.forEach((element, index) => {
+        // this.typeNameList.push({})
+        this.speciesNameList[element.toLowerCase()] = chineseNameArr[index]
+      })
+      // console.log('typeNameList', this.typeNameList)
+    },
+    updatePokemonNames () {
+      this.summarizedProductList.forEach(item => {
+        item.learned_by_pokemon.forEach(item => {
+          item.name = this.speciesNameList[item.name]
         })
       })
     }
