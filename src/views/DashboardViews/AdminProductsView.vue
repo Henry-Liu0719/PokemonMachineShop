@@ -309,6 +309,8 @@ export default {
         this.productList.push({
           origin_price: item.cost || 9999,
           content: item.id,
+          pokemons: item.learned_by_pokemon,
+          // pokemons: JSON.stringify(item.learned_by_pokemon),
           imagesUrl: this.stringifyLearnedByPokemon(item.learned_by_pokemon),
           // imagesUrl: item.learned_by_pokemon,
           title: item.machine_name,

@@ -25,7 +25,9 @@
         <loadingOverlay :active="isAttributesLoading"
         :is-full-page="false"><img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid"></loadingOverlay>
         <!-- {{ typeNameList }} -->
-        <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary"><router-link :to="{ path: 'products', query: { category: type[1] }}">{{ type[1] }}</router-link></button>
+        <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary">
+
+        <router-link :to="{ path: 'products', query: { category: type[1] }}">{{ type[1] }}</router-link></button>
       </div>
     </div>
     <div class="row flex-row-reverse justify-content-between mt-4">

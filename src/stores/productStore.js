@@ -90,7 +90,7 @@ export default defineStore('product', {
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
         .then((res) => {
-          // console.log(res)
+          console.log(res.data.product)
           this.product = res.data.product
           this.isProductLoading = false
         })

@@ -71,6 +71,28 @@
       <p class="text-muted">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p>
     </div> -->
   </div>
+    <div class="row mt-5">
+      <!-- {{ pokemons }} -->
+      <div class="col-md-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.url">
+        <div class="card border-0 mb-4">
+          <router-link :to="{ path: 'product', query: { id: product.id }}">
+          <img
+            :src="pokemon.imageUrl"
+            class="card-img-top rounded-0  border border-1 border-dark"
+            alt="..."
+          />
+          </router-link>
+          <div class="card-body text-center">
+            <h4><router-link :to="{ path: 'product', query: { id: product.id }}">{{ pokemon.name }}</router-link></h4>
+            <!-- <div class="d-flex justify-content-between">
+              <p class="card-text text-muted mb-0">
+                {{ product.description }}
+              </p>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
   <!-- <h3 class="fw-bold">Lorem ipsum dolor sit amet</h3>
   <div class="swiper-container mt-4 mb-5">
     <div class="swiper-wrapper">
@@ -152,7 +174,9 @@ export default {
   data () {
     return {
       productId: '',
-      num: 1
+      num: 1,
+      pokemonStrings: [],
+      pokemons: []
     }
   },
   mounted () {
@@ -169,10 +193,36 @@ export default {
   computed: {
     ...mapState(cartStore, ['isUpdating']),
     ...mapState(productStore, ['isProductLoading', 'product'])
+    // ,
+    // pokemons () {
+    //   // return 1
+    //   // return this.product.imagesUrl?.map(item => {
+    //   //   return JSON.parse(item)
+    //   // })
+    //   const arr = []
+    //   this.product?.imagesUrl?.forEach(item => {
+    //     // eslint-disable-next-line no-empty
+    //     if (item === '{}') {
+    //     } else {
+    //       // arr.push(item)
+    //       arr.push(JSON.parse(item))
+    //     }
+    //     // arr.push(item)
+    //     // console.log(item === '{}')
+    //   })
+    //   return arr
+    // }
   },
   watch: {
     num () {
       this.num = this.num < 1 ? 1 : this.num
+    },
+    product () {
+      this.pokemonStrings = [...this.product.imagesUrl]
+      console.log(this.pokemonStrings)
+      // this.pokemonStrings.forEach(element => {
+      //   this.pokemons.push(JSON.parse(element))
+      // })
     }
   }
 }
