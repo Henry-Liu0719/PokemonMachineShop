@@ -1,28 +1,38 @@
-# 六角學院 Vue 樣板
+# 本專案為練習作品，跟大家分享好用的神奇寶貝資源
 
-> 這是六角學院的 Vue 樣板，是基於 Vite 所建立的專案。
+[The RESTful Pokémon API](https://pokeapi.co/)
 
-Node.js 版本建議為：18.17.1 以上
+福音啊!省去了自己做資料的時間
+
+[PNGWING](https://www.pngwing.com/en/search?q=pokemon)
+
+神奇寶貝圖庫
+
+[LottiFiles](https://lottiefiles.com/search?q=pokemon&category=animations)
+
+寶可夢球Loading圖是這裡下載的
 
 ## 安裝與使用
 
 以下將會引導你如何安裝此專案到你的電腦上。
 
+Node.js 版本建議為：18.17.1 以上
+
 ### 取得專案
 
 ```bash
-git clone https://github.com/hexschool/vite-template.git
+git clone https://github.com/Henry-Liu0719/PokemonMachineShop.git
 ```
 
 ### 移動到專案資料夾
 
 ```bash
-cd vite-template
+cd PokemonMachineShop
 ```
 
 ## 環境變數
 
-請將 `.env.example` 複製一份並命名為 `.env`，並將裡面的環境變數設定為你的值。
+請將 `.env.example` 複製一份並命名為 `.env`。
 
 ```bash
 cp .env.example .env
@@ -106,5 +116,3 @@ npm run deploy
 ```bash
 npm run deploy
 ```
-
-（請記得將 `.env` 中的 `REPOSITORY_NAME` 改為你的專案名稱即可。）
