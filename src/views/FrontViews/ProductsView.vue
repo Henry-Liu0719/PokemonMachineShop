@@ -39,6 +39,7 @@
     <div class="col-8">
       <div class="row">
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!filterdProducts.products?.length}">無相符的查詢結果</h4>
+        <h4 class="opacity-0 mt-6"  :class="{'opacity-100':$route.query.keyWord?.length}">「{{ $route.query.keyWord }}」的搜尋結果</h4>
         <div class="col-12 col-md-4 col-lg-3" v-for="product in filterdProducts.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <router-link :to="{ path: 'product', query: { id: product.id }}">
@@ -178,7 +179,8 @@ export default {
         messages: []
       }
       this.searchedProducts.products = this.filterdProducts.products.filter(element => {
-        return element.description.includes(keyWord) || element.unit.includes(keyWord)
+        return element.description.includes(keyWord) || element.unit.includes(keyWord) ||
+        element.pokemons.some(item => item.name === keyWord)
       })
       console.log('this.searchedProducts', this.searchedProducts)
       this.filterdProducts = { ...this.searchedProducts }

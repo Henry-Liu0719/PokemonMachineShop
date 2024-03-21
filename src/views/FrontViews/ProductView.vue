@@ -221,7 +221,7 @@ export default {
     },
     product () {
       this.pokemonStrings = [...this.product.imagesUrl]
-      console.log(this.pokemonStrings)
+      // console.log(this.pokemonStrings)
       // this.pokemonStrings.forEach(element => {
       //   this.pokemons.push(JSON.parse(element))
       // })
