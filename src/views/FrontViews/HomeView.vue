@@ -51,7 +51,7 @@
           <img
             :src="product.imageUrl"
             class="card-img-top rounded border border-1 border-secondary"
-            alt="..."
+            altw="..."
           />
           </router-link>
           <div class="card-body text-center bg-light">

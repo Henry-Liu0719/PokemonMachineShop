@@ -24,9 +24,12 @@
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="card-body py-0">
               <ul class="list-unstyled">
+                <li>
+                  <button href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="typeSelected = '全部';this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,'')">瀏覽全部</button>
+                </li>
                 <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
 
-                <button href="#" class="m-2 page-link py-2 d-block text-muted" @click="this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
+                <button href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == type[0]}" @click="this.typeSelected = type[0];this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
               </ul>
             </div>
           </div>
@@ -36,17 +39,25 @@
     <div class="col-8">
       <div class="row">
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!filterdProducts.products?.length}">無相符的查詢結果</h4>
-        <div class="col-md-6" v-for="product in filterdProducts.products" :key="product.id">
+        <div class="col-12 col-md-4 col-lg-3" v-for="product in filterdProducts.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <router-link :to="{ path: 'product', query: { id: product.id }}">
-              <img :src="product.imageUrl" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 10rem;height: 10rem;">
-              <!-- <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-dark"><i class="bi bi-heart"></i>
-                <span class="visually-hidden">unread messages</span>
-              </span> -->
+              <img :src="product.imageUrl" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 100%;">
             </router-link>
-            <a href="#" class="text-dark">
-              <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
-            </a>
+              <!-- {{ favorites.some(item => item.id === product.id) }} -->
+              <span>
+                <button type="button" class="position-absolute top-0 start-100 badge bg-secondary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="addToFavorites(product)" v-if="!favorites.some(item => item.id === product.id)">
+                  <i class="bi bi-heart"></i>
+                  <span class="visually-hidden">unread messages</span>
+                </button>
+                <button type="button" class="position-absolute top-0 start-100 badge bg-primary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="removeFromFavorites(product.id)" v-else>
+                  <i class="bi bi-heart"></i>
+                  <span class="visually-hidden">unread messages</span>
+                </button>
+              </span>
+            <!-- <btn type="button" href="#" class="text-dark" @click="addToFavorites(product)">
+              <i class="far fa-heart position-absolute z-1" style="right: 16px; top: 16px"></i>
+            </btn> -->
             <div class="card-body p-0">
               <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
@@ -57,7 +68,7 @@
           </div>
         </div>
       </div>
-      <nav class="d-flex justify-content-center" v-if="!filterdProducts?.length == 0">
+      <nav class="d-flex justify-content-center" v-if="!filterdProducts?.products?.length == 0">
         <ul class="pagination">
           <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
           </template> -->
@@ -83,6 +94,7 @@
 import { mapActions, mapState } from 'pinia'
 import productStore from '../../stores/productStore.js'
 import pokemonStore from '../../stores/pokemonStore.js'
+import favoriteStore from '../../stores/favoriteStore.js'
 
 // const { VITE_URL, VITE_PATH } = import.meta.env
 // import axios from 'axios'
@@ -94,15 +106,44 @@ export default {
       // products: []
       yOffset: 0,
       filterdProducts: {},
-      searchedProducts: {}
+      searchedProducts: {},
+      typeSelected: '全部'
     }
   },
   components: {
     // UserProductModal
   },
+  mounted () {
+    console.log(this.favorites)
+    this.init()
+    // console.log(this.filterdProducts)
+    this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
+  },
+  computed: {
+    ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts']),
+    ...mapState(pokemonStore, ['typeNameList']),
+    ...mapState(favoriteStore, ['favorites'])
+  },
+  watch: {
+    async products () {
+      this.filterdProducts = { ...this.products }
+      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
+      console.log(this.filterdProducts)
+      // console.log(this.$route.query)
+      if (this.$route.query.keyWord) {
+        await this.getAllProducts()
+      }
+    },
+    allProducts () {
+      this.filterdProducts = { ...this.allProducts }
+      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
+      this.createSearchedProducts()
+    }
+  },
   methods: {
     ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
     ...mapActions(pokemonStore, ['exportTypeNamesList']),
+    ...mapActions(favoriteStore, ['addToFavorites', 'removeFromFavorites', 'getFavorites']),
     async init () {
       const category = this.$route.query.category || ''
       // console.log(category)
@@ -142,31 +183,6 @@ export default {
       console.log('this.searchedProducts', this.searchedProducts)
       this.filterdProducts = { ...this.searchedProducts }
       // console.log('this.filterdProducts', this.filterdProducts)
-    }
-  },
-  mounted () {
-    this.init()
-    // console.log(this.filterdProducts)
-    this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
-  },
-  computed: {
-    ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts']),
-    ...mapState(pokemonStore, ['typeNameList'])
-  },
-  watch: {
-    async products () {
-      this.filterdProducts = { ...this.products }
-      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
-      // console.log(this.filterdProducts)
-      // console.log(this.$route.query)
-      if (this.$route.query.keyWord) {
-        await this.getAllProducts()
-      }
-    },
-    allProducts () {
-      this.filterdProducts = { ...this.allProducts }
-      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
-      this.createSearchedProducts()
     }
   }
 }
