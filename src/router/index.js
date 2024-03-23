@@ -36,6 +36,14 @@ const routes = [
       {
         path: '/gopopov',
         component: () => import('../views/FrontViews/TestView.vue')
+      },
+      {
+        path: '/pokemon',
+        component: () => import('../views/FrontViews/PokemonView.vue')
+      },
+      {
+        path: '/pokemons',
+        component: () => import('../views/FrontViews/PokemonsView.vue')
       }
     ]
   },

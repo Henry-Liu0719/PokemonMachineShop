@@ -147,7 +147,7 @@ export default {
     ...mapActions(favoriteStore, ['addToFavorites', 'removeFromFavorites', 'getFavorites']),
     async init () {
       const category = this.$route.query.category || ''
-      // console.log(category)
+      // console.log(this.typeSelected)
       await this.getProducts(1, 0, category)
       // this.filterdProducts = this.products
       this.exportTypeNamesList()

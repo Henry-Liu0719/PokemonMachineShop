@@ -47,18 +47,18 @@ export default {
       // console.log('moveList', this.moveList)
       this.addMoveName()
       this.addMoveText()
-      await this.createTypeUrlList()
-      await this.getTypeList()
-      this.getTypeNamesList()
-      this.addMoveType()
-      this.addLearnedByPokemon()
-      this.updateLearnedByPokemon()
-      await this.createSpeciesUrlList()
-      await this.getSpeciesList()
-      this.getSpeciesNamesList()
+      // await this.createTypeUrlList()
+      // await this.getTypeList()
+      // this.getTypeNamesList()
+      // this.addMoveType()
+      // this.addLearnedByPokemon()
+      // this.updateLearnedByPokemon()
+      // await this.createSpeciesUrlList()
+      // await this.getSpeciesList()
+      // this.getSpeciesNamesList()
       // console.log('speciesNameList', this.speciesNameList)
-      this.updatePokemonNames()
-      this.createProductList()
+      // this.updatePokemonNames()
+      // this.createProductList()
       console.log('summarizedProductList', this.summarizedProductList)
       console.log('productList', this.productList)
     },
@@ -178,11 +178,11 @@ export default {
       flavorArr.forEach(item => {
         entriesArr.push(item.filter(element => element.language.name === 'zh-Hant')[0] || item[0])
       })
-      // const textArr = flavorArr.map(item => item.language.name === 'zh-Hant')
+      // console.log('flavorArr',flavorArr)
+      // console.log('entriesArr',entriesArr)
       entriesArr.forEach((item, index) => {
         this.summarizedProductList[index].text = item.flavor_text
       })
-      // console.log(this.summarizedProductList)
     },
     addMoveName () {
       const namesArr = []
@@ -337,8 +337,9 @@ export default {
       this.summarizedProductList.forEach(item => {
         item.learned_by_pokemon.forEach(item => {
           // item.information = this.pokemons[item.name]
-          item.url = this.pokemons[item.name]?.species?.url
+          item.speciesUrl = this.pokemons[item.name]?.species?.url
           item.imageUrl = this.pokemons[item.name]?.sprites?.front_default
+          item.id = this.pokemons[item.name]?.id
         })
       })
     },
@@ -399,7 +400,8 @@ export default {
       namesArr.forEach(item => {
         chineseNameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0].name || item[0].name)
       })
-      // console.log('chineseNameArr', chineseNameArr)
+      console.log('namesArr', namesArr)
+      console.log('chineseNameArr', chineseNameArr)
       const engNameArr = []
       namesArr.forEach(item => {
         engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)

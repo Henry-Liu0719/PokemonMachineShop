@@ -1,6 +1,6 @@
 <template>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<nav class="navbar navbar-expand navbar-light text-white p-4 border-bottom border-black border-3 mb-0 mb-lg-7 position-relative relative1 h-100" style="background-color: #FB0404;">
+<nav class="navbar navbar-expand navbar-light text-white p-4 border-bottom border-black border-3 mb-0 mb-md-3 mb-lg-1 position-relative relative1 h-100" style="background-color: #FB0404;">
 <!-- <nav class="navbar navbar-expand-lg navbar-light"> -->
   <div class="bg-white position-absolute top-100 start-50 border border-3 border-black z-1" style="transform: translate(-50%, -50%);width: 5rem;height: 5rem;border-radius: 100%;"></div>
   <!-- <div class="col-2" style="height:2rem"> -->

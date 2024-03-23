@@ -20,14 +20,15 @@
         <!-- <img src="https://w7.pngwing.com/pngs/957/958/png-transparent-free-type-pokemon.png" alt="" class="img-fluid"> -->
         <img src="/src/assets/pokemonAttributs.png" alt="" class="img-fluid">
       </div>
-      <div class="col-md-4 m-auto text-center vl-parent">
+      <div class="col-md-4 mx-auto text-center vl-parent">
         <h4 class="mt-4">根據屬性篩選</h4>
         <loadingOverlay :active="isAttributesLoading"
         :is-full-page="false"><img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid"></loadingOverlay>
         <!-- {{ typeNameList }} -->
-        <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary">
+        <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary" >
 
-        <router-link :to="{ path: 'products', query: { category: type[1] }}" class="h4" style="text-decoration: none;">{{ type[1] }}</router-link></button>
+          <router-link :to="{ path: 'products', query: { category: type[1] }}" class="h4" style="text-decoration: none;">{{ type[1] }}</router-link>
+        </button>
       </div>
     </div>
     <div class="row flex-row-reverse justify-content-between mt-4">
@@ -40,13 +41,15 @@
       </div>
     </div>
   </div>
-  <div class="container vl-parent">
-    <loadingOverlay :active="isProductsLoading" :is-full-page="false">
-      <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
-    </loadingOverlay>
-    <div class="row mt-5">
+  <div class="container">
+    <div class="row mt-5 vl-parent bg-light">
+      <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid w-auto opacity-0" v-if="shuffledProducts?.length===0">
+      <loadingOverlay :active="isProductLoading" :is-full-page="false">
+      <!-- <loadingOverlay :active="true" :is-full-page="false"> -->
+        <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid bg-light">
+      </loadingOverlay>
       <div class="col-12 col-md-4 col-lg-2 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
-        <div class="card border-0 mb-4">
+        <div class="card border-0 mb-4 bg-light">
           <router-link :to="{ path: 'product', query: { id: product.id }}">
           <img
             :src="product.imageUrl"
@@ -196,8 +199,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(productStore, ['allProducts']),
-    ...mapState(pokemonStore, ['typeNameList', 'isAttributesLoading', 'isProductsLoading'])
+    ...mapState(productStore, ['allProducts', 'isProductsLoading']),
+    ...mapState(pokemonStore, ['typeNameList', 'isAttributesLoading'])
   },
   mounted () {
     this.exportTypeNamesList()
@@ -209,6 +212,7 @@ export default {
   },
   watch: {
     allProducts () {
+      // this.isProductsLoading = true
       this.shuffledProducts = this.allProducts.products.slice().sort(() => 0.5 - Math.random()).slice(0, 6)
       // console.log(this.filterdProducts)
     }

@@ -36,27 +36,28 @@ export default defineStore('product', {
       this.$refs.userModal.open()
     },
     async getAllProducts () {
+      // console.log('isProductsLoading', this.isProductsLoading)
       this.isProductsLoading = true
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
-        .then((res) => {
-          console.log(res.data)
-          this.isProductsLoading = false
-          // this.isUpdating = false
-          this.allProducts = res.data
-          // console.log(selector)
+      try {
+        const res = await axios
+          .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
+        console.log(res.data)
+        this.isProductsLoading = false
+        // console.log('isProductsLoading', this.isProductsLoading)
+        // this.isUpdating = false
+        this.allProducts = res.data
+        // console.log(selector)
+      } catch (error) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'false',
+          title: '讀取產品失敗，請聯繫管理員',
+          showConfirmButton: false,
+          timer: 1000
         })
-        .catch((error) => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'false',
-            title: '讀取產品失敗，請聯繫管理員',
-            showConfirmButton: false,
-            timer: 1000
-          })
-          console.dir(error)
-          this.isProductsLoading = false
-        })
+        console.dir(error)
+        this.isProductsLoading = false
+      }
     },
     async getProducts (page = '', yOffset = false, category = '') {
       this.isProductsLoading = true
@@ -84,27 +85,26 @@ export default defineStore('product', {
           this.isProductsLoading = false
         })
     },
-    getProduct (id) {
+    async getProduct (id) {
       this.isProductLoading = true
       // console.log(id)
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
-        .then((res) => {
-          console.log(res.data.product)
-          this.product = res.data.product
-          this.isProductLoading = false
+      try {
+        const res = await axios
+          .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
+        console.log(res.data.product)
+        this.product = res.data.product
+        this.isProductLoading = false
+      } catch (error) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'false',
+          title: '讀取產品失敗，請聯繫管理員',
+          showConfirmButton: false,
+          timer: 1000
         })
-        .catch((error) => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'false',
-            title: '讀取產品失敗，請聯繫管理員',
-            showConfirmButton: false,
-            timer: 1000
-          })
-          console.dir(error)
-          this.isProductLoading = false
-        })
+        console.dir(error)
+        this.isProductLoading = false
+      }
     }
   }
 })
