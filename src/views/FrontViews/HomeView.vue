@@ -1,5 +1,5 @@
 <template>
-<body class=" bg-light">
+<body class=" bg-light mt-lg-6">
   <div class="position-relative bg-light">
     <!-- <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');    background-position: center center; opacity: 0.2;"></div> -->
     <div class="container d-flex flex-column " style="min-height: 50vh;">

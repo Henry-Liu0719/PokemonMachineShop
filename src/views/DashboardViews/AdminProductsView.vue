@@ -53,14 +53,17 @@ export default {
       // this.addMoveType()
       // this.addLearnedByPokemon()
       // this.updateLearnedByPokemon()
-      // await this.createSpeciesUrlList()
-      // await this.getSpeciesList()
-      // this.getSpeciesNamesList()
+      await this.createSpeciesUrlList()
+      await this.getSpeciesList()
+      this.getSpeciesNamesList()
       // console.log('speciesNameList', this.speciesNameList)
       // this.updatePokemonNames()
       // this.createProductList()
       console.log('summarizedProductList', this.summarizedProductList)
       console.log('productList', this.productList)
+      console.log('pokemons', this.pokemons)
+      console.log('speciesList', this.speciesList)
+      console.log('speciesNameList', this.speciesNameList)
     },
     async getMachines () {
       try {
