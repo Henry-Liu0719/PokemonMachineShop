@@ -39,6 +39,13 @@
         </ol>
       </nav>
       <h2 class="fw-bold h1 mb-1">{{product.unit}}</h2>
+      <span class="btn btn-dark py-2 border-0" :style="{'background-color':chineseTypeColorList[product.category]}">{{ product.category }}</span>
+      <!-- {{chineseTypeColorList['格鬥']}} -->
+      <!-- {{ typeNameList }} -->
+      <p class="h4 fw-bold">威力：{{ product.price }}</p>
+      <p class="h4 fw-bold">命中率：{{ product.price }}</p>
+      <p class="h4 fw-bold">攻擊種類：{{ product.price == 'physical'?'物理':'特殊' }}</p>
+      <p class="h4 fw-bold">PP：{{ product.price }}</p>
       <p class="mb-0 text-muted text-end"><del>NT${{product.origin_price}}</del></p>
       <p class="h4 fw-bold text-end">NT${{ product.price }}</p>
       <div class="row align-items-center">
@@ -72,10 +79,11 @@
     </div> -->
   </div>
     <div class="row mt-5">
+      <h3>可學習該招式機的寶可夢清單</h3>
       <!-- {{ pokemons }} -->
       <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.id">
         <div class="card border-0 mb-4">
-          <router-link :to="{ path: 'pokemon', query: { id: 25, pokemonName: '皮卡丘' }}">
+          <router-link :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}">
           <!-- <router-link :to="{ path: 'pokemon', query: { id: pokemon.id }}"> -->
           <img
             :src="pokemon.imageUrl"
@@ -84,7 +92,7 @@
           />
           </router-link>
           <div class="card-body text-center">
-            <router-link :to="{ path: 'pokemon', query: { id: pokemon.id }}" class=" page-link text-primary">
+            <router-link :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}">
               <h4>{{ pokemon.name }}</h4>
             </router-link>
             <!-- <div class="d-flex justify-content-between">
@@ -170,6 +178,7 @@ import { mapActions, mapState } from 'pinia'
 
 import cartStore from '../../stores/cartStore'
 import productStore from '../../stores/productStore'
+import pokemonStore from '../../stores/pokemonStore'
 
 // import { defineStore } from 'pinia'
 // const { VITE_URL, VITE_PATH } = import.meta.env
@@ -179,6 +188,7 @@ export default {
       productId: '',
       num: 1,
       pokemonStrings: [],
+      chineseTypeColorList: {},
       pokemons: []
     }
   },
@@ -187,14 +197,17 @@ export default {
     // 通过 $route.params 获取路由参数
     this.productId = this.$route.query.id
     this.getProduct(this.$route.query.id)
+    this.createTypeColorList()
   },
   methods: {
     ...mapActions(cartStore, ['addToCart']),
+    ...mapActions(pokemonStore, ['exportTypeNamesList', 'createTypeColorList']),
     ...mapActions(productStore, ['getProduct'])
 
   },
   computed: {
     ...mapState(cartStore, ['isUpdating']),
+    ...mapState(pokemonStore, ['typeNameList', 'typeColorList']),
     ...mapState(productStore, ['isProductLoading', 'product'])
     // ,
     // pokemons () {
@@ -217,8 +230,32 @@ export default {
     // }
   },
   watch: {
-    num () {
-      this.num = this.num < 1 ? 1 : this.num
+    // num () {
+    //   this.num = this.num < 1 ? 1 : this.num
+    // },
+    typeColorList () {
+      this.chineseTypeColorList = {
+        格鬥: '#8f191b',
+        飛行: '#81b9ef',
+        一般: '#9fa19f',
+        幽靈: '#704170',
+        鋼: '#60a1b8',
+        火: '#e62829',
+        岩石: '#afa981',
+        草: '#3fa129',
+        水: '#2980ef',
+        // eslint-disable-next-line quote-props
+        '電': '#fac000',
+        地面: '#915121',
+        毒: '#9141cb',
+        蟲: '#b3c163',
+        妖精: '#ef70ef',
+        冰: '#3fd8ff',
+        惡: '#44685e',
+        龍: '#5060e1',
+        超能力: '#f05388',
+        暗: '#50413f'
+      }
     },
     product () {
       this.pokemonStrings = [...this.product.imagesUrl]

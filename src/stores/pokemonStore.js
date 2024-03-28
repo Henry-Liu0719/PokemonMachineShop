@@ -16,9 +16,25 @@ export default defineStore('pokemon', {
     typeUrlList: [],
     typeList: [],
     typeNameList: {},
-    isAttributesLoading: true
+    isAttributesLoading: true,
+    isPokemonsLoading: true,
+    pokemons: {},
+    speciesUrlList: [],
+    speciesList: [],
+    speciesNameList: {},
+    pokemonCount: 1025,
+    typeColorList: {}
+
+    // pokemonCount: 251
   }),
   actions: {
+    async pokemonsView () {
+      // await this.getPokemonCount()
+      await this.createSpeciesUrlList()
+      await this.getSpeciesList()
+      this.getSpeciesNamesList()
+      await this.getPokemons()
+    },
     async summarizeProductList () {
       await this.getMachines()
       await this.getMachineList()
@@ -260,6 +276,112 @@ export default defineStore('pokemon', {
           is_enabled: 1
         })
       })
+    },
+    async getPokemonCount () {
+      try {
+        const res = await axios.get(`${VITE_POKEMON_API}/pokemon`)
+        this.pokemonCount = res.data.count
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    async createSpeciesUrlList () {
+      try {
+        const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=${this.pokemonCount}`)
+        // console.log(res)
+        res.data.results.forEach((item, index) => {
+          // const name = item.name
+          // this.typeUrlList.push({ name: item.name })
+          this.speciesUrlList.push({ url: item.url })
+          this.speciesUrlList[index].name = item.name
+        })
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    async getSpeciesList () {
+      try {
+        await Promise.all(this.speciesUrlList.map(async (item, index) => {
+          const res = await axios.get(item.url)
+          if (res.data) {
+            this.speciesList.push(res.data)
+          }
+        }))
+        // console.log('typeList', this.typeList)
+      } catch (err) {
+        console.dir(err)
+      }
+    },
+    getSpeciesNamesList () {
+      const namesArr = []
+      this.speciesList.forEach(item => {
+        namesArr.push(item.names)
+      })
+      const chineseNameArr = []
+      namesArr.forEach(item => {
+        chineseNameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0].name || item[0].name)
+      })
+      console.log('namesArr', namesArr)
+      console.log('chineseNameArr', chineseNameArr)
+      const engNameArr = []
+      namesArr.forEach(item => {
+        engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
+      })
+      // console.log('engNameArr', engNameArr)
+      engNameArr.forEach((element, index) => {
+        // this.typeNameList.push({})
+        this.speciesNameList[element.toLowerCase()] = chineseNameArr[index]
+      })
+      // console.log('typeNameList', this.typeNameList)
+    },
+    async getPokemons () {
+      // const count = await axios.get(`https://pokeapi.co/api/v2/pokemon`)
+      const promises = []
+      for (let index = 1; index <= this.pokemonCount; index++) {
+        promises.push(axios.get(`${VITE_POKEMON_API}/pokemon/${index}`))
+      }
+      const res = {}
+      const responses = await Promise.all(promises)
+      responses.forEach(element => {
+        res[element.data.name] = element.data
+        res[element.data.name].chineseName = this.speciesNameList[element.data.name]
+      })
+      this.pokemons = { ...res }
+      this.isPokemonsLoading = false
+      // for (let index = 1; index <= 1000; index++) {
+      //   axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`)
+      //     .then(res => {
+      //       // console.log(res.data.results)
+      //       this.pokemons[res.data.name] = res.data
+      //     })
+      //     .catch(err => {
+      //       console.dir(err)
+      //     })
+      // }
+      // console.log(this.pokemons)
+    },
+    createTypeColorList () {
+      this.typeColorList = {
+        fighting: '#8f191b',
+        flying: '#81b9ef',
+        normal: '#9fa19f',
+        ghost: '#704170',
+        steel: '#60a1b8',
+        fire: '#e62829',
+        rock: '#afa981',
+        grass: '#3fa129',
+        water: '#2980ef',
+        electric: '#fac000',
+        ground: '#915121',
+        poison: '#9141cb',
+        bug: '#b3c163',
+        fairy: '#ef70ef',
+        ice: '#3fd8ff',
+        shadow: '#44685e',
+        dragon: '#5060e1',
+        psychic: '#f05388',
+        dark: '#50413f'
+      }
     }
   }
 })

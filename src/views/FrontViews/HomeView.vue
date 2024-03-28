@@ -36,8 +36,9 @@
         <img src="/src/assets/pokemonBalls.png" alt="" class="img-fluid">
       </div>
       <div class="col-md-4 m-auto text-center">
-        <h4 class="mt-4">搜尋最愛的寶可夢(開發中)</h4>
-        <p class="text-muted">顯示基本資料、可學習招式機一覽</p>
+        <h4 class="mt-4">搜尋最愛的寶可夢</h4>
+        <v-field type="text" class="form-control" placeholder="搜尋寶可夢，可輸入名稱或者圖鑑編號。" required @keyup.enter="this.$router.push({ path: 'pokemons', query: { searchWord: searchWord }});" v-model="searchWord"></v-field>
+        <!-- <p class="text-muted">顯示基本資料、可學習招式機一覽</p> -->
       </div>
     </div>
   </div>
@@ -195,7 +196,8 @@ export default {
       paginationConfig: {
         clickable: true
       },
-      shuffledProducts: []
+      shuffledProducts: [],
+      searchWord: ''
     }
   },
   computed: {

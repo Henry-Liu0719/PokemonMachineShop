@@ -39,7 +39,7 @@
     <div class="col-8">
       <div class="row">
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!filterdProducts.products?.length}">無相符的查詢結果</h4>
-        <h4 class="opacity-0 mt-6"  :class="{'opacity-100':$route.query.keyWord?.length}">「{{ $route.query.keyWord }}」的搜尋結果</h4>
+        <h4 class="opacity-0 mt-6"  :class="{'opacity-100':$route.query.keyWord?.length}">「{{ $route.query.keyWord }}」的招式機配對結果</h4>
         <div class="col-12 col-md-4 col-lg-3" v-for="product in filterdProducts.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <router-link :to="{ path: 'product', query: { id: product.id }}">

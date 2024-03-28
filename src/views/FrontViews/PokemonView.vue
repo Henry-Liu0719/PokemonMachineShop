@@ -7,7 +7,7 @@
   <div class="row align-items-center">
     <div class="col-12 col-md-5 col-xl-4">
       <swiper
-        :spaceBetween="100"
+        :spaceBetween="30"
         :centeredSlides="true"
         :autoplay="autoplayConfig"
         :pagination="paginationConfig"
@@ -59,11 +59,12 @@
       <p class="text-muted">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p>
     </div>
   </div> -->
-    <div class="row mt-5 vl-parent">
-        <loadingOverlay :active="isProductsLoading" :is-full-page="false">
+  <div class="row mt-5 vl-parent">
+      <h3>該寶可夢可學習的招式機清單</h3>
+        <!-- <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid w-auto opacity-0" v-if="isProductsLoading"> -->
+        <loadingOverlay :active="isProductsLoading" :is-full-page="true">
         <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
       </loadingOverlay>
-
       <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="product in learnedMachines" :key="product.id">
         <div class="card border-0 mb-4">
           <router-link :to="{ path: 'product', query: { id: product.id }}">
@@ -181,7 +182,7 @@ export default {
       modules: [Autoplay, Pagination, Navigation],
       autoplayConfig: {
         delay: 1000,
-        disableOnInteraction: true
+        disableOnInteraction: false
       },
       paginationConfig: {
         clickable: true
@@ -190,8 +191,7 @@ export default {
       pokemon: {},
       imagesUrl: [],
       learnedMachines: [],
-      isPokemonLoading: true,
-      typeColorList: {}
+      isPokemonLoading: true
     }
   },
   mounted () {
@@ -200,7 +200,7 @@ export default {
   computed: {
     // ...mapState(cartStore, ['isUpdating']),
     ...mapState(productStore, ['isProductsLoading', 'allProducts']),
-    ...mapState(pokemonStore, ['typeNameList'])
+    ...mapState(pokemonStore, ['typeNameList', 'typeColorList'])
   },
   watch: {
     // product () {
@@ -209,7 +209,7 @@ export default {
   methods: {
     // ...mapActions(cartStore, ['addToCart']),
     ...mapActions(productStore, ['getAllProducts', 'isProductLoading']),
-    ...mapActions(pokemonStore, ['exportTypeNamesList']),
+    ...mapActions(pokemonStore, ['exportTypeNamesList', 'createTypeColorList']),
     async init () {
       this.createTypeColorList()
       await this.getAllProducts()
@@ -288,37 +288,16 @@ export default {
       }
     },
     getLearnedMachines () {
+      this.learnedMachines = []
       this.allProducts.products.forEach(item => {
         item.pokemons?.forEach(element => {
           if (element.name === this.$route.query.pokemonName) {
             this.learnedMachines.push(item)
+            console.log(1)
           }
         })
       })
       console.log(this.learnedMachines)
-    },
-    createTypeColorList () {
-      this.typeColorList = {
-        fighting: '#8f191b',
-        flying: '#81b9ef',
-        normal: '#9fa19f',
-        ghost: '#704170',
-        steel: '#60a1b8',
-        fire: '#e62829',
-        rock: '#afa981',
-        grass: '#3fa129',
-        water: '#2980ef',
-        electric: '#fac000',
-        ground: '#915121',
-        poison: '#9141cb',
-        bug: '#b3c163',
-        fairy: '#ef70ef',
-        ice: '#3fd8ff',
-        shadow: '#44685e',
-        dragon: '#5060e1',
-        psychic: '#f05388',
-        dark: '#50413f'
-      }
     }
 
   }

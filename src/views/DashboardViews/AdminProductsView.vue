@@ -1,6 +1,10 @@
 <template>
   <div>
     <button class="btn btn-danger" @click="deleteAllProducts()">deleteAllProducts</button>
+    <button class="btn btn-primary" @click="postProducts(productList)">postAllProducts</button>
+    <div class="row">
+      <button v-for="(product, index) in productList" :key="product.id" class="btn btn-primary col-2" @click="postProducts(productList,index)">{{index}} postProducts</button>
+    </div>
   </div>
 </template>
 <script>
@@ -25,7 +29,8 @@ export default {
       pokemons: {},
       speciesUrlList: [],
       speciesList: [],
-      speciesNameList: {}
+      speciesNameList: {},
+      pokemonCount: 1025
     }
   },
   mounted () {
@@ -33,37 +38,41 @@ export default {
   },
   methods: {
     async summarizeProductList () {
-      await this.getPokemons()
+      await this.login()
       await this.getMachines()
       await this.getMachineList()
       this.createSummarizedProductList()
-      // console.log('machineList', this.machineList)
+      await this.getMoveUrlList()
+      await this.getMoveList()
+      this.addMoveItemsFirst() // 使用解構賦直，請擺第一個
+      this.addMoveName()
+      this.addMoveText()
       this.addMachineName()
       this.addCost()
       this.addId()
       this.addMachinePhoto()
-      await this.getMoveUrlList()
-      await this.getMoveList()
-      // console.log('moveList', this.moveList)
-      this.addMoveName()
-      this.addMoveText()
-      // await this.createTypeUrlList()
-      // await this.getTypeList()
-      // this.getTypeNamesList()
-      // this.addMoveType()
-      // this.addLearnedByPokemon()
-      // this.updateLearnedByPokemon()
+
+      await this.createTypeUrlList()
+      await this.getTypeList()
+      this.getTypeNamesList()
+
       await this.createSpeciesUrlList()
       await this.getSpeciesList()
       this.getSpeciesNamesList()
-      // console.log('speciesNameList', this.speciesNameList)
-      // this.updatePokemonNames()
-      // this.createProductList()
+      await this.getPokemons()
+
+      this.addMoveType()
+      this.addLearnedByPokemon()
+      this.updateLearnedByPokemon()
+
+      this.updatePokemonNames()
+      this.createProductList()
+
       console.log('summarizedProductList', this.summarizedProductList)
       console.log('productList', this.productList)
-      console.log('pokemons', this.pokemons)
-      console.log('speciesList', this.speciesList)
-      console.log('speciesNameList', this.speciesNameList)
+      // console.log('pokemons', this.pokemons)
+      // console.log('speciesList', this.speciesList)
+      // console.log('speciesNameList', this.speciesNameList)
     },
     async getMachines () {
       try {
@@ -172,17 +181,23 @@ export default {
         this.summarizedProductList.push({})
       })
     },
+    addMoveItemsFirst () {
+      this.moveList.forEach((item, index) => {
+      // eslint-disable-next-line camelcase
+        const { accuracy, power, pp, damage_class } = item
+        // eslint-disable-next-line camelcase
+        this.summarizedProductList[index] = { accuracy, power, pp, damage_class }
+      })
+    },
     addMoveText () {
       const flavorArr = []
-      this.moveList.forEach(item => {
+      this.moveList.forEach((item, index) => {
         flavorArr.push(item.flavor_text_entries)
       })
       const entriesArr = []
       flavorArr.forEach(item => {
         entriesArr.push(item.filter(element => element.language.name === 'zh-Hant')[0] || item[0])
       })
-      // console.log('flavorArr',flavorArr)
-      // console.log('entriesArr',entriesArr)
       entriesArr.forEach((item, index) => {
         this.summarizedProductList[index].text = item.flavor_text
       })
@@ -199,7 +214,6 @@ export default {
       entriesArr.forEach((item, index) => {
         this.summarizedProductList[index].move_name = item.name
       })
-      // console.log(this.summarizedProductList)
     },
     addMoveType () {
       this.moveList.forEach((item, index) => {
@@ -243,68 +257,50 @@ export default {
       })
     },
     addMachinePhoto () {
-      this.machineList.forEach((item, index) => {
-        this.summarizedProductList[index].photo = item.sprites.default
+      // console.log('machineList',this.machineList)
+      this.moveList.forEach((item, index) => {
+        // this.summarizedProductList[index].photo = item.sprites.default
+        this.summarizedProductList[index].photo = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/tm-${item.type.name}.png`
       })
     },
-    getAllProducts () {
-      axios
+    async getAllProducts () {
+      const res = await axios
         .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
-        .then((res) => {
-          // this.products = res.data.products
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
+      this.products = res.data.products
+      console.log('this.products', this.products)
     },
-    deleteAllProducts () {
-      axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
-        .then((res) => {
-          console.log(res)
-          const idList = []
-          res.data.products.forEach(item => {
-            idList.push(item.id)
-          })
-          login(idList)
-        })
-        .catch((error) => {
-          console.dir(error)
-        })
-      function login (idList) {
-        axios.post(`${VITE_URL}/admin/signin`, {
-          username: 'hungminliu@gmail.com',
-          password: 'gopopov'
-        })
-          .then(res => {
-            const { token, expired } = res.data
-            if (document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1') !== 'true') {
-              document.cookie = `loginToken=${token}; expires=${new Date(expired)}; path=/`
-            }
-            const loginToken = document.cookie.replace(
-              /(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1'
-            )
-            axios.defaults.headers.common.Authorization = loginToken
-            console.log(res)
-            idList.forEach(item => {
-              deleteAll(item)
-            })
-          })
-          .catch(err => {
-            // console.dir();
-            alert(err.response.data.error.message)
-          })
+    async deleteAllProducts () {
+      await this.getAllProducts()
+      const promises = []
+      for (let index = 0; index < this.products.length; index++) {
+        promises.push(axios.delete(`${VITE_URL}/api/${VITE_PATH}/admin/product/${this.products[index].id}`))
       }
-      // eslint-disable-next-line no-unused-vars
-      function deleteAll (id) {
-        axios
-          .delete(`${VITE_URL}/api/${VITE_PATH}/admin/product/${id}`)
-          .then((res) => {
-            console.log(res)
-          })
-          .catch((error) => {
-            console.dir(error)
-          })
+      const responses = await Promise.all(promises)
+      console.log(responses)
+    },
+    async postProducts (productList, num = false) {
+      if (num === false) {
+        const promises = []
+        for (let index = productList.length - 1; index < productList.length; index++) {
+          // console.log(productList[index])
+          promises.push(axios.post(`${VITE_URL}/api/${VITE_PATH}/admin/product`, {
+            data: productList[index]
+          }))
+        }
+        const responses = await Promise.all(promises)
+        console.log(responses)
+        console.log(false)
+      } else {
+        const promises = []
+        for (let index = num; index <= num; index++) {
+          // console.log(productList[index])
+          promises.push(axios.post(`${VITE_URL}/api/${VITE_PATH}/admin/product`, {
+            data: productList[index]
+          }))
+        }
+        const responses = await Promise.all(promises)
+        console.log(responses)
+        console.log(num)
       }
     },
     createProductList () {
@@ -322,7 +318,11 @@ export default {
           description: item.text,
           unit: item.move_name,
           price: item.cost * 0.8 || 9999,
-          is_enabled: 1
+          is_enabled: 1,
+          accuracy: item.accuracy,
+          power: item.power,
+          pp: item.pp,
+          damage_class: item.damage_class.name
 
           // machine_id: item.id,
           // text: item.text,
@@ -348,12 +348,13 @@ export default {
     },
     async getPokemons () {
       const promises = []
-      for (let index = 1; index <= 1000; index++) {
-        promises.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`))
+      for (let index = 1; index <= this.pokemonCount; index++) {
+        promises.push(axios.get(`${VITE_POKEMON_API}/pokemon/${index}`))
       }
       const responses = await Promise.all(promises)
       responses.forEach(element => {
         this.pokemons[element.data.name] = element.data
+        this.pokemons[element.data.name].chineseName = this.speciesNameList[element.data.name]
       })
       // for (let index = 1; index <= 1000; index++) {
       //   axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`)
@@ -369,7 +370,7 @@ export default {
     },
     async createSpeciesUrlList () {
       try {
-        const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=1000`)
+        const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=${this.pokemonCount}`)
         // console.log(res)
         res.data.results.forEach((item, index) => {
           // const name = item.name
@@ -403,8 +404,8 @@ export default {
       namesArr.forEach(item => {
         chineseNameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0].name || item[0].name)
       })
-      console.log('namesArr', namesArr)
-      console.log('chineseNameArr', chineseNameArr)
+      // console.log('namesArr', namesArr)
+      // console.log('chineseNameArr', chineseNameArr)
       const engNameArr = []
       namesArr.forEach(item => {
         engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
@@ -422,6 +423,24 @@ export default {
           item.name = this.speciesNameList[item.name]
         })
       })
+    },
+    async login () {
+      try {
+        const res = await axios.post(`${VITE_URL}/admin/signin`, {
+          username: 'hungminliu@gmail.com',
+          password: 'gopopov'
+        })
+        const { token, expired } = res.data
+        if (document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1') !== 'true') {
+          document.cookie = `loginToken=${token}; expires=${new Date(expired)}; path=/`
+        }
+        const loginToken = document.cookie.replace(
+          /(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1'
+        )
+        axios.defaults.headers.common.Authorization = loginToken
+      } catch (err) {
+        console.dir(err)
+      }
     }
   }
 }

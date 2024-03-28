@@ -2,19 +2,21 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <nav class="navbar navbar-expand navbar-light text-white p-4 border-bottom border-black border-3 mb-0 mb-md-3 mb-lg-1 position-relative relative1 h-100" style="background-color: #FB0404;">
 <!-- <nav class="navbar navbar-expand-lg navbar-light"> -->
+
   <div class="bg-white position-absolute top-100 start-50 border border-3 border-black z-1" style="transform: translate(-50%, -50%);width: 5rem;height: 5rem;border-radius: 100%;"></div>
   <!-- <div class="col-2" style="height:2rem"> -->
     <router-link class="nav-item nav-link me-4 active" to="/">
       <span class="m-2"><strong>回首頁</strong></span>
       <!-- <img src="/src/assets/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
     </router-link>
-    <v-field type="text" class="form-control w-25" id="ContactMail" aria-describedby="emailHelp" placeholder="可搜尋招式名稱、內容、寶可夢名稱" name="email" required @keyup.enter="searchMachine" v-model="keyWord"></v-field>
+    <v-field type="text" class="form-control w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord"></v-field>
   <!-- </div> -->
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end col-4" id="navbarNavAltMarkup">
     <div class="navbar-nav">
+      <router-link class="nav-item nav-link me-1 text-white m-1" to="pokemons"><span><strong>寶可夢列表</strong></span></router-link>
       <router-link class="nav-item nav-link me-1 text-white m-1" to="products"><span><strong>產品列表</strong></span></router-link>
       <router-link class="nav-item nav-link me-1 text-white m-1" to="searchOrder"><span><strong>訂單查詢</strong></span></router-link>
       <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to=""><span><strong>寶可夢列表(開發中)</strong></span></router-link> -->
@@ -60,12 +62,12 @@
         <div class="mb-md-0 mb-1 col-5">
           <!-- <p class="mb-0">02-3456-7890</p> -->
           <p class="mb-0">hugnminliu@gmail.com</p>
-          <p class="mb-0">本網站僅供個人作品使用，不提供任何商業用途</p>
-          <p class="mb-0">2024 All Rights Reserved. | made by 貢波波夫</p>
+          <p class="mb-0">本網站僅作為個人練習使用，無任何商業用途</p>
+          <p class="mb-0">2024 made by 貢波波夫</p>
         </div>
         <div class="mb-md-0 mb-1 col-5">
           <div class="col-md3" style="width:10%">
-            <img src="/src/assets/Pikachu.png" alt="" class="img-fluid">
+            <!-- <img src="/src/assets/Pikachu.png" alt="" class="img-fluid"> -->
           </div>
         </div>
         <!-- <p class="mb-0">© 2020 LOGO All Rights Reserved.</p> -->
