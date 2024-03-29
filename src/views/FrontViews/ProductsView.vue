@@ -7,7 +7,7 @@
 </div> -->
 <div class="container mt-md-5 mt-3 mb-7">
   <loadingOverlay :active="isProductsLoading" :is-full-page="true">
-    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
   <div class="row">
     <div class="col-4">
@@ -25,11 +25,11 @@
             <div class="card-body py-0">
               <ul class="list-unstyled">
                 <li>
-                  <button href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="typeSelected = '全部';this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,'')">瀏覽全部</button>
+                  <button type="button"  href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="typeSelected = '全部';this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,'')">瀏覽全部</button>
                 </li>
                 <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
 
-                <button href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == type[0]}" @click="this.typeSelected = type[0];this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
+                <button type="button"  href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == type[0]}" @click="this.typeSelected = type[0];this.$route.query.keyWord = '';isLoading = true;getProducts(1,yOffset,type[1])">{{ type[1] }}</button></li>
               </ul>
             </div>
           </div>
@@ -74,14 +74,14 @@
           <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
           </template> -->
           <li class="page-item">
-            <button class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getProducts(products.pagination.current_page-1,yOffset)">
+            <button type="button"  class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getProducts(products.pagination.current_page-1,yOffset)">
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
           <li class="page-item" :class="{active:filterdProducts.pagination.current_page == index}" v-for="index in filterdProducts.pagination?.total_pages" :key="index" ><button class="page-link" @click="getProducts(index,yOffset)">{{ index }}</button></li>
           <!-- {{ products.pagination }} -->
           <li class="page-item">
-            <button class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getProducts(products.pagination.current_page+1,yOffset)">
+            <button type="button"  class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getProducts(products.pagination.current_page+1,yOffset)">
               <span aria-hidden="true">&raquo;</span>
             </button>
           </li>

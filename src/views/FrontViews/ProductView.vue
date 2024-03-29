@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row align-items-center vl-parent">
     <loadingOverlay :active="isProductLoading" :is-full-page="true">
-      <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+      <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
     </loadingOverlay>
     <div class="col-md-7">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -203,6 +203,9 @@ export default {
     ...mapState(productStore, ['isProductLoading', 'product'])
   },
   watch: {
+    num () {
+      this.num = this.num < 1 ? 1 : this.num
+    },
     typeColorList () {
       this.chineseTypeColorList = {
         格鬥: '#8f191b',

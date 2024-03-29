@@ -1,7 +1,7 @@
 <template>
 <div class="container mt-md-5 mt-3 mb-7">
   <loadingOverlay :active="isOrderLoading" :is-full-page="true">
-    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
   <div class="col-md-10">
     <label for="orderId" class="mb-0 form-label">

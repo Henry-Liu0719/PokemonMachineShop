@@ -7,7 +7,7 @@
   <!-- <div class="col-2" style="height:2rem"> -->
     <router-link class="nav-item nav-link me-4 active" to="/">
       <span class="m-2"><strong>回首頁</strong></span>
-      <!-- <img src="/src/assets/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
+      <!-- <img src="/src/assets/img/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
     </router-link>
     <v-field type="text" class="form-control w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord" name="text"></v-field>
   <!-- </div> -->
@@ -54,7 +54,7 @@
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end align-items-start text-white">
         <div class="mb-md-0 mb-1 col-2">
           <router-link class="nav-item nav-link me-4 active m-2" to="/">
-            <!-- <img src="/src/assets/pokemonBall.png" style="width:5%" alt="" srcset=""> -->
+            <!-- <img src="/src/assets/img/pokemonBall.png" style="width:5%" alt="" srcset=""> -->
             <span><strong>回首頁</strong></span>
           </router-link>
           <router-link class="nav-item nav-link me-4 text-white m-2" to="products"><span><strong>產品列表</strong></span></router-link>
@@ -67,7 +67,7 @@
         </div>
         <div class="mb-md-0 mb-1 col-5">
           <div class="col-md3" style="width:10%">
-            <!-- <img src="/src/assets/Pikachu.png" alt="" class="img-fluid"> -->
+            <!-- <img src="/src/assets/img/Pikachu.png" alt="" class="img-fluid"> -->
           </div>
         </div>
         <!-- <p class="mb-0">© 2020 LOGO All Rights Reserved.</p> -->

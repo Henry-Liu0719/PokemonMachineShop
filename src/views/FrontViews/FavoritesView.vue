@@ -7,7 +7,7 @@
 </div> -->
 <div class="container mt-md-5 mt-3 mb-7">
   <loadingOverlay :active="isFavoritesLoading" :is-full-page="true">
-    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
   <div class="row">
     <div class="col-4">
@@ -25,11 +25,11 @@
             <div class="card-body py-0">
               <ul class="list-unstyled">
                 <li>
-                  <button href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="filterType('全部')">瀏覽全部</button>
+                  <button type="button" href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="filterType('全部')">瀏覽全部</button>
                 </li>
                 <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
 
-                <button href="#" class="m-1 page-link py-1 px-2 d-block text-muted" :class="{'text-primary rounded border border-primary':typeSelected == type[1]}"  @click="filterType(type[1])">{{ type[1] }}</button></li>
+                <button type="button" href="#" class="m-1 page-link py-1 px-2 d-block text-muted" :class="{'text-primary rounded border border-primary':typeSelected == type[1]}"  @click="filterType(type[1])">{{ type[1] }}</button></li>
               </ul>
             </div>
           </div>

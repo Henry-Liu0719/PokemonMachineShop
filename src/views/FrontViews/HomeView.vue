@@ -4,12 +4,18 @@
     <!-- <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');    background-position: center center; opacity: 0.2;"></div> -->
     <div class="container d-flex flex-column " style="min-height: 50vh;">
       <div class="row justify-content-center my-auto">
-        <img src="/src/assets/Gotcha.png" alt="背景图像"
+        <img src="/src/assets/img/Gotcha.png" alt="背景图像"
         style="/*width: 100%; height: 100%; */opacity: 0.15;" class="w-50">
         <div class="col-md-6 text-center position-absolute" style="z-index: 1">
           <h2>歡迎來到寶可夢招式機商店！</h2>
           <p class="text-muted mb-0">在我們的商店裡，你可以找到各種強大的寶可夢招式機，這些招式將幫助你的寶可夢在戰鬥中更加強大。無論是火、水、雷，還是其他屬性，我們都擁有最新、最強大的招式供你選擇。</p>
-          <router-link class="btn btn-dark rounded-0 mt-6" to="products">瀏覽產品</router-link>
+          <router-link class="btn rounded-0 mt-6 popov-btn w-auto" to="products">
+            <div class="my-auto">瀏覽產品</div>
+            <svg width="13px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+          </router-link>
         </div>
       </div>
     </div>
@@ -18,14 +24,14 @@
     <div class="row">
       <div class="col-md-6">
         <!-- <img src="https://w7.pngwing.com/pngs/957/958/png-transparent-free-type-pokemon.png" alt="" class="img-fluid"> -->
-        <img src="/src/assets/pokemonAttributs.png" alt="" class="img-fluid">
+        <img src="/src/assets/img/pokemonAttributs.png" alt="寶可夢屬性" class="img-fluid">
       </div>
       <div class="col-md-4 mx-auto text-center vl-parent">
         <h4 class="mt-4">根據屬性篩選</h4>
         <loadingOverlay :active="isAttributesLoading"
-        :is-full-page="false"><img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid"></loadingOverlay>
+        :is-full-page="false"><img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid"></loadingOverlay>
         <!-- {{ typeNameList }} -->
-        <button v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary" >
+        <button type="button"  v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary" >
 
           <router-link :to="{ path: 'products', query: { category: type[1] }}" class="h4" style="text-decoration: none;">{{ type[1] }}</router-link>
         </button>
@@ -33,7 +39,7 @@
     </div>
     <div class="row flex-row-reverse justify-content-between mt-4">
       <div class="col-md-6">
-        <img src="/src/assets/pokemonBalls.png" alt="" class="img-fluid">
+        <img src="/src/assets/img/pokemonBalls.png" alt="搜尋最愛的寶可夢" class="img-fluid">
       </div>
       <div class="col-md-4 m-auto text-center">
         <h4 class="mt-4">搜尋最愛的寶可夢</h4>
@@ -44,10 +50,10 @@
   </div>
   <div class="container">
     <div class="row mt-5 vl-parent bg-light">
-      <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid w-auto opacity-0" v-if="shuffledProducts?.length===0">
+      <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid w-auto opacity-0" v-if="shuffledProducts?.length===0">
       <loadingOverlay :active="isProductLoading" :is-full-page="false">
       <!-- <loadingOverlay :active="true" :is-full-page="false"> -->
-        <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid bg-light">
+        <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid bg-light">
       </loadingOverlay>
       <div class="col-12 col-md-4 col-lg-2 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
         <div class="card border-0 mb-4 bg-light">
@@ -125,7 +131,7 @@
     <swiper-slide>
       <div class="row justify-content-between mt-4 ms-6">
         <div class="col-md-6">
-          <img src="/src/assets/Eves.png" alt="" class="img-fluid">
+          <img src="/src/assets/img/Eves.png" alt="各種各樣的寶可夢招式" class="img-fluid">
         </div>
         <div class="col-md-4 m-auto text-center">
           <h4 class="mt-4">多樣性</h4>
@@ -136,7 +142,7 @@
     <swiper-slide>
       <div class="row justify-content-between mt-4 ms-6">
         <div class="col-md-6">
-          <img src="/src/assets/diffBalls.png" alt="" class="img-fluid">
+          <img src="/src/assets/img/diffBalls.png" alt="品質保證" class="img-fluid">
         </div>
         <div class="col-md-4 m-auto text-center">
           <h4 class="mt-4">品質保證</h4>
@@ -147,7 +153,7 @@
     <swiper-slide>
       <div class="row justify-content-between mt-4 ms-6">
         <div class="col-md-6">
-          <img src="/src/assets/trainers.png" alt="" class="img-fluid">
+          <img src="/src/assets/img/trainers.png" alt="專業服務" class="img-fluid">
         </div>
         <div class="col-md-4 m-auto text-center">
           <h4 class="mt-4">專業服務</h4>
@@ -209,3 +215,84 @@ export default {
   }
 }
 </script>
+<style>
+.popov-btn {
+    position: relative;
+    color: #111111;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 12px 20px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.popov-btn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 28px;
+    background: rgb(251, 4, 4);
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.3s ease;
+    /* border: 2px solid black; */
+}
+.popov-btn:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 28px;
+    background: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: all 0.3s ease;
+    z-index:1;
+    transform: translate(50%,50%);
+    /* border: 2px solid black; */
+}
+.popov-btn div {
+    position: relative;
+    z-index: 2;
+    padding-left: 25%;
+    /* margin-top: auto; */
+    width:6rem;
+}
+.popov-btn svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #111111;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+}
+.popov-btn:hover:before {
+    width: 100%;
+    background: rgb(251, 4, 4);
+}
+.popov-btn:hover svg {
+    transform: translateX(0);
+    /* background: #fff; */
+    stroke: #fff;
+}
+.popov-btn:hover,
+.popov-btn:focus {
+    color: #fff;
+}
+.popov-btn:active {
+    color: #fff;
+    transform: scale(0.96);
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <loadingOverlay :active="isPokemonLoading" :is-full-page="true">
-    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
 
   <div class="row align-items-center">
@@ -59,9 +59,9 @@
   </div> -->
   <div class="row mt-5 vl-parent">
       <h3>該寶可夢可學習的招式機清單</h3>
-        <!-- <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid w-auto opacity-0" v-if="isProductsLoading"> -->
+        <!-- <img src="/src/assets/img/Animation - 1710557059960.gif" alt="" class="img-fluid w-auto opacity-0" v-if="isProductsLoading"> -->
         <loadingOverlay :active="isProductsLoading" :is-full-page="true">
-        <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+        <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
       </loadingOverlay>
       <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="product in learnedMachines" :key="product.id">
         <div class="card border-0 mb-4">

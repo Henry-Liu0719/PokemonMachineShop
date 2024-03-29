@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <loadingOverlay :active="isCartsLoading" :is-full-page="true">
-    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
   <div class="mt-3">
     <h3 class="mt-3 mb-4">購物車</h3>
@@ -146,7 +146,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'pinia'
-import cartStore from '../../stores/cartStore'
+import cartStore from '@/stores/cartStore'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 const { VITE_URL, VITE_PATH } = import.meta.env

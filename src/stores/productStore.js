@@ -99,7 +99,7 @@ export default defineStore('product', {
         })
         console.dir(error)
       } finally {
-        this.isProductsLoading = false
+        this.isProductLoading = false
       }
     }
   }
