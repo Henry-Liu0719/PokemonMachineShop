@@ -41,7 +41,7 @@
       </div> -->
     </div>
   </div>
-  <div class="bg-dark py-5">
+  <div class="py-5 border-top border-3 border-black" style="background-color: #FB0404;">
     <div class="container">
       <!-- <div class="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4">
         <a class="text-white h4" href="./index.html">LOGO</a>
