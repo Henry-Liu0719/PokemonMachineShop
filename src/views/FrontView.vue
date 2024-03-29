@@ -9,7 +9,7 @@
       <span class="m-2"><strong>回首頁</strong></span>
       <!-- <img src="/src/assets/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
     </router-link>
-    <v-field type="text" class="form-control w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord"></v-field>
+    <v-field type="text" class="form-control w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord" name="text"></v-field>
   <!-- </div> -->
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

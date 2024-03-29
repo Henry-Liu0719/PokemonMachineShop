@@ -91,14 +91,9 @@
 import { mapActions, mapState } from 'pinia'
 import Swal from 'sweetalert2'
 
-// import productStore from '../../stores/productStore.js'
 import pokemonStore from '../../stores/pokemonStore.js'
 import favoriteStore from '../../stores/favoriteStore.js'
 
-// const { VITE_URL, VITE_PATH } = import.meta.env
-// import axios from 'axios'
-
-// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
@@ -106,12 +101,9 @@ export default {
       yOffset: 0,
       typeSelected: '全部',
       isFavoritesLoading: true
-      // filterdProducts: {},
-      // searchedProducts: {}
     }
   },
   components: {
-    // UserProductModal
   },
   mounted () {
     // console.log(this.favorites)
@@ -120,7 +112,6 @@ export default {
     this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
   },
   computed: {
-    // ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts']),
     ...mapState(pokemonStore, ['typeNameList']),
     ...mapState(favoriteStore, ['favorites'])
   },
@@ -131,7 +122,6 @@ export default {
     }
   },
   methods: {
-    // ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
     ...mapActions(pokemonStore, ['exportTypeNamesList']),
     ...mapActions(favoriteStore, ['addToFavorites', 'removeFromFavorites', 'getFavorites']),
     async init () {
@@ -154,7 +144,6 @@ export default {
       })
       swalWithBootstrapButtons.fire({
         title: `要將${product.unit}從收藏商品移除嗎?`,
-        // text: '點擊送出後將完成交易',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: '移除',
@@ -165,8 +154,6 @@ export default {
           this.removeFromFavorites(product.id)
           Swal.fire({
             title: `${product.unit}已從收藏商品移除`,
-            // position: 'center-end',
-            // text: "You clicked the button!",
             icon: 'success',
             timer: 1000,
             showConfirmButton: false,
@@ -178,7 +165,6 @@ export default {
         ) {
           swalWithBootstrapButtons.fire({
             title: '操作已取消',
-            // text: 'Your imaginary file is safe :)',
             icon: 'warning'
           })
         }

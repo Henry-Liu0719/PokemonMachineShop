@@ -97,14 +97,9 @@ import productStore from '../../stores/productStore.js'
 import pokemonStore from '../../stores/pokemonStore.js'
 import favoriteStore from '../../stores/favoriteStore.js'
 
-// const { VITE_URL, VITE_PATH } = import.meta.env
-// import axios from 'axios'
-
-// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
-      // products: []
       yOffset: 0,
       filterdProducts: {},
       searchedProducts: {},
@@ -112,10 +107,9 @@ export default {
     }
   },
   components: {
-    // UserProductModal
   },
   mounted () {
-    console.log(this.favorites)
+    // console.log(this.favorites)
     this.init()
     // console.log(this.filterdProducts)
     this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
@@ -128,8 +122,7 @@ export default {
   watch: {
     async products () {
       this.filterdProducts = { ...this.products }
-      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
-      console.log(this.filterdProducts)
+      // console.log(this.filterdProducts)
       // console.log(this.$route.query)
       if (this.$route.query.keyWord) {
         await this.getAllProducts()
@@ -137,7 +130,6 @@ export default {
     },
     allProducts () {
       this.filterdProducts = { ...this.allProducts }
-      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
       this.createSearchedProducts()
     }
   },
@@ -149,12 +141,9 @@ export default {
       const category = this.$route.query.category || ''
       // console.log(this.typeSelected)
       await this.getProducts(1, 0, category)
-      // this.filterdProducts = this.products
       this.exportTypeNamesList()
     },
     filterType (type = '岩石') {
-      // this.getProducts()
-      // console.log(type)
       this.filterdProducts.products = this.products.products.filter(item => item.unit === type)
       // console.log('products', this.products)
       // console.log('filterdProducts', this.filterdProducts)
@@ -163,7 +152,6 @@ export default {
     },
     async createSearchedProducts () {
       const keyWord = this.$route.query.keyWord
-      // await this.getProducts('', 0, '')
       // console.log(keyWord)
       console.log('this.filterdProducts', this.filterdProducts)
       this.searchedProducts = {

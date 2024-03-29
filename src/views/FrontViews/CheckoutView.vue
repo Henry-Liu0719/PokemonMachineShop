@@ -135,12 +135,12 @@ export default {
       orderData: {
         // data: {
         //   user: {
-        //     name: 'testName',
-        //     email: 'test@gmail.com',
-        //     tel: '0912346768',
-        //     address: 'Kaohsiung'
+        //     name: '',
+        //     email: '',
+        //     tel: '',
+        //     address: ''
         //   },
-        //   message: '這是留言'
+        //   message: ''
         // },
         data: {
           user: {
@@ -160,9 +160,6 @@ export default {
   methods: {
     ...mapActions(cartStore, ['getCart']),
     ...mapActions(utilStore, ['copyTextToClipboard']),
-    getOrder () {
-      // console.log(axios, VITE_URL, VITE_PATH)
-    },
     isPhone (value) {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
@@ -223,16 +220,6 @@ export default {
               }).then(() => {
                 this.$router.push('/products')
               })
-              // swalWithBootstrapButtons.fire({
-              //   title: `${res.data.message}\n訂單編號：${res.data.orderId}`,
-              //   text: '3秒後回到產品列表',
-              //   icon: 'success',
-              //   timer: 3000,
-              //   showConfirmButton: false,
-              //   showCancelButton: false
-              // }).then(() => {
-              //   this.$router.push('/products')
-              // })
             })
             .catch((error) => {
               console.dir(error)
@@ -251,20 +238,10 @@ export default {
         ) {
           swalWithBootstrapButtons.fire({
             title: '訂單資料未送出',
-            // text: 'Your imaginary file is safe :)',
             icon: 'warning'
           })
         }
       })
-      // axios
-      //   .post(`${VITE_URL}/api/${VITE_PATH}/order`, data)
-      //   .then((res) => {
-      //     // console.log(res)
-      //     this.$router.push('checkout-success')
-      //   })
-      //   .catch((error) => {
-      //     console.dir(error)
-      //   })
     }
   },
   computed: {

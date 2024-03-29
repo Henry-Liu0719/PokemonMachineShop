@@ -17,8 +17,6 @@
       >
         <swiper-slide v-for="item in imagesUrl" :key="item">
           <img :src="item" class="d-block w-100" alt="">
-          <!-- <div>
-          </div> -->
         </swiper-slide>
       </swiper>
     </div>
@@ -158,16 +156,12 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { mapActions, mapState } from 'pinia'
-// Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
-// Import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 
-// import { defineStore } from 'pinia'
-// import cartStore from '../../stores/cartStore'
 import productStore from '../../stores/productStore'
 import pokemonStore from '../../stores/pokemonStore'
 
@@ -198,16 +192,12 @@ export default {
     this.init()
   },
   computed: {
-    // ...mapState(cartStore, ['isUpdating']),
     ...mapState(productStore, ['isProductsLoading', 'allProducts']),
     ...mapState(pokemonStore, ['typeNameList', 'typeColorList'])
   },
   watch: {
-    // product () {
-    // }
   },
   methods: {
-    // ...mapActions(cartStore, ['addToCart']),
     ...mapActions(productStore, ['getAllProducts', 'isProductLoading']),
     ...mapActions(pokemonStore, ['exportTypeNamesList', 'createTypeColorList']),
     async init () {
@@ -219,10 +209,8 @@ export default {
     },
     async getPokemon () {
       this.isPokemonLoading = true
-
       try {
         const res = await axios.get(`${VITE_POKEMON_API}/pokemon/${this.$route.query.id}`)
-        this.isPokemonLoading = false
         // console.log(res.data)
         this.pokemon = res.data
 
@@ -278,12 +266,12 @@ export default {
       } catch (err) {
         console.dir(err)
         Swal.fire({
-          // position: 'top-end',
           icon: 'false',
           title: '讀取寶可夢失敗，請聯繫管理員',
           showConfirmButton: false,
           timer: 1000
         })
+      } finally {
         this.isPokemonLoading = false
       }
     },
@@ -293,11 +281,10 @@ export default {
         item.pokemons?.forEach(element => {
           if (element.name === this.$route.query.pokemonName) {
             this.learnedMachines.push(item)
-            // console.log(1)
           }
         })
       })
-      console.log(this.learnedMachines)
+      // console.log(this.learnedMachines)
     }
 
   }

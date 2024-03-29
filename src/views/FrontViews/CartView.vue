@@ -171,17 +171,13 @@ export default {
           code: `${code}`
         }
       }
-      console.log(code)
       axios
         .post(`${VITE_URL}/api/${VITE_PATH}/coupon`, data)
         .then((res) => {
-          console.log(res)
-          this.isUpdating = false
+          // console.log(res)
           this.getCart()
           Swal.fire({
             title: '使用優惠券成功',
-            // position: 'center-end',
-            // text: "You clicked the button!",
             icon: 'success',
             timer: 1000,
             showConfirmButton: false,
@@ -197,6 +193,8 @@ export default {
             timer: 1000
           })
           console.dir(error)
+        })
+        .finally(() => {
           this.isUpdating = false
         })
     }

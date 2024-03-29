@@ -16,11 +16,11 @@
           name="訂單號碼"
           class="invalid-feedback"
         ></error-message>
-        <span>訂單號碼範例: -NtK1ICsM1uiXJyfF3m-</span>
+        <span>訂單號碼範例: -Nu7z07B4SbgJwRufeFo</span>
       </div>
       <button type="button" class="btn btn-dark mt-4 p-2 px-4" @click="getOrder(this.orderId)" :disabled="this.orderId ==='' || Object.keys(errors).length > 0">送出查詢</button>
     </v-form>
-    <div class="row mt-3 flex-row-reverse">
+    <div class="row mt-3 flex-row-reverse" v-if="!(Object.keys(order)?.length === 0)">
       <div class="col-lg-8 col-sm-6">
         <table class="table">
           <thead>
@@ -191,11 +191,8 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
-// import { mapActions, mapState } from 'pinia'
 
-// import cartStore from '../../stores/cartStore'
 const { VITE_URL, VITE_PATH } = import.meta.env
-// import { defineStore } from 'pinia'
 
 export default {
   data () {
@@ -217,48 +214,40 @@ export default {
       }
       // 检查订单号码的长度是否为20个字符，并且以 '-' 开头
       return value.length === 20 ? true : '訂單號碼長度為20碼'
-      // return (value.length === 20 ? true : '訂單號碼長度為20碼') && (regex.test(value) ? true : '訂單號碼為「-」開頭')
     },
     getOrder (id) {
       this.isOrderLoading = true
-      // console.log(id)
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/order/${id}`)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           if (res.data.order) {
             this.order = res.data.order
-            // const cartIdArr = Object.keys(this.order.products)
-            // console.log(cartIdArr)
             this.carts = this.order.products
           } else {
             Swal.fire({
-              // position: 'top-end',
               icon: 'warning',
               title: '查無該筆訂單',
               showConfirmButton: false,
               timer: 1000
             })
           }
-          this.isOrderLoading = false
-
-          // this.product = res.data.product
         })
         .catch((error) => {
           Swal.fire({
-            // position: 'top-end',
             icon: 'false',
             title: '讀取產品失敗，請聯繫管理員',
             showConfirmButton: false,
             timer: 1000
           })
           console.dir(error)
-          // this.isProductLoading = false
+        })
+        .finally(() => {
+          this.isOrderLoading = false
         })
     }
   },
   computed: {
-    // ...mapState(cartStore, ['carts', 'isCartsLoading'])
   }
 }
 </script>

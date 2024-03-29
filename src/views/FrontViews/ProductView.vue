@@ -1,9 +1,9 @@
 <template>
 <div class="container">
-  <loadingOverlay :active="isProductLoading" :is-full-page="true">
-    <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
-  </loadingOverlay>
-  <div class="row align-items-center">
+  <div class="row align-items-center vl-parent">
+    <loadingOverlay :active="isProductLoading" :is-full-page="true">
+      <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
+    </loadingOverlay>
     <div class="col-md-7">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -27,10 +27,7 @@
         </a> -->
       </div>
     </div>
-    <div class="col-md-5 vl-parent">
-      <loadingOverlay :active="isUpdating" :is-full-page="false">
-        <img src="/src/assets/Animation - 1710557059960.gif" alt="" class="img-fluid">
-      </loadingOverlay>
+    <div class="col-md-5">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white px-0 mb-0 py-3">
           <li class="breadcrumb-item"><a class="text-muted" href="./index.html">首頁</a></li>
@@ -172,16 +169,12 @@
 </div>
 </template>
 <script>
-// import axios from 'axios'
-// import Swal from 'sweetalert2'
 import { mapActions, mapState } from 'pinia'
 
 import cartStore from '../../stores/cartStore'
 import productStore from '../../stores/productStore'
 import pokemonStore from '../../stores/pokemonStore'
 
-// import { defineStore } from 'pinia'
-// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
@@ -194,7 +187,6 @@ export default {
   },
   mounted () {
     // console.log(this.$route)
-    // 通过 $route.params 获取路由参数
     this.productId = this.$route.query.id
     this.getProduct(this.$route.query.id)
     this.createTypeColorList()
@@ -209,30 +201,8 @@ export default {
     ...mapState(cartStore, ['isUpdating']),
     ...mapState(pokemonStore, ['typeNameList', 'typeColorList']),
     ...mapState(productStore, ['isProductLoading', 'product'])
-    // ,
-    // pokemons () {
-    //   // return 1
-    //   // return this.product.imagesUrl?.map(item => {
-    //   //   return JSON.parse(item)
-    //   // })
-    //   const arr = []
-    //   this.product?.imagesUrl?.forEach(item => {
-    //     // eslint-disable-next-line no-empty
-    //     if (item === '{}') {
-    //     } else {
-    //       // arr.push(item)
-    //       arr.push(JSON.parse(item))
-    //     }
-    //     // arr.push(item)
-    //     // console.log(item === '{}')
-    //   })
-    //   return arr
-    // }
   },
   watch: {
-    // num () {
-    //   this.num = this.num < 1 ? 1 : this.num
-    // },
     typeColorList () {
       this.chineseTypeColorList = {
         格鬥: '#8f191b',
@@ -244,8 +214,7 @@ export default {
         岩石: '#afa981',
         草: '#3fa129',
         水: '#2980ef',
-        // eslint-disable-next-line quote-props
-        '電': '#fac000',
+        電: '#fac000',
         地面: '#915121',
         毒: '#9141cb',
         蟲: '#b3c163',
@@ -260,9 +229,6 @@ export default {
     product () {
       this.pokemonStrings = [...this.product.imagesUrl]
       // console.log(this.pokemonStrings)
-      // this.pokemonStrings.forEach(element => {
-      //   this.pokemons.push(JSON.parse(element))
-      // })
     }
   }
 }

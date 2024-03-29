@@ -155,12 +155,6 @@
         </div>
       </div>
     </swiper-slide>
-    <!-- <swiper-slide>Slide 4</swiper-slide>
-    <swiper-slide>Slide 5</swiper-slide>
-    <swiper-slide>Slide 6</swiper-slide>
-    <swiper-slide>Slide 7</swiper-slide>
-    <swiper-slide>Slide 8</swiper-slide>
-    <swiper-slide>Slide 9</swiper-slide> -->
   </swiper>
 </body>
 </template>
@@ -170,16 +164,12 @@ import { mapActions, mapState } from 'pinia'
 
 import pokemonStore from '../../stores/pokemonStore'
 import productStore from '../../stores/productStore'
-// Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
-// import './style.css'
 
-// Import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 export default {
   components: {
@@ -214,9 +204,7 @@ export default {
   },
   watch: {
     allProducts () {
-      // this.isProductsLoading = true
       this.shuffledProducts = this.allProducts.products.slice().sort(() => 0.5 - Math.random()).slice(0, 6)
-      // console.log(this.filterdProducts)
     }
   }
 }

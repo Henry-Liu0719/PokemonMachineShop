@@ -42,9 +42,7 @@ export default defineStore('product', {
         const res = await axios
           .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
         console.log(res.data)
-        this.isProductsLoading = false
         // console.log('isProductsLoading', this.isProductsLoading)
-        // this.isUpdating = false
         this.allProducts = res.data
         // console.log(selector)
       } catch (error) {
@@ -56,6 +54,7 @@ export default defineStore('product', {
           timer: 1000
         })
         console.dir(error)
+      } finally {
         this.isProductsLoading = false
       }
     },
@@ -65,10 +64,7 @@ export default defineStore('product', {
         .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${page}&category=${category}`)
         .then((res) => {
           // console.log(res.data)
-          this.isProductsLoading = false
-          // this.isUpdating = false
           this.products = res.data
-          // console.log(selector)
           if (yOffset !== false) {
             window.scrollTo({ top: yOffset, behavior: 'smooth' })
           }
@@ -82,18 +78,17 @@ export default defineStore('product', {
             timer: 1000
           })
           console.dir(error)
+        }).finally(() => {
           this.isProductsLoading = false
         })
     },
     async getProduct (id) {
       this.isProductLoading = true
-      // console.log(id)
       try {
         const res = await axios
           .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
-        console.log(res.data.product)
+        // console.log(res.data.product)
         this.product = res.data.product
-        this.isProductLoading = false
       } catch (error) {
         Swal.fire({
           position: 'top-end',
@@ -103,7 +98,8 @@ export default defineStore('product', {
           timer: 1000
         })
         console.dir(error)
-        this.isProductLoading = false
+      } finally {
+        this.isProductsLoading = false
       }
     }
   }

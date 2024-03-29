@@ -93,14 +93,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'pinia'
-// import productStore from '../../stores/productStore.js'
 import pokemonStore from '../../stores/pokemonStore.js'
-// import favoriteStore from '../../stores/favoriteStore.js'
-
-// const { VITE_URL, VITE_PATH } = import.meta.env
-// import axios from 'axios'
-
-// const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
@@ -110,92 +103,29 @@ export default {
   },
   mounted () {
     this.pokemonsView()
-    // this.init()
-    // console.log(this.filterdProducts)
-    // this.yOffset = document.querySelector('div.container.mt-md-5.mt-3.mb-7 > div > div.col-8 > div > h4').getBoundingClientRect().top + window.pageYOffset
   },
   computed: {
-    // ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts']),
-    // ...mapState(favoriteStore, ['favorites']),
     ...mapState(pokemonStore, ['typeNameList', 'pokemons', 'speciesUrlList', 'speciesList', 'speciesNameList', 'isPokemonsLoading', 'pokemonCount'])
   },
   watch: {
-    // async products () {
-    //   this.filterdProducts = { ...this.products }
-    //   // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
-    //   console.log(this.filterdProducts)
-    //   // console.log(this.$route.query)
-    //   if (this.$route.query.keyWord) {
-    //     await this.getAllProducts()
-    //   }
-    // },
     pokemons () {
       this.filterdPokemons = { ...this.pokemons }
       console.log(this.pokemons)
       this.keyWord = this.$route.query.searchWord || ''
-      // this.filterdProducts.products = this.filterdProducts.products.slice().reverse()
-      // this.createSearchedProducts()
     },
     keyWord () {
       this.searchPokemon()
     }
   },
   methods: {
-    // ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
-    // ...mapActions(favoriteStore, ['addToFavorites', 'removeFromFavorites', 'getFavorites']),
-    // async init () {
-    //   const category = this.$route.query.category || ''
-    //   // console.log(category)
-    //   await this.getProducts(1, 0, category)
-    //   // this.filterdProducts = this.products
-    //   this.exportTypeNamesList()
-    // },
-    // filterType (type = '岩石') {
-    //   // this.getProducts()
-    //   // console.log(type)
-    //   this.filterdProducts.products = this.products.products.filter(item => item.unit === type)
-    //   // console.log('products', this.products)
-    //   // console.log('filterdProducts', this.filterdProducts)
-    //   window.scrollTo({ top: this.yOffset, behavior: 'smooth' })
-    //   // console.log('filterdProducts', this.filterdProducts)
-    // },
-    // async createSearchedProducts () {
-    //   const keyWord = this.$route.query.keyWord
-    //   // await this.getProducts('', 0, '')
-    //   // console.log(keyWord)
-    //   console.log('this.filterdProducts', this.filterdProducts)
-    //   this.searchedProducts = {
-    //     success: true,
-    //     products: [],
-    //     pagination: {
-    //       total_pages: 1,
-    //       current_page: 1,
-    //       has_pre: false,
-    //       has_next: false,
-    //       category: ''
-    //     },
-    //     messages: []
-    //   }
-    //   this.searchedProducts.products = this.filterdProducts.products.filter(element => {
-    //     return element.description.includes(keyWord) || element.unit.includes(keyWord) ||
-    //     element.pokemons.some(item => item.name === keyWord)
-    //   })
-    //   console.log('this.searchedProducts', this.searchedProducts)
-    //   this.filterdProducts = { ...this.searchedProducts }
-    //   // console.log('this.filterdProducts', this.filterdProducts)
-    // }
     ...mapActions(pokemonStore, ['pokemonsView']),
     searchPokemon () {
       if (this.keyWord === '') {
         this.filterdPokemons = { ...this.pokemons }
       } else {
-        // console.log(1)
         const obj = {}
-        // this.filterdPokemons
         Object.keys(this.pokemons).forEach(item => {
           if (this.pokemons[item]?.chineseName?.includes(this.keyWord) || this.pokemons[item]?.id === Number(this.keyWord)) {
-            // console.log(obj)
-            // console.log(this.pokemons[item])
             obj[item] = this.pokemons[item]
           }
         })

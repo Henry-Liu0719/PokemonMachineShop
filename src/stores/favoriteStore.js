@@ -1,6 +1,4 @@
-// import axios from 'axios'
 import { defineStore } from 'pinia'
-// const { VITE_URL, VITE_PATH } = import.meta.env
 
 export default defineStore('favorites', {
   state: () => ({
@@ -10,7 +8,6 @@ export default defineStore('favorites', {
     // 加入收藏
     addToFavorites (product) {
       // 从 localStorage 获取收藏列表，如果不存在则创建一个空数组
-      // event.stopPropagation()
       // console.log('addToFavorites')
       const favorites = JSON.parse(localStorage.getItem('favorites')) || []
 

@@ -92,7 +92,6 @@ export default {
           if (res.data.flavor_text_entries.length) {
             this.machineList.push(res.data)
           }
-          // this.summarizedProductList[index] = { text: res.data.flavor_text_entries[19].text }
         }))
         this.machineList = this.machineList.sort(function (a, b) {
           return a.id < b.id ? -1 : 1// 升序排序
@@ -134,8 +133,6 @@ export default {
         const res = await axios.get(`${VITE_POKEMON_API}/type`)
         // console.log(res)
         res.data.results.forEach((item, index) => {
-          // const name = item.name
-          // this.typeUrlList.push({ name: item.name })
           this.typeUrlList.push({ url: item.url })
           this.typeUrlList[index].name = item.name
         })
@@ -172,7 +169,6 @@ export default {
       })
       // console.log('engNameArr', engNameArr)
       engNameArr.forEach((element, index) => {
-        // this.typeNameList.push({})
         this.typeNameList[element.toLowerCase()] = chineseNameArr[index]
       })
       // console.log('typeNameList', this.typeNameList)
@@ -324,23 +320,12 @@ export default {
           power: item.power,
           pp: item.pp,
           damage_class: item.damage_class.name
-
-          // machine_id: item.id,
-          // text: item.text,
-          // imagesUrl: [
-          //   '圖片網址一',
-          //   '圖片網址二',
-          //   '圖片網址三',
-          //   '圖片網址四',
-          //   '圖片網址五'
-          // ]
         })
       })
     },
     updateLearnedByPokemon () {
       this.summarizedProductList.forEach(item => {
         item.learned_by_pokemon.forEach(item => {
-          // item.information = this.pokemons[item.name]
           item.speciesUrl = this.pokemons[item.name]?.species?.url
           item.imageUrl = this.pokemons[item.name]?.sprites?.front_default
           item.id = this.pokemons[item.name]?.id
@@ -357,25 +342,12 @@ export default {
         this.pokemons[element.data.name] = element.data
         this.pokemons[element.data.name].chineseName = this.speciesNameList[element.data.name]
       })
-      // for (let index = 1; index <= 1000; index++) {
-      //   axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`)
-      //     .then(res => {
-      //       // console.log(res.data.results)
-      //       this.pokemons[res.data.name] = res.data
-      //     })
-      //     .catch(err => {
-      //       console.dir(err)
-      //     })
-      // }
-      // console.log(this.pokemons)
     },
     async createSpeciesUrlList () {
       try {
         const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=${this.pokemonCount}`)
         // console.log(res)
         res.data.results.forEach((item, index) => {
-          // const name = item.name
-          // this.typeUrlList.push({ name: item.name })
           this.speciesUrlList.push({ url: item.url })
           this.speciesUrlList[index].name = item.name
         })
