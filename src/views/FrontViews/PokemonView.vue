@@ -223,7 +223,7 @@ export default {
       try {
         const res = await axios.get(`${VITE_POKEMON_API}/pokemon/${this.$route.query.id}`)
         this.isPokemonLoading = false
-        console.log(res.data)
+        // console.log(res.data)
         this.pokemon = res.data
 
         this.imagesUrl.push(res.data.sprites.front_default)
@@ -237,7 +237,7 @@ export default {
         this.imagesUrl = this.imagesUrl.filter(item => item)
 
         const descriptionResponse = await axios.get(`${VITE_POKEMON_API}/pokemon-species/${this.$route.query.id}`)
-        console.log(descriptionResponse)
+        // console.log(descriptionResponse)
         this.pokemon.description = descriptionResponse.data.flavor_text_entries[0].flavor_text
         descriptionResponse.data.flavor_text_entries.forEach(item => {
           if (item.language.name === 'zh-Hant') {
@@ -293,7 +293,7 @@ export default {
         item.pokemons?.forEach(element => {
           if (element.name === this.$route.query.pokemonName) {
             this.learnedMachines.push(item)
-            console.log(1)
+            // console.log(1)
           }
         })
       })

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- {{ speciesNameList}} -->
     <button class="btn btn-danger" @click="deleteAllProducts()">deleteAllProducts</button>
     <button class="btn btn-primary" @click="postProducts(productList)">postAllProducts</button>
     <div class="row">
@@ -410,12 +411,11 @@ export default {
       namesArr.forEach(item => {
         engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
       })
-      // console.log('engNameArr', engNameArr)
+      console.log('engNameArr', engNameArr)
       engNameArr.forEach((element, index) => {
-        // this.typeNameList.push({})
         this.speciesNameList[element.toLowerCase()] = chineseNameArr[index]
       })
-      // console.log('typeNameList', this.typeNameList)
+      // console.log('speciesNameList', this.speciesNameList['Farfetch’d'])
     },
     updatePokemonNames () {
       this.summarizedProductList.forEach(item => {

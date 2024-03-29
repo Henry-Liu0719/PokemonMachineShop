@@ -42,10 +42,10 @@
       <span class="btn btn-dark py-2 border-0" :style="{'background-color':chineseTypeColorList[product.category]}">{{ product.category }}</span>
       <!-- {{chineseTypeColorList['格鬥']}} -->
       <!-- {{ typeNameList }} -->
-      <p class="h4 fw-bold">威力：{{ product.price }}</p>
-      <p class="h4 fw-bold">命中率：{{ product.price }}</p>
+      <p class="h4 fw-bold">威力：{{ product.power || '無' }}</p>
+      <p class="h4 fw-bold">命中率：{{ product.accuracy  || '無'}}</p>
       <p class="h4 fw-bold">攻擊種類：{{ product.price == 'physical'?'物理':'特殊' }}</p>
-      <p class="h4 fw-bold">PP：{{ product.price }}</p>
+      <p class="h4 fw-bold">PP：{{ product.pp  || '無'}}</p>
       <p class="mb-0 text-muted text-end"><del>NT${{product.origin_price}}</del></p>
       <p class="h4 fw-bold text-end">NT${{ product.price }}</p>
       <div class="row align-items-center">

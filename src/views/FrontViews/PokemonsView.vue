@@ -44,6 +44,7 @@
         </div>
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!Object.keys(filterdPokemons)?.length}">無相符的查詢結果</h4>
         <!-- <h4 class="opacity-0 mt-6"  :class="{'opacity-100':$route.query.keyWord?.length}">「{{ $route.query.keyWord }}」的搜尋結果</h4> -->
+        <!-- {{filterdPokemons.abomasnow}} -->
         <div class="col-12 col-md-4 col-lg-3" v-for="pokemon in filterdPokemons" :key="pokemon.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <router-link :to="{ path: 'pokemon', query: { id: pokemon.id ,pokemonName: pokemon.chineseName}}">

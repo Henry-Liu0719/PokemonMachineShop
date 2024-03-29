@@ -29,7 +29,6 @@ export default defineStore('pokemon', {
   }),
   actions: {
     async pokemonsView () {
-      // await this.getPokemonCount()
       await this.createSpeciesUrlList()
       await this.getSpeciesList()
       this.getSpeciesNamesList()
@@ -176,7 +175,6 @@ export default defineStore('pokemon', {
       })
       // console.log('engNameArr', engNameArr)
       engNameArr.forEach((element, index) => {
-        // this.typeNameList.push({})
         this.typeNameList[element.toLowerCase()] = chineseNameArr[index]
       })
       delete this.typeNameList['???']
@@ -277,21 +275,11 @@ export default defineStore('pokemon', {
         })
       })
     },
-    async getPokemonCount () {
-      try {
-        const res = await axios.get(`${VITE_POKEMON_API}/pokemon`)
-        this.pokemonCount = res.data.count
-      } catch (err) {
-        console.dir(err)
-      }
-    },
     async createSpeciesUrlList () {
       try {
         const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=${this.pokemonCount}`)
         // console.log(res)
         res.data.results.forEach((item, index) => {
-          // const name = item.name
-          // this.typeUrlList.push({ name: item.name })
           this.speciesUrlList.push({ url: item.url })
           this.speciesUrlList[index].name = item.name
         })
@@ -307,7 +295,7 @@ export default defineStore('pokemon', {
             this.speciesList.push(res.data)
           }
         }))
-        // console.log('typeList', this.typeList)
+        // console.log('speciesList', this.speciesList)
       } catch (err) {
         console.dir(err)
       }
@@ -321,8 +309,8 @@ export default defineStore('pokemon', {
       namesArr.forEach(item => {
         chineseNameArr.push(item.filter(element => element.language.name === 'zh-Hant')[0].name || item[0].name)
       })
-      console.log('namesArr', namesArr)
-      console.log('chineseNameArr', chineseNameArr)
+      // console.log('namesArr', namesArr)
+      // console.log('chineseNameArr', chineseNameArr)
       const engNameArr = []
       namesArr.forEach(item => {
         engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
@@ -335,7 +323,6 @@ export default defineStore('pokemon', {
       // console.log('typeNameList', this.typeNameList)
     },
     async getPokemons () {
-      // const count = await axios.get(`https://pokeapi.co/api/v2/pokemon`)
       const promises = []
       for (let index = 1; index <= this.pokemonCount; index++) {
         promises.push(axios.get(`${VITE_POKEMON_API}/pokemon/${index}`))
@@ -348,17 +335,6 @@ export default defineStore('pokemon', {
       })
       this.pokemons = { ...res }
       this.isPokemonsLoading = false
-      // for (let index = 1; index <= 1000; index++) {
-      //   axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`)
-      //     .then(res => {
-      //       // console.log(res.data.results)
-      //       this.pokemons[res.data.name] = res.data
-      //     })
-      //     .catch(err => {
-      //       console.dir(err)
-      //     })
-      // }
-      // console.log(this.pokemons)
     },
     createTypeColorList () {
       this.typeColorList = {
