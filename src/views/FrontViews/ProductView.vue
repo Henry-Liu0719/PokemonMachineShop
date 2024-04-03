@@ -36,7 +36,7 @@
         </ol>
       </nav>
       <h2 class="fw-bold h1 mb-1">{{product.unit}}</h2>
-      <span class="btn btn-dark py-2 border-0" :style="{'background-color':chineseTypeColorList[product.category]}">{{ product.category }}</span>
+      <span class="btn btn-dark py-2 border-0 w-25" :style="{'background-color':chineseTypeColorList[product.category]}" style="pointer-events: none;  cursor: default;">{{ product.category }}</span>
       <!-- {{chineseTypeColorList['格鬥']}} -->
       <!-- {{ typeNameList }} -->
       <p class="h4 fw-bold">威力：{{ product.power || '無' }}</p>
@@ -44,25 +44,25 @@
       <p class="h4 fw-bold">攻擊種類：{{ product.price == 'physical'?'物理':'特殊' }}</p>
       <p class="h4 fw-bold">PP：{{ product.pp  || '無'}}</p>
       <p class="mb-0 text-muted text-end"><del>NT${{product.origin_price}}</del></p>
-      <p class="h4 fw-bold text-end">NT${{ product.price }}</p>
+      <p class="h4 fw-bold text-end">NT${{ Math.round(product.price*0.8) }}</p>
       <div class="row align-items-center">
         <div class="col-6">
-          <div class="input-group my-3 bg-light rounded">
+          <div class="input-group my-3 bg-light rounded border">
             <div class="input-group-prepend">
-              <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
+              <button class="btn btn-outline-dark border-1 py-2" type="button" id="button-addon1">
                 <i class="bi bi-dash" @click="num--"></i>
               </button>
             </div>
-            <input type="number" class="form-control border-0 text-center my-auto shadow-none bg-light" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" v-model="num" min="0" readonly>
+            <input type="number" class="form-control border-1 text-center shadow-none bg-light m-0 p-0" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" v-model="num" min="0" readonly>
             <div class="input-group-append">
-              <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
+              <button class="btn btn-outline-dark border-1 py-2" type="button" id="button-addon2">
                 <i class="bi bi-plus" @click="num++"></i>
               </button>
             </div>
           </div>
         </div>
         <div class="col-6">
-          <a @click="addToCart(product.id, num)" class="text-nowrap btn btn-dark w-100 py-2">加到購物車</a>
+          <a @click="addToCart(product.id, num)" class="text-nowrap btn btn-primary w-100 py-2">加到購物車</a>
         </div>
       </div>
     </div>
@@ -78,8 +78,8 @@
     <div class="row mt-5">
       <h3>可學習該招式機的寶可夢清單</h3>
       <!-- {{ pokemons }} -->
-      <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.id">
-        <div class="card border-0 mb-4">
+      <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.id" :class="{'d-none':!pokemon.name}">
+        <div class="card border-0 mb-4" v-if="pokemon.name">
           <router-link :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}">
           <!-- <router-link :to="{ path: 'pokemon', query: { id: pokemon.id }}"> -->
           <img

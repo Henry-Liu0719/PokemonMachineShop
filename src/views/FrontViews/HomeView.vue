@@ -1,5 +1,5 @@
 <template>
-<body class=" bg-light mt-lg-6">
+<body class=" bg-light mt-lg-6 fs-5">
   <div class="position-relative bg-light">
     <!-- <div class="position-absolute" style="top:0; bottom:0; left:0; right:0; background-image: url('/src/assets/Gatcha.png');    background-position: center center; opacity: 0.2;"></div> -->
     <div class="container d-flex flex-column " style="min-height: 50vh;">
@@ -10,7 +10,7 @@
           <h2>歡迎來到寶可夢招式機商店！</h2>
           <p class="text-muted mb-0">在我們的商店裡，你可以找到各種強大的寶可夢招式機，這些招式將幫助你的寶可夢在戰鬥中更加強大。無論是火、水、雷，還是其他屬性，我們都擁有最新、最強大的招式供你選擇。</p>
           <router-link class="btn rounded-0 mt-6 popov-btn w-auto" to="products">
-            <div class="my-auto">瀏覽產品</div>
+            <div class="my-auto">前往產品列表</div>
             <svg width="13px" height="10px" viewBox="0 0 13 10">
                 <path d="M1,5 L11,5"></path>
                 <polyline points="8 1 12 5 8 9"></polyline>
@@ -219,7 +219,7 @@ export default {
 .popov-btn {
     position: relative;
     color: #111111;
-    font-size: 1rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
@@ -234,7 +234,7 @@ export default {
 .popov-btn:before {
     content: "";
     position: absolute;
-    top: 0;
+    top: auto;
     left: 0;
     display: block;
     border-radius: 28px;
@@ -242,12 +242,12 @@ export default {
     width: 3rem;
     height: 3rem;
     transition: all 0.3s ease;
-    /* border: 2px solid black; */
+    border: 2px solid black;
 }
 .popov-btn:after {
     content: "";
     position: absolute;
-    top: 0;
+    top: 10%;
     left: 0;
     display: block;
     border-radius: 28px;
@@ -257,14 +257,14 @@ export default {
     transition: all 0.3s ease;
     z-index:1;
     transform: translate(50%,50%);
-    /* border: 2px solid black; */
+    border: 2px solid black;
 }
 .popov-btn div {
     position: relative;
     z-index: 2;
-    padding-left: 25%;
+    padding-left: 10%;
     /* margin-top: auto; */
-    width:6rem;
+    width:15rem;
 }
 .popov-btn svg {
     position: relative;

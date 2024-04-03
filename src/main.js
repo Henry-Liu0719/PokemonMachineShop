@@ -8,6 +8,7 @@ import 'vue-loading-overlay/dist/css/index.css'
 
 import App from './App.vue'
 import router from './router'
+import PokemonsComponent from './components/PokemonsComponent.vue'
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
@@ -30,5 +31,6 @@ app.component('VField', Field)
 app.component('VForm', Form)
 app.component('ErrorMessage', ErrorMessage)
 app.component('LoadingOverlay', Loading)
+app.component('PokemonsComponent', PokemonsComponent)
 
 app.mount('#app')

@@ -11,7 +11,7 @@
   <div class="mt-0">
     <v-form v-slot="{ errors }">
       <div class="mb-0">
-        <v-field type="email" class="form-control" id="orderId" aria-describedby="emailHelp" placeholder="輸入訂單號碼，為「-」開頭的20碼英文數字" name="訂單號碼" :class="{ 'is-invalid': errors['訂單號碼'] }" :rules="minLength" v-model="this.orderId"></v-field>
+        <v-field type="email" class="form-control-lg col-12" id="orderId" aria-describedby="emailHelp" placeholder="輸入訂單號碼，為「-」開頭的20碼英文數字" name="訂單號碼" :class="{ 'is-invalid': errors['訂單號碼'] }" :rules="minLength" v-model="this.orderId"></v-field>
         <error-message
           name="訂單號碼"
           class="invalid-feedback"

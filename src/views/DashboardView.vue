@@ -14,7 +14,7 @@
     </div>
   </div>
 </nav>
-  <router-view></router-view>
+  <RouterView></RouterView>
   <div class="bg-light py-4">
     <div class="container">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">

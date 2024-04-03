@@ -3,6 +3,7 @@
     <!-- {{ speciesNameList}} -->
     <button class="btn btn-danger" @click="deleteAllProducts()">deleteAllProducts</button>
     <button class="btn btn-primary" @click="postProducts(productList)">postAllProducts</button>
+    <button class="btn btn-primary" @click="forEachpostProducts(productList)">forEachpostProducts</button>
     <div class="row">
       <button v-for="(product, index) in productList" :key="product.id" class="btn btn-primary col-2" @click="postProducts(productList,index)">{{index}} postProducts</button>
     </div>
@@ -35,11 +36,11 @@ export default {
     }
   },
   mounted () {
+    this.login()
     this.summarizeProductList()
   },
   methods: {
     async summarizeProductList () {
-      await this.login()
       await this.getMachines()
       await this.getMachineList()
       this.createSummarizedProductList()
@@ -124,6 +125,7 @@ export default {
         this.moveList = this.moveList.sort(function (a, b) {
           return a.machines[0].machine.url < b.machines[0].machine.url ? -1 : 1// 升序排序
         })
+        console.log('this.moveList', this.moveList)
       } catch (err) {
         console.dir(err)
       }
@@ -262,7 +264,7 @@ export default {
     },
     async getAllProducts () {
       const res = await axios
-        .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
+        .get(`${VITE_URL}/api/${VITE_PATH}/products`)
       this.products = res.data.products
       console.log('this.products', this.products)
     },
@@ -273,7 +275,34 @@ export default {
         promises.push(axios.delete(`${VITE_URL}/api/${VITE_PATH}/admin/product/${this.products[index].id}`))
       }
       const responses = await Promise.all(promises)
+      this.deleteAllProducts()
       console.log(responses)
+    },
+    forEachpostProducts (productList) {
+      console.log('forEachpostProducts')
+      productList.forEach((item, index) => {
+        if (index < 100) {
+          setTimeout(() => {
+            console.log(index)
+            axios.post(`${VITE_URL}/api/${VITE_PATH}/admin/product`, { data: item })
+            // if (index < 30) {
+            // } else {
+            //   console.log(index)
+            // }
+          }, 5000 * index)
+        }
+      })
+      // for (let index = 0; index < 20; index++) {
+      //   post(index)
+      //   // setTimeout(() => {
+      //   //   clearInterval(timerId) // 停止计时器
+      //   // }, 200)
+      // }
+      // function post (item) {
+      //   setTimeout(() => {
+      //     console.log(item)
+      //   }, 200)
+      // }
     },
     async postProducts (productList, num = false) {
       if (num === false) {
@@ -286,7 +315,6 @@ export default {
         }
         const responses = await Promise.all(promises)
         console.log(responses)
-        console.log(false)
       } else {
         const promises = []
         for (let index = num; index <= num; index++) {
@@ -297,7 +325,6 @@ export default {
         }
         const responses = await Promise.all(promises)
         console.log(responses)
-        console.log(num)
       }
     },
     createProductList () {
@@ -342,6 +369,7 @@ export default {
         this.pokemons[element.data.name] = element.data
         this.pokemons[element.data.name].chineseName = this.speciesNameList[element.data.name]
       })
+      console.log('this.pokemons', this.pokemons)
     },
     async createSpeciesUrlList () {
       try {
@@ -383,7 +411,7 @@ export default {
       namesArr.forEach(item => {
         engNameArr.push(item.filter(element => element.language.name === 'en')[0].name || item[0].name)
       })
-      console.log('engNameArr', engNameArr)
+      // console.log('engNameArr', engNameArr)
       engNameArr.forEach((element, index) => {
         this.speciesNameList[element.toLowerCase()] = chineseNameArr[index]
       })
@@ -410,6 +438,7 @@ export default {
           /(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1'
         )
         axios.defaults.headers.common.Authorization = loginToken
+        console.log(res)
       } catch (err) {
         console.dir(err)
       }

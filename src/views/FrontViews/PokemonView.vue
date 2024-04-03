@@ -30,7 +30,7 @@
       </nav>
       <div class="col-6">
         <h2 class="fw-bold h1 mb-1">{{$route.query.pokemonName}}</h2>
-        <span v-for="type in pokemon.types" :key="type.slot" class="btn btn-dark w-50 py-2 border-0" :style="{'background-color':typeColorList[type.type.name]}">{{ typeNameList[type.type.name] }}</span>
+        <span v-for="type in pokemon.types" :key="type.slot" class="btn btn-dark w-50 py-2 border-0" :style="{'background-color':typeColorList[type.type.name]}" style="pointer-events: none;  cursor: default;">{{ typeNameList[type.type.name] }}</span>
 
       </div>
       <div class="col-6">

@@ -3,12 +3,12 @@
   <loadingOverlay :active="isCartsLoading" :is-full-page="true">
     <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
-  <div class="mt-3">
-    <h3 class="mt-3 mb-4">購物車</h3>
+  <div class="mt-3 fs-4">
+    <h3 class="mt-3 mb-4 fs-1">購物車</h3>
     <div class="p-0 container d-flex" v-if="!(carts.carts?.length)">
       <h4 class="my-auto">購物車無商品</h4>
-      <router-link class="btn btn-danger rounded w-auto mx-2" to="products">
-        <div class="my-auto">瀏覽產品</div>
+      <router-link class="btn btn-danger rounded w-auto mx-2 mb-2" to="products">
+        <div class="my-auto">前往產品列表</div>
       </router-link>
     </div>
     <div class="row" v-if="carts.carts?.length">
@@ -76,9 +76,50 @@
             <p class="mb-0 h4 fw-bold">Total</p>
             <p class="mb-0 h4 fw-bold">NT${{ carts.final_total }}</p>
           </div>
-          <router-link to="checkout" class="btn btn-dark w-100 mt-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
+          <router-link to="checkout" class="btn btn-dark w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
         </div>
       </div>
+    </div>
+    <div class="col-12">
+      <h3 class="my-3">查看更多商品</h3>
+      <div class="row">
+        <div class="col-12 col-md-3 col-lg-2" v-for="product in products.products" :key="product.id">
+          <div class="card border-0 mb-4 position-relative position-relative">
+            <router-link :to="{ path: 'product', query: { id: product.id }}">
+              <img :src="product.imageUrl" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 100%;">
+            </router-link>
+              <!-- {{ favorites.some(item => item.id === product.id) }} -->
+            <!-- <btn type="button" href="#" class="text-dark" @click="addToFavorites(product)">
+              <i class="far fa-heart position-absolute z-1" style="right: 16px; top: 16px"></i>
+            </btn> -->
+            <div class="card-body p-0">
+              <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
+                <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
+                </router-link>
+              <p class="card-text mb-0">NT${{ Math.round(product.price*0.8) }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p>
+              <p class="text-muted mt-3"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="d-flex justify-content-center" v-if="!filterdProducts?.products?.length == 0">
+        <ul class="pagination pagination-lg">
+          <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
+          </template> -->
+          <li class="page-item">
+            <button type="button"  class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getProducts(products.pagination.current_page-1,yOffset)">
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+          <li class="page-item" :class="{active:filterdProducts.pagination.current_page == index}" v-for="index in filterdProducts.pagination?.total_pages" :key="index" ><button class="page-link" @click="getProducts(index,yOffset)">{{ index }}</button></li>
+          <!-- {{ products.pagination }} -->
+          <li class="page-item">
+            <button type="button"  class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getProducts(products.pagination.current_page+1,yOffset)">
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
     <!-- <div class="my-5">
       <h3 class="fw-bold">Lorem ipsum dolor sit amet</h3>
@@ -153,6 +194,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import cartStore from '@/stores/cartStore'
+import productStore from '../../stores/productStore.js'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 const { VITE_URL, VITE_PATH } = import.meta.env
@@ -167,9 +209,11 @@ export default {
   },
   mounted () {
     this.getCart()
+    this.getProducts()
   },
   methods: {
     ...mapActions(cartStore, ['getCart', 'deleteCart', 'updateCart']),
+    ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
     postCoupon (code) {
       this.isUpdating = true
       const data = {
@@ -206,7 +250,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['carts', 'isCartsLoading'])
+    ...mapState(cartStore, ['carts', 'isCartsLoading']),
+    ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts'])
   },
   watch: {
     num () {
@@ -215,84 +260,3 @@ export default {
   }
 }
 </script>
-<style>
-.popov-btn {
-    position: relative;
-    color: #111111;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    padding: 12px 20px;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-.popov-btn:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    border-radius: 28px;
-    background: rgb(251, 4, 4);
-    width: 3rem;
-    height: 3rem;
-    transition: all 0.3s ease;
-    /* border: 2px solid black; */
-}
-.popov-btn:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    border-radius: 28px;
-    background: white;
-    width: 1.5rem;
-    height: 1.5rem;
-    transition: all 0.3s ease;
-    z-index:1;
-    transform: translate(50%,50%);
-    /* border: 2px solid black; */
-}
-.popov-btn div {
-    position: relative;
-    z-index: 2;
-    padding-left: 25%;
-    /* margin-top: auto; */
-    width:6rem;
-}
-.popov-btn svg {
-    position: relative;
-    top: 0;
-    margin-left: 10px;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke: #111111;
-    stroke-width: 2;
-    transform: translateX(-5px);
-    transition: all 0.3s ease;
-}
-.popov-btn:hover:before {
-    width: 100%;
-    background: rgb(251, 4, 4);
-}
-.popov-btn:hover svg {
-    transform: translateX(0);
-    /* background: #fff; */
-    stroke: #fff;
-}
-.popov-btn:hover,
-.popov-btn:focus {
-    color: #fff;
-}
-.popov-btn:active {
-    color: #fff;
-    transform: scale(0.96);
-}
-</style>

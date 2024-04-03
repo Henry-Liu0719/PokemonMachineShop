@@ -48,7 +48,7 @@ export default defineStore('product', {
       } catch (error) {
         Swal.fire({
           position: 'top-end',
-          icon: 'false',
+          icon: 'error',
           title: '讀取所有產品失敗，請聯繫管理員',
           showConfirmButton: false,
           timer: 1000
@@ -72,7 +72,7 @@ export default defineStore('product', {
         .catch((error) => {
           Swal.fire({
             position: 'top-end',
-            icon: 'false',
+            icon: 'error',
             title: '讀取產品清單失敗，請聯繫管理員',
             showConfirmButton: false,
             timer: 1000
@@ -92,7 +92,7 @@ export default defineStore('product', {
       } catch (error) {
         Swal.fire({
           position: 'top-end',
-          icon: 'false',
+          icon: 'error',
           title: '讀取單一產品失敗，請聯繫管理員',
           showConfirmButton: false,
           timer: 1000
