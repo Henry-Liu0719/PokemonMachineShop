@@ -10,7 +10,6 @@
       <span class="m-2"><strong>回首頁</strong></span>
       <!-- <img src="/src/assets/img/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
     </router-link>
-    <v-field type="text" class="form-control w-50 mb-md-4" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord" name="text"></v-field>
   <!-- </div> -->
   <button class="navbar-toggler col-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -25,6 +24,7 @@
       <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts?.carts?.length }}</span></span></router-link>
     </div>
   </div>
+    <v-field type="text" class="form-control mb-md-4 bg-white position-fixed top-100 start-100 border border-3 border-black z-2 text-black w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord" name="text" style="transform: translate(-100%,-100%);"></v-field>
 </nav>
   <RouterView></RouterView>
   <!-- <div class="bg-light py-4">
