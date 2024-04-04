@@ -5,40 +5,46 @@
   <div class="position-absolute" style="top:0; bottom: 0; left: 0; right: 0; background-image: url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80); background-position: center center; opacity: 0.1;"></div>
   <h2 class="fw-bold">神奇寶貝招式機百貨商店</h2>
 </div> -->
-<div class="container mt-md-5 mt-3 mb-7">
+<div class="container mt-md-5 mt-3 mb-7 mx-1">
   <loadingOverlay :active="isFavoritesLoading" :is-full-page="true">
     <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
   </loadingOverlay>
   <div class="row">
-    <div class="col-4">
+    <div class="col-4 col-md-3">
       <div class="accordion border border-bottom border-top-0 border-start-0 border-end-0 mb-3" id="accordionExample">
-        <div class="card border-0">
-          <div class="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-            <div class="d-flex justify-content-between align-items-center pe-1">
-              <h4 class="mb-0">
+        <div class="card border-0 mx-3">
+          <div class="card-header px-0 py-4 bg-white border-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+            <div class="">
+              <h3 class="mb-0 text-center">
                 屬性瀏覽
-              </h4>
+              </h3>
               <!-- <i class="fas fa-chevron-down"></i> -->
             </div>
           </div>
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="card-body py-0">
-              <ul class="list-unstyled">
-                <li>
-                  <button type="button" href="#" class="m-1 page-link py-1 px-2 d-block text-mute" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="filterType('全部')">瀏覽全部</button>
-                </li>
-                <li v-for="type in Object.entries(typeNameList)" :key="type[0]">
+            <div class="py-0">
+              <ul class="list-group">
+                <button type="button" href="#" class="page-link fs-5" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="filterType('全部')">
+                  <li class="list-group-item py-2 px-2" :class="{'active':typeSelected == '全部'}">
+                    瀏覽全部
+                  </li>
+                </button>
+                <button type="button" href="#" class="page-link fs-5" :class="{'text-primary rounded border border-primary':typeSelected == type[1]}" v-for="type in Object.entries(typeNameList)" :key="type[0]">
 
-                <button type="button" href="#" class="m-1 page-link py-1 px-2 d-block text-muted" :class="{'text-primary rounded border border-primary':typeSelected == type[1]}"  @click="filterType(type[1])">{{ type[1] }}</button></li>
+                <li @click="filterType(type[1])" class="list-group-item py-2 px-2" :class="{'active':typeSelected == type[0]}" >
+                {{ type[1] }}
+                </li>
+              </button>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-8">
+    <div class="col-8 col-md-9">
       <div class="row">
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!filterdFavorites?.length}">尚未收藏任何商品</h4>
+        <h4 class="opacity-0 mt-6">對齊產品列表版面使用，不顯示</h4>
         <div class="col-12 col-md-4 col-lg-3" v-for="product in filterdFavorites" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
             <router-link :to="{ path: 'product', query: { id: product.id }}">
