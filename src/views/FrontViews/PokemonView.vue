@@ -162,8 +162,8 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 
-import productStore from '../../stores/productStore'
-import pokemonStore from '../../stores/pokemonStore'
+import productStore from '@/stores/productStore'
+import pokemonStore from '@/stores/pokemonStore'
 
 const { VITE_POKEMON_API } = import.meta.env
 export default {

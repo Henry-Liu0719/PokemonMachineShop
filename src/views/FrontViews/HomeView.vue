@@ -51,9 +51,9 @@
   <div class="container">
     <div class="row mt-5 vl-parent bg-light">
       <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid w-auto opacity-0" v-if="shuffledProducts?.length===0">
-      <loadingOverlay :active="isProductLoading" :is-full-page="false">
+      <loadingOverlay :active="isProductsLoading" :is-full-page="false">
       <!-- <loadingOverlay :active="true" :is-full-page="false"> -->
-        <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid bg-light">
+        <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid bg-light z-1">
       </loadingOverlay>
       <div class="col-12 col-md-4 col-lg-2 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
         <div class="card border-0 mb-4 bg-light">
@@ -168,8 +168,8 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 
-import pokemonStore from '../../stores/pokemonStore'
-import productStore from '../../stores/productStore'
+import pokemonStore from '@/stores/pokemonStore'
+import productStore from '@/stores/productStore'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import 'swiper/css'

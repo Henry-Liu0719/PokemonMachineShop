@@ -44,6 +44,10 @@ const routes = [
       {
         path: '/pokemons',
         component: () => import('../views/FrontViews/PokemonsView.vue')
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        component: () => import('../views/FrontViews/404View.vue')
       }
     ]
   },
@@ -57,6 +61,11 @@ const routes = [
       }
     ]
   }
+  // ,
+  // {
+  //   path: '*',
+  //   component: () => import('../views/404View.vue')
+  // }
 ]
 
 const router = createRouter({

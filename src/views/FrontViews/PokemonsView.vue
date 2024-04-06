@@ -69,7 +69,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'pinia'
-import pokemonStore from '../../stores/pokemonStore.js'
+import pokemonStore from '@/stores/pokemonStore.js'
 export default {
   data () {
     return {
@@ -86,7 +86,7 @@ export default {
   watch: {
     pokemons () {
       this.filterdPokemons = { ...this.pokemons }
-      console.log(this.pokemons)
+      // console.log(this.pokemons)
       this.keyWord = this.$route.query.searchWord || ''
     },
     keyWord () {

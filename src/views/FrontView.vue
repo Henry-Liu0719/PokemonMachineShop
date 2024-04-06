@@ -1,6 +1,7 @@
 <template>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<nav class="navbar navbar-expand-lg navbar-light text-white p-4 border-bottom border-black border-3 mb-0 mb-md-3 mb-lg-1 position-relative relative1 h-100 fs-5 row" style="background-color: #FB0404;">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> -->
+<nav class="navbar navbar-expand-lg navbar-light text-white p-4 border-bottom border-black border-3 mb-0 mb-md-3 mb-lg-1h-100 fs-5" style="background-color: #FB0404;">
+    <v-field type="text" class="form-control mb-md-4 bg-white position-fixed top-100 start-100 border border-3 border-black z-2 text-black w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord" name="text" style="transform: translate(-100%,-100%);"></v-field>
   <!-- <a class="navbar-brand" href="./index.html">Navbar</a>  -->
 <!-- <nav class="navbar navbar-expand-lg navbar-light"> -->
 
@@ -14,17 +15,16 @@
   <button class="navbar-toggler col-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-end col-4" id="navbarNavAltMarkup">
+  <div class="collapse navbar-collapse justify-content-end col-6" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <router-link class="nav-item nav-link me-1 text-white m-1" to="pokemons"><span><strong>寶可夢列表</strong></span></router-link>
       <router-link class="nav-item nav-link me-1 text-white m-1" to="products"><span><strong>產品列表</strong></span></router-link>
       <router-link class="nav-item nav-link me-1 text-white m-1" to="searchOrder"><span><strong>訂單查詢</strong></span></router-link>
       <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to=""><span><strong>寶可夢列表(開發中)</strong></span></router-link> -->
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="favorites"><span><i class="bi bi-heart"></i><span class="badge text-bg-secondary">{{ favorites?.length }}</span></span></router-link>
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts?.carts?.length }}</span></span></router-link>
+      <router-link class="nav-item nav-link text-white m-1" to="favorites"><span><i class="bi bi-heart"></i><span class="badge text-bg-secondary">{{ favorites?.length }}</span></span></router-link>
+      <router-link class="nav-item nav-link text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts?.carts?.length }}</span></span></router-link>
     </div>
   </div>
-    <v-field type="text" class="form-control mb-md-4 bg-white position-fixed top-100 start-100 border border-3 border-black z-2 text-black w-25" placeholder="搜尋產品，可輸入招式名稱、內容、寶可夢。" required @keyup.enter="searchMachine" v-model="keyWord" name="text" style="transform: translate(-100%,-100%);"></v-field>
 </nav>
   <RouterView></RouterView>
   <!-- <div class="bg-light py-4">

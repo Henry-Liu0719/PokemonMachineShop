@@ -1,5 +1,6 @@
 import './assets/all.scss'
 import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // eslint-disable-next-line no-unused-vars

@@ -171,9 +171,9 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 
-import cartStore from '../../stores/cartStore'
-import productStore from '../../stores/productStore'
-import pokemonStore from '../../stores/pokemonStore'
+import cartStore from '@/stores/cartStore'
+import productStore from '@/stores/productStore'
+import pokemonStore from '@/stores/pokemonStore'
 
 export default {
   data () {

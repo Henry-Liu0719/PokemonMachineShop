@@ -82,6 +82,12 @@
     </div>
     <div class="col-12">
       <h3 class="my-3">查看更多商品</h3>
+      <div class="vl-parent">
+        <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid opacity-0" v-if="!products?.products">
+        <loadingOverlay :active="isProductsLoading" :is-full-page="false" v-if="!isCartsLoading">
+          <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
+        </loadingOverlay>
+      </div>
       <div class="row">
         <div class="col-12 col-md-3 col-lg-2" v-for="product in products.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
@@ -194,7 +200,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import cartStore from '@/stores/cartStore'
-import productStore from '../../stores/productStore.js'
+import productStore from '@/stores/productStore.js'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 const { VITE_URL, VITE_PATH } = import.meta.env

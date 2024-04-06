@@ -24,14 +24,14 @@
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="py-0">
               <ul class="list-group">
-                <button type="button" href="#" class="page-link fs-5" :class="{'text-primary rounded border border-primary':typeSelected == '全部'}" @click="filterType('全部')">
+                <button type="button" href="#" class="page-link fs-5" @click="filterType('全部')">
                   <li class="list-group-item py-2 px-2" :class="{'active':typeSelected == '全部'}">
                     瀏覽全部
                   </li>
                 </button>
-                <button type="button" href="#" class="page-link fs-5" :class="{'text-primary rounded border border-primary':typeSelected == type[1]}" v-for="type in Object.entries(typeNameList)" :key="type[0]">
+                <button type="button" href="#" class="page-link fs-5" v-for="type in Object.entries(typeNameList)" :key="type[0]">
 
-                <li @click="filterType(type[1])" class="list-group-item py-2 px-2" :class="{'active':typeSelected == type[0]}" >
+                <li @click="filterType(type[1])" class="list-group-item py-2 px-2" :class="{'active':typeSelected == type[1]}" >
                 {{ type[1] }}
                 </li>
               </button>
@@ -97,8 +97,8 @@
 import { mapActions, mapState } from 'pinia'
 import Swal from 'sweetalert2'
 
-import pokemonStore from '../../stores/pokemonStore.js'
-import favoriteStore from '../../stores/favoriteStore.js'
+import pokemonStore from '@/stores/pokemonStore.js'
+import favoriteStore from '@/stores/favoriteStore.js'
 
 export default {
   data () {

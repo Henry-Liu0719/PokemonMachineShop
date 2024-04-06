@@ -98,9 +98,9 @@
 </template>
 <script>
 import { mapActions, mapState } from 'pinia'
-import productStore from '../../stores/productStore.js'
-import pokemonStore from '../../stores/pokemonStore.js'
-import favoriteStore from '../../stores/favoriteStore.js'
+import productStore from '@/stores/productStore.js'
+import pokemonStore from '@/stores/pokemonStore.js'
+import favoriteStore from '@/stores/favoriteStore.js'
 
 export default {
   data () {

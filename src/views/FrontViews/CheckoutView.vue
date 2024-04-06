@@ -125,8 +125,8 @@ import axios from 'axios'
 import { mapActions, mapState } from 'pinia'
 import Swal from 'sweetalert2'
 
-import cartStore from '../../stores/cartStore'
-import utilStore from '../../stores/utilStore'
+import cartStore from '@/stores/cartStore'
+import utilStore from '@/stores/utilStore'
 // import { defineStore } from 'pinia'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {

@@ -41,7 +41,7 @@ export default defineStore('product', {
       try {
         const res = await axios
           .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
-        console.log(res.data)
+        // console.log(res.data)
         // console.log('isProductsLoading', this.isProductsLoading)
         this.allProducts = res.data
         // console.log(selector)
