@@ -1,1 +1,0 @@
-import{u as c}from"./index-RUF9gL7e.js";const n=c("counter",{state:()=>({}),actions:{copyTextToClipboard(t){const e=document.createElement("textarea");e.value=t,document.body.appendChild(e),e.select();try{const o=document.execCommand("copy")}catch{}finally{document.body.removeChild(e)}}}});export{n as u};
