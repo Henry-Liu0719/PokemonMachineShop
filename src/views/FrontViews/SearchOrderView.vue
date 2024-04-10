@@ -16,12 +16,12 @@
           name="訂單號碼"
           class="invalid-feedback"
         ></error-message>
-        <span>訂單號碼範例: -Nu7z07B4SbgJwRufeFo</span>
+        <span>訂單號碼範例：  -Nv644NM1-bO-LPQafn0</span>
       </div>
       <button type="button" class="btn btn-dark mt-4 p-2 px-4" @click="getOrder(this.orderId)" :disabled="this.orderId ==='' || Object.keys(errors).length > 0">送出查詢</button>
     </v-form>
-    <div class="row mt-3 flex-row-reverse" v-if="!(Object.keys(order)?.length === 0)">
-      <div class="col-lg-8 col-sm-6">
+    <div class="row mt-3" v-if="!(Object.keys(order)?.length === 0)">
+      <div class="col-12 col-lg-6 col-xxl-8">
         <table class="table">
           <thead>
             <tr>
@@ -67,7 +67,7 @@
           </div>
         </div> -->
       </div>
-      <div class="col-lg-4 col-sm-6">
+      <div class="col-12 col-lg-6 col-xxl-4">
         <div class="border p-4 mb-4">
           <h3 class="fw-bold mb-4">訂單詳情</h3>
           <!-- <table class="table text-muted border-bottom">

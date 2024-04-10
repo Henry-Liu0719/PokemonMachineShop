@@ -53,8 +53,12 @@
             </tr>
           </tbody>
         </table> -->
+        <div class="d-flex justify-content-between mt-4" v-if="carts.final_total != carts.total">
+          <p class="mb-0 h4 fw-bold">優惠折扣</p>
+          <p class="mb-0 h4 fw-bold">{{ (carts.final_total / carts.total)*100 }} %</p>
+        </div>
         <div class="d-flex justify-content-between mt-4">
-          <p class="mb-0 h4 fw-bold">Total</p>
+          <p class="mb-0 h4 fw-bold">總額</p>
           <p class="mb-0 h4 fw-bold">NT${{ carts.final_total }}</p>
         </div>
       </div>
@@ -64,7 +68,7 @@
         <p>聯絡資訊</p>
         <div class="mb-0">
           <label for="ContactMail" class="text-muted mb-0 form-label">Email</label>
-          <v-field type="email" class="form-control" id="ContactMail" aria-describedby="emailHelp" placeholder="example@gmail.com" name="email" :class="{ 'is-invalid': errors['email'] }" rules="email|required" v-model="orderData.data.user.email"></v-field>
+          <v-field type="email" class="form-control" id="ContactMail" aria-describedby="emailHelp" placeholder="請填寫電子信箱" name="email" :class="{ 'is-invalid': errors['email'] }" rules="email|required" v-model="orderData.data.user.email"></v-field>
           <error-message
             name="email"
             class="invalid-feedback"
@@ -73,7 +77,7 @@
         <p class="mt-4">送件資訊</p>
         <div class="mb-2">
           <label for="ContactName" class="text-muted mb-0">姓名</label>
-          <v-field type="text" class="form-control" id="ContactName"  placeholder="Carmen A. Rose"
+          <v-field type="text" class="form-control" id="ContactName"  placeholder="請填寫收件人姓名"
           name="姓名"
           :class="{ 'is-invalid': errors['姓名'] }"
           rules="required" v-model="orderData.data.user.name"></v-field>
@@ -84,7 +88,7 @@
         </div>
         <div class="mb-2">
           <label for="ContactPhone" class="text-muted mb-0">電話</label>
-          <v-field type="tel" class="form-control" id="ContactPhone" placeholder="ContactPhone" name="電話" :class="{ 'is-invalid': errors['電話'] }" :rules="isPhone" v-model="orderData.data.user.tel"></v-field>
+          <v-field type="tel" class="form-control" id="ContactPhone" placeholder="請填寫手機號碼共十碼" name="電話" :class="{ 'is-invalid': errors['電話'] }" :rules="isPhone" v-model="orderData.data.user.tel"></v-field>
           <error-message
             name="電話"
             class="invalid-feedback"
@@ -98,7 +102,7 @@
             type="text"
             class="form-control"
             :class="{ 'is-invalid': errors['地址'] }"
-            placeholder="請輸入地址"
+            placeholder="請輸入收件地址"
             rules="required"
             v-model="orderData.data.user.address"
           ></v-field>
@@ -109,11 +113,11 @@
         </div>
         <div class="mb-2">
           <label for="ContactMessage" class="text-muted mb-0">備註</label>
-          <textarea class="form-control" rows="3" id="ContactMessage" placeholder="message ... " v-model="orderData.data.message"></textarea>
+          <textarea class="form-control" rows="3" id="ContactMessage" placeholder="歡迎留下任何訊息" v-model="orderData.data.message"></textarea>
         </div>
         <div class="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
           <router-link to="products" class="text-dark mt-md-0 mt-3"><i class="fas fa-chevron-left me-2"></i> 回到產品頁</router-link>
-          <button type="button" class="btn btn-dark py-3 px-7" @click="postOrder()" :disabled="Object.keys(errors).length > 0">完成訂單</button>
+          <button type="button" class="btn btn-primary py-3 px-7" @click="postOrder()" :disabled="Object.keys(errors).length > 0 || Object.values(orderData.data.user).some(item => item == '')">{{Object.keys(errors).length == 0 && !Object.values(orderData.data.user).some(item => item == '')?'完成訂單':'請填入所有資料'}}</button>
         </div>
       </v-form>
     </div>
@@ -133,24 +137,24 @@ export default {
   data () {
     return {
       orderData: {
-        // data: {
-        //   user: {
-        //     name: '',
-        //     email: '',
-        //     tel: '',
-        //     address: ''
-        //   },
-        //   message: ''
-        // },
         data: {
           user: {
-            name: 'testName',
-            email: 'test@gmail.com',
-            tel: '0912346768',
-            address: 'Kaohsiung'
+            name: '',
+            email: '',
+            tel: '',
+            address: ''
           },
-          message: '這是留言'
+          message: ''
         }
+        // data: {
+        //   user: {
+        //     name: 'testName',
+        //     email: 'test@gmail.com',
+        //     tel: '0912346768',
+        //     address: 'Kaohsiung'
+        //   },
+        //   message: '這是留言'
+        // }
       }
     }
   },
@@ -168,7 +172,7 @@ export default {
       const data = { ...this.orderData }
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-          confirmButton: 'btn btn-success',
+          confirmButton: 'btn btn-primary',
           cancelButton: 'btn btn-outline-danger me-4'
         },
         buttonsStyling: false

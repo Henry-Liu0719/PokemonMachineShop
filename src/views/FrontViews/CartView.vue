@@ -54,7 +54,7 @@
         </table>
         <div class="input-group mb-3 d-flex justify-content-between">
           <div class="input-group-append d-flex flex-grow-1">
-            <input type="text" class="form-control w-75 border-primary" placeholder="輸入優惠券gopopov即享50%折價" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="couponCode">
+            <input type="text" class="form-control w-75 border-primary" placeholder="輸入優惠券popovgo即享50%折價" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="couponCode">
             <button class="btn border-bottom border-top-0 border-start-0 border-end-0 btn-outline-primary rounded d-inline-block ms-1" type="button" id="button-addon2" @click="postCoupon(couponCode)" :disabled="couponCode === ''"><i :class="{'bi bi-send-check-fill':couponCode != '','bi bi-send':couponCode === ''}"></i></button>
           </div>
           <div class="text-end d-inline-block">
@@ -85,10 +85,18 @@
             </tbody>
           </table> -->
           <div class="d-flex justify-content-between mt-4">
+            <p class="mb-0 h4 fw-bold">商品數量</p>
+            <p class="mb-0 h4 fw-bold">{{ carts.carts.length }}</p>
+          </div>
+          <div class="d-flex justify-content-between mt-4" v-if="carts.final_total != carts.total">
+            <p class="mb-0 h4 fw-bold">優惠折扣</p>
+            <p class="mb-0 h4 fw-bold">{{ (carts.final_total / carts.total)*100 }} %</p>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold">總額</p>
             <p class="mb-0 h4 fw-bold">NT${{ carts.final_total }}</p>
           </div>
-          <router-link to="checkout" class="btn btn-dark w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
+          <router-link to="checkout" class="btn btn-primary w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
         </div>
       </div>
     </div>
