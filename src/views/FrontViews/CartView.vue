@@ -46,7 +46,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total}}</p></td>
+                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total.toLocaleString()}}</p></td>
                 <td class="border-0 align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td>
               </tr>
             </template>
@@ -94,7 +94,7 @@
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold">總額</p>
-            <p class="mb-0 h4 fw-bold">NT${{ carts.final_total }}</p>
+            <p class="mb-0 h4 fw-bold">NT${{ carts.final_total.toLocaleString() }}</p>
           </div>
           <router-link to="checkout" class="btn btn-primary w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
         </div>
@@ -122,7 +122,7 @@
               <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
                 </router-link>
-              <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price }}</del></span></p>
+              <p class="card-text mb-0">NT${{ product.price.toLocaleString() }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price.toLocaleString() }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
           </div>

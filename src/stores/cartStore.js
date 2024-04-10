@@ -17,7 +17,7 @@ export default defineStore('cart', {
         .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
         .then((res) => {
           this.carts = res.data.data
-          console.log('🚀 ~ .then ~ this.carts:', this.carts)
+          // console.log('🚀 ~ .then ~ this.carts:', this.carts)
         })
         .catch((error) => {
           Swal.fire({

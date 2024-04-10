@@ -81,7 +81,7 @@
               <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
                 </router-link>
-              <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price }}</del></span></p>
+              <p class="card-text mb-0">NT${{ product.price.toLocaleString() }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price.toLocaleString() }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
           </div>

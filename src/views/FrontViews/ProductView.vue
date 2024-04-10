@@ -41,10 +41,10 @@
       <!-- {{ typeNameList }} -->
       <p class="h4 fw-bold">威力：{{ product.power || '無' }}</p>
       <p class="h4 fw-bold">命中率：{{ product.accuracy  || '無'}}</p>
-      <p class="h4 fw-bold">攻擊種類：{{ product.price == 'physical'?'物理':'特殊' }}</p>
+      <p class="h4 fw-bold">攻擊種類：{{ product.damage_class == 'physical'?'物理':'特殊' }}</p>
       <p class="h4 fw-bold">PP：{{ product.pp  || '無'}}</p>
-      <p class="mb-0 text-muted text-end"><del v-if="product.price != product.origin_price">NT${{product.origin_price}}</del></p>
-      <p class="h4 fw-bold text-end">NT${{ product.price }}</p>
+      <p class="mb-0 text-muted text-end"><del v-if="product.price != product.origin_price">NT${{product.origin_price.toLocaleString()}}</del></p>
+      <p class="h4 fw-bold text-end">NT${{ product.price.toLocaleString() }}</p>
       <div class="row align-items-center">
         <div class="col-6">
           <div class="input-group my-3 bg-light rounded border">
