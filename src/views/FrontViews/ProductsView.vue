@@ -47,17 +47,30 @@
         <h4 class="opacity-0 mt-6"  :class="{'opacity-100':$route.query.keyWord?.length}">「{{ $route.query.keyWord }}」的招式機配對結果</h4>
         <div class="col-12 col-md-4 col-lg-3" v-for="product in filterdProducts.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
-            <router-link :to="{ path: 'product', query: { id: product.id }}">
+            <router-link :to="{ path: 'product', query: { id: product.id }}" class="vl-parent">
               <img :src="product.imageUrl" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 100%;">
+              <loadingOverlay :active="isUpdating" :is-full-page="false">
+                <img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid">
+              </loadingOverlay>
             </router-link>
               <!-- {{ favorites.some(item => item.id === product.id) }} -->
               <span>
-                <button type="button" class="position-absolute top-0 start-100 badge bg-secondary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="addToFavorites(product)" v-if="!favorites.some(item => item.id === product.id)">
+                <button type="button" class="position-absolute top-0 start-0 badge bg-secondary border-0" style="width:3rem;height:1.5rem;border-radius:0.375rem 0;" @click.prevent="addToFavorites(product)" v-if="!favorites.some(item => item.id === product.id)">
                   <i class="bi bi-heart"></i>
                   <span class="visually-hidden">unread messages</span>
                 </button>
-                <button type="button" class="position-absolute top-0 start-100 badge bg-primary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="removeFromFavorites(product.id)" v-else>
+                <button type="button" class="position-absolute top-0 start-0 badge bg-primary border-0" style="width:3rem;height:1.5rem;border-radius:0.375rem 0 ;" @click.prevent="removeFromFavorites(product.id)" v-else>
                   <i class="bi bi-heart"></i>
+                  <span class="visually-hidden">unread messages</span>
+                </button>
+              </span>
+              <span>
+                <button type="button" class="position-absolute top-0 start-100 badge bg-secondary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="addToCart(product.id,1)" v-if="!carts.carts.some(item => item.product.id === product.id)">
+                  <i class="bi bi-cart"></i>
+                  <span class="visually-hidden">unread messages</span>
+                </button>
+                <button type="button" class="position-absolute top-0 start-100 badge bg-primary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="deleteCart(carts.carts.filter(itme => itme.product_id == product.id)[0].id)" v-else>
+                  <i class="bi bi-cart"></i>
                   <span class="visually-hidden">unread messages</span>
                 </button>
               </span>
@@ -68,7 +81,7 @@
               <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
                 </router-link>
-              <p class="card-text mb-0">NT${{ Math.round(product.price*0.8) }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p>
+              <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
           </div>
@@ -101,6 +114,7 @@ import { mapActions, mapState } from 'pinia'
 import productStore from '@/stores/productStore.js'
 import pokemonStore from '@/stores/pokemonStore.js'
 import favoriteStore from '@/stores/favoriteStore.js'
+import cartStore from '@/stores/cartStore.js'
 
 export default {
   data () {
@@ -122,7 +136,8 @@ export default {
   computed: {
     ...mapState(productStore, ['products', 'isProductsLoading', 'allProducts']),
     ...mapState(pokemonStore, ['typeNameList']),
-    ...mapState(favoriteStore, ['favorites'])
+    ...mapState(favoriteStore, ['favorites']),
+    ...mapState(cartStore, ['carts', 'isCartsLoading', 'isUpdating'])
   },
   watch: {
     async products () {
@@ -142,7 +157,9 @@ export default {
     ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
     ...mapActions(pokemonStore, ['exportTypeNamesList']),
     ...mapActions(favoriteStore, ['addToFavorites', 'removeFromFavorites', 'getFavorites']),
+    ...mapActions(cartStore, ['getCart', 'addToCart', 'deleteCart']),
     async init () {
+      this.getCart()
       const category = this.$route.query.category || ''
       // console.log(this.typeSelected)
       await this.getProducts(1, 0, category)

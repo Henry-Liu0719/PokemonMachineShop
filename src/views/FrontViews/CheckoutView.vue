@@ -169,13 +169,22 @@ export default {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
+          cancelButton: 'btn btn-outline-danger me-4'
         },
         buttonsStyling: false
       })
       swalWithBootstrapButtons.fire({
-        title: `請確認以下資訊\nEmail：${data.data.user.email}\n姓名：${data.data.user.name}\n電話：${data.data.user.tel}\n地址：${data.data.user.address}`,
-        text: '點擊送出後將完成交易',
+        title: '請確認以下資訊',
+        html: `
+          Email：${data.data.user.email}<br>
+          姓名：${data.data.user.name}<br>
+          電話：${data.data.user.tel}<br>
+          地址：${data.data.user.address}<br>
+          點擊送出後將完成交易
+        `,
+        // customClass: {
+        //   html: 'text-left' // 自定义内容对齐方式为靠左
+        // },
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: '完成交易',
@@ -225,7 +234,7 @@ export default {
               console.dir(error)
               Swal.fire({
                 position: 'top-end',
-                icon: 'false',
+                icon: 'error',
                 title: '送出訂單失敗，請聯繫管理員',
                 showConfirmButton: false,
                 timer: 1000

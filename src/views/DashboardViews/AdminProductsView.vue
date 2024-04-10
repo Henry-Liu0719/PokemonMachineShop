@@ -341,7 +341,7 @@ export default {
           imageUrl: item.photo,
           description: item.text,
           unit: item.move_name,
-          price: item.cost * 0.8 || 9999,
+          price: item.cost * 0.8 || 7999,
           is_enabled: 1,
           accuracy: item.accuracy,
           power: item.power,

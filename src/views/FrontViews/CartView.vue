@@ -18,7 +18,7 @@
             <tr>
               <th scope="col" class="border-0 ps-0">品名</th>
               <th scope="col" class="border-0">數量</th>
-              <th scope="col" class="border-0">單價</th>
+              <th scope="col" class="border-0">小計</th>
               <th scope="col" class="border-0"></th>
             </tr>
           </thead>
@@ -26,8 +26,10 @@
             <template v-for="cart in carts.carts" :key="cart.id">
               <tr class="border-bottom border-top">
                 <th scope="row" class="border-0 px-0 font-weight-normal py-4">
+                <router-link :to="{ path: 'product', query: { id: cart.product.id }}">
                   <img :src="cart.product.imageUrl" alt="" style="width: 72px; height: 72px; object-fit: cover;">
                   <p class="mb-0 fw-bold ms-3 d-inline-block">{{cart.product.title}} {{cart.product.unit}}</p>
+                </router-link>
                 </th>
                 <td class="border-0 align-middle" style="max-width: 160px;">
                   <div class="input-group pe-5">
@@ -50,10 +52,20 @@
             </template>
           </tbody>
         </table>
-        <div class="input-group w-50 mb-3">
-          <input type="text" class="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none" placeholder="輸入優惠券gopopov即享50%折價" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="couponCode">
-          <div class="input-group-append">
-            <button class="btn btn-outline-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0" type="button" id="button-addon2" @click="postCoupon(couponCode)" :disabled="couponCode === ''"><i class="bi bi-send"></i></button>
+        <div class="input-group mb-3 d-flex justify-content-between">
+          <div class="input-group-append d-flex flex-grow-1">
+            <input type="text" class="form-control w-75 border-primary" placeholder="輸入優惠券gopopov即享50%折價" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="couponCode">
+            <button class="btn border-bottom border-top-0 border-start-0 border-end-0 btn-outline-primary rounded d-inline-block ms-1" type="button" id="button-addon2" @click="postCoupon(couponCode)" :disabled="couponCode === ''"><i :class="{'bi bi-send-check-fill':couponCode != '','bi bi-send':couponCode === ''}"></i></button>
+          </div>
+          <div class="text-end d-inline-block">
+            <button
+              class="btn btn-outline-danger"
+              type="button"
+              @click="deleteCarts()"
+              :disabled="isCartsLoading"
+            >
+              清空購物車
+            </button>
           </div>
         </div>
       </div>
@@ -73,7 +85,7 @@
             </tbody>
           </table> -->
           <div class="d-flex justify-content-between mt-4">
-            <p class="mb-0 h4 fw-bold">Total</p>
+            <p class="mb-0 h4 fw-bold">總額</p>
             <p class="mb-0 h4 fw-bold">NT${{ carts.final_total }}</p>
           </div>
           <router-link to="checkout" class="btn btn-dark w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
@@ -102,30 +114,12 @@
               <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
                 </router-link>
-              <p class="card-text mb-0">NT${{ Math.round(product.price*0.8) }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p>
+              <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
           </div>
         </div>
       </div>
-      <nav class="d-flex justify-content-center" v-if="!filterdProducts?.products?.length == 0">
-        <ul class="pagination pagination-lg">
-          <!-- <template v-for="index in products.pagination?.total_pages" :key="index">
-          </template> -->
-          <li class="page-item">
-            <button type="button"  class="page-link" aria-label="Previous" :class="{disabled:!filterdProducts?.pagination?.has_pre}" @click="getProducts(products.pagination.current_page-1,yOffset)">
-              <span aria-hidden="true">&laquo;</span>
-            </button>
-          </li>
-          <li class="page-item" :class="{active:filterdProducts.pagination.current_page == index}" v-for="index in filterdProducts.pagination?.total_pages" :key="index" ><button class="page-link" @click="getProducts(index,yOffset)">{{ index }}</button></li>
-          <!-- {{ products.pagination }} -->
-          <li class="page-item">
-            <button type="button"  class="page-link" aria-label="Next" :class="{disabled:!filterdProducts?.pagination?.has_next}" @click="getProducts(products.pagination.current_page+1,yOffset)">
-              <span aria-hidden="true">&raquo;</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
     </div>
     <!-- <div class="my-5">
       <h3 class="fw-bold">Lorem ipsum dolor sit amet</h3>
@@ -218,7 +212,7 @@ export default {
     this.getProducts()
   },
   methods: {
-    ...mapActions(cartStore, ['getCart', 'deleteCart', 'updateCart']),
+    ...mapActions(cartStore, ['getCart', 'deleteCart', 'updateCart', 'deleteCarts']),
     ...mapActions(productStore, ['openModal', 'addToCart', 'getProducts', 'filterType', 'getAllProducts']),
     postCoupon (code) {
       this.isUpdating = true

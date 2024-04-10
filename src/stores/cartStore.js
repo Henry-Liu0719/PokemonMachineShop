@@ -16,8 +16,8 @@ export default defineStore('cart', {
       axios
         .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
         .then((res) => {
-          // console.log(res)
           this.carts = res.data.data
+          // console.log(this.carts)
         })
         .catch((error) => {
           Swal.fire({
@@ -71,13 +71,13 @@ export default defineStore('cart', {
     },
     deleteCart (id) {
       this.isCartsLoading = true
-      // console.log(id)
+      this.isUpdating = true
       axios
         .delete(`${VITE_URL}/api/${VITE_PATH}/cart/${id}`)
         .then((res) => {
           // console.log(res)
           Swal.fire({
-            title: '刪除成功',
+            title: '從購物車移除成功',
             icon: 'success',
             timer: 500,
             showConfirmButton: false,
@@ -96,7 +96,82 @@ export default defineStore('cart', {
         })
         .finally(() => {
           this.isCartsLoading = false
+          this.isUpdating = false
         })
+    },
+    deleteCarts () {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-outline-danger me-4'
+        },
+        buttonsStyling: false
+      })
+      swalWithBootstrapButtons.fire({
+        title: '是否要清除購物車?',
+        text: '點擊送出後將清除購物車',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '清除購物車',
+        cancelButtonText: '取消操作',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isCartsLoading = true
+          axios
+            .delete(`${VITE_URL}/api/${VITE_PATH}/carts`)
+            // .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
+            .then((res) => {
+              let timerInterval
+              Swal.fire({
+                title: '購物車已清除',
+                html: '<b></b>秒後回到產品列表',
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading()
+                  const timer = Swal.getPopup().querySelector('b')
+                  timerInterval = setInterval(() => {
+                    timer.textContent = `${Math.ceil(Swal.getTimerLeft() / 1000)}`
+                  }, 100)
+                },
+                willClose: () => {
+                  clearInterval(timerInterval)
+                }
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  // console.log('I was closed by the timer')
+                }
+              }).then(() => {
+                // console.log(this.$router)
+                // this.$router.push('/products')
+                window.location.href = '/#/products'
+              })
+            })
+            .catch((error) => {
+              console.dir(error)
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: '清除購物車失敗，請聯繫管理員',
+                showConfirmButton: false,
+                timer: 1000
+              })
+            }).finally(() => {
+              this.isCartsLoading = false
+            })
+          // console.log(data)
+        } else if (
+        /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: '購物車未清除',
+            icon: 'warning'
+          })
+        }
+      })
     },
     updateCart: debounce(function (cart, qty) {
       this.isUpdating = true
@@ -126,6 +201,6 @@ export default defineStore('cart', {
         .finally(() => {
           this.isUpdating = false
         })
-    }, 500)
+    }, 400)
   }
 })
