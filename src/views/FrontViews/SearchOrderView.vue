@@ -54,7 +54,7 @@
                     </div> -->
                   </div>
                 </td>
-                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total.toLocaleString()}}</p></td>
+                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total?.toLocaleString()}}</p></td>
                 <!-- <td class="border-0 align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td> -->
               </tr>
             </template>
@@ -84,11 +84,11 @@
           </table> -->
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold me-1">訂單日期</p>
-            <p class="mb-0 h4 fw-bold" :class="{'d-none':Object.keys(order).length == 0}">{{ new Date(order?.create_at * 1000).toLocaleString() }}</p>
+            <p class="mb-0 h4 fw-bold" :class="{'d-none':Object.keys(order).length == 0}">{{ new Date(order?.create_at * 1000)?.toLocaleString() }}</p>
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold me-1">訂單金額</p>
-            <p class="mb-0 h4 fw-bold" :class="{'d-none':Object.keys(order).length == 0}">NT${{ order?.total.toLocaleString() }}</p>
+            <p class="mb-0 h4 fw-bold" :class="{'d-none':Object.keys(order).length == 0}">NT${{ order?.total?.toLocaleString() }}</p>
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold me-1">完成付款</p>

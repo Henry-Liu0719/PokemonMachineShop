@@ -12,14 +12,14 @@
       </router-link>
     </div>
     <div class="row" v-if="carts.carts?.length">
-      <div class="col-md-8">
+      <div class="col-12 col-xl-9">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col" class="border-0 ps-0">品名</th>
+              <th scope="col" class="border-0 ps-0 col-4 col-xl-6">品名</th>
               <th scope="col" class="border-0">數量</th>
-              <th scope="col" class="border-0">小計</th>
-              <th scope="col" class="border-0"></th>
+              <th scope="col" class="border-0 col-3 col-xl-2">小計</th>
+              <th scope="col" class="border-0 col-1"></th>
             </tr>
           </thead>
           <tbody>
@@ -32,21 +32,21 @@
                 </router-link>
                 </th>
                 <td class="border-0 align-middle" style="max-width: 160px;">
-                  <div class="input-group pe-5">
+                  <div class="input-group">
                     <div class="input-group-prepend">
-                      <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1" @click="cart.qty--;updateCart(cart,cart.qty)">
+                      <button class="btn btn-outline-dark border-0 py-1" type="button" id="button-addon1" @click="cart.qty--;updateCart(cart,cart.qty)">
                         <i class="bi bi-dash"></i>
                       </button>
                     </div>
                     <input type="text" class="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" v-model="cart.qty" readonly>
                     <div class="input-group-append">
-                      <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2" @click="cart.qty++;updateCart(cart,cart.qty)">
+                      <button class="btn btn-outline-dark border-0 py-1" type="button" id="button-addon2" @click="cart.qty++;updateCart(cart,cart.qty)">
                         <i class="bi bi-plus"></i>
                       </button>
                     </div>
                   </div>
                 </td>
-                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total.toLocaleString()}}</p></td>
+                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total?.toLocaleString()}}</p></td>
                 <td class="border-0 align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td>
               </tr>
             </template>
@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-xl-3">
         <div class="border p-4 mb-4">
           <h4 class="fw-bold mb-4">訂單詳情</h4>
           <!-- <table class="table text-muted border-bottom">
@@ -94,7 +94,7 @@
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold">總額</p>
-            <p class="mb-0 h4 fw-bold">NT${{ carts.final_total.toLocaleString() }}</p>
+            <p class="mb-0 h4 fw-bold">NT${{ carts.final_total?.toLocaleString() }}</p>
           </div>
           <router-link to="checkout" class="btn btn-primary w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
         </div>
@@ -122,7 +122,7 @@
               <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
                 </router-link>
-              <p class="card-text mb-0">NT${{ product.price.toLocaleString() }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price.toLocaleString() }}</del></span></p>
+              <p class="card-text mb-0">NT${{ product.price?.toLocaleString() }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price?.toLocaleString() }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>
           </div>

@@ -67,6 +67,7 @@ export default {
             obj[item] = this.pokemons[item]
           }
         })
+        // this.filterdPokemons = { }
         this.filterdPokemons = { ...obj }
       }
     }

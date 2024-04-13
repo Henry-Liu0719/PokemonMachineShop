@@ -26,7 +26,7 @@
           <div class="w-100">
             <div class="d-flex justify-content-between">
               <p class="mb-0 fw-bold">{{cart.product.title}} {{cart.product.unit}}</p>
-              <p class="mb-0">NT${{cart.total.toLocaleString()}}</p>
+              <p class="mb-0">NT${{cart.total?.toLocaleString()}}</p>
             </div>
             <p class="mb-0 fw-bold">x{{cart.qty}}</p>
           </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="d-flex justify-content-between mt-4">
           <p class="mb-0 h4 fw-bold">總額</p>
-          <p class="mb-0 h4 fw-bold">NT${{ carts.final_total.toLocaleString() }}</p>
+          <p class="mb-0 h4 fw-bold">NT${{ carts.final_total?.toLocaleString() }}</p>
         </div>
       </div>
     </div>

@@ -277,7 +277,8 @@ export default defineStore('pokemon', {
     },
     async createSpeciesUrlList () {
       try {
-        const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=${this.pokemonCount}`)
+        // const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=0&limit=${this.pokemonCount}`)
+        const res = await axios.get(`${VITE_POKEMON_API}/pokemon-species?offset=${0}&limit=${Math.floor(this.pokemonCount / 3)}`)
         // console.log(res)
         res.data.results.forEach((item, index) => {
           this.speciesUrlList.push({ url: item.url })
@@ -320,11 +321,11 @@ export default defineStore('pokemon', {
         // this.typeNameList.push({})
         this.speciesNameList[element.toLowerCase()] = chineseNameArr[index]
       })
-      // console.log('typeNameList', this.typeNameList)
+      // console.log('typeNameList', this.typeNameList)j
     },
     async getPokemons () {
       const promises = []
-      for (let index = 1; index <= this.pokemonCount; index++) {
+      for (let index = 1; index <= Math.floor(this.pokemonCount / 3); index++) {
         promises.push(axios.get(`${VITE_POKEMON_API}/pokemon/${index}`))
       }
       const res = {}

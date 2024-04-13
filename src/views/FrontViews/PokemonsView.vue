@@ -42,10 +42,41 @@
           <v-field type="text" class="form-control-lg col-12 mt-sm-6" id="ContactMail" aria-describedby="emailHelp" placeholder="輸入寶可夢名稱或圖鑑編號" name="email" required @keyup.enter="searchPokemon" v-model="keyWord"></v-field>
           <!-- <button class="btn btn-primary col-4" @click="searchPokemon">送出查詢</button> -->
         </div>
-        <h4 class="opacity-0 mt-6"  :class="{'opacity-100':!Object.keys(filterdPokemons)?.length}">無相符的查詢結果</h4>
+        <h4 class="mt-6"  v-if="!Object.keys(filterdPokemons)?.length">查詢中</h4>
+        <h4 class="opacity-0 mt-6" :class="{'opacity-100':!Object.keys(filterdPokemons)?.length} && !isPokemonsLoading">無相符的查詢結果</h4>
+        <!-- {{Object.keys(filterdPokemons)?.length}} -->
+        <!-- {{ Object.keys(pokemons['bulbasaur']) }} -->
+        <!-- {{ pokemons['bulbasaur'].id }} -->
         <!-- <h4 class="opacity-0 mt-6"  :class="{'opacity-100':$route.query.keyWord?.length}">「{{ $route.query.keyWord }}」的搜尋結果</h4> -->
         <!-- {{filterdPokemons.abomasnow}} -->
-        <PokemonsComponent></PokemonsComponent>
+        <!-- <PokemonsComponent></PokemonsComponent> -->
+                <div class="col-12 col-md-4 col-lg-3" v-for="pokemon in filterdPokemons" :key="pokemon.id">
+          <div class="card border-0 mb-4 position-relative position-relative">
+            <router-link :to="{ path: 'pokemon', query: { id: pokemon.id ,pokemonName: pokemon.chineseName}}">
+              <img :src="pokemon.sprites.front_default" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 100%;">
+            </router-link>
+              <!-- {{ favorites.some(item => item.id === product.id) }} -->
+              <!-- <span>
+                <button type="button" class="position-absolute top-0 start-100 badge bg-secondary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="addToFavorites(product)" v-if="!favorites.some(item => item.id === product.id)">
+                  <i class="bi bi-heart"></i>
+                  <span class="visually-hidden">unread messages</span>
+                </button>
+                <button type="button" class="position-absolute top-0 start-100 badge bg-primary border-0" style="transform: translate(-100%, 0);width:3rem;height:1.5rem;border-radius: 0 0.375rem;" @click.prevent="removeFromFavorites(product.id)" v-else>
+                  <i class="bi bi-heart"></i>
+                  <span class="visually-hidden">unread messages</span>
+                </button>
+              </span> -->
+            <div class="card-body p-0">
+              <h4 class="mb-0 mt-3">
+                  <router-link :to="{ path: 'pokemon', query: { id: pokemon.id ,pokemonName: pokemon.chineseName}}" style="text-decoration: none;">
+                  {{ pokemon.id }} {{ pokemon.chineseName }}
+                  </router-link>
+                </h4>
+              <!-- <p class="card-text mb-0">NT${{ product.price }} <span class="text-muted "><del>NT${{ product.origin_price }}</del></span></p> -->
+              <p class="text-muted mt-3"></p>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- <nav class="d-flex justify-content-center" v-if="!filterdProducts?.products?.length == 0">
         <ul class="pagination">
@@ -70,12 +101,16 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import pokemonStore from '@/stores/pokemonStore.js'
+// import PokemonsComponent from '@/components/PokemonsComponent.vue'
 export default {
   data () {
     return {
       filterdPokemons: {},
       keyWord: ''
     }
+  },
+  components: {
+    // PokemonsComponent
   },
   mounted () {
     this.pokemonsView()
