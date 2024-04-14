@@ -55,28 +55,28 @@
         </table> -->
         <div class="d-flex justify-content-between mt-4" v-if="carts.final_total != carts.total">
           <p class="mb-0 h4 fw-bold">優惠折扣</p>
-          <p class="mb-0 h4 fw-bold">{{ (carts.final_total / carts.total)*100 }} %</p>
+          <p class="mb-0 h4 fw-bold">{{ Math.floor((carts.final_total / carts.total)*100) }} %</p>
         </div>
         <div class="d-flex justify-content-between mt-4">
           <p class="mb-0 h4 fw-bold">總額</p>
-          <p class="mb-0 h4 fw-bold">NT${{ carts.final_total?.toLocaleString() }}</p>
+          <p class="mb-0 h4 fw-bold">NT${{ Math.floor(carts.final_total)?.toLocaleString() }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <v-form v-slot="{ errors }">
-        <p>聯絡資訊</p>
+        <h4>聯絡資訊</h4>
         <div class="mb-0">
-          <label for="ContactMail" class="text-muted mb-0 form-label">Email</label>
+          <label for="ContactMail" class="text-muted mb-0 form-label"><span class="text-danger">*</span>Email</label>
           <v-field type="email" class="form-control" id="ContactMail" aria-describedby="emailHelp" placeholder="請填寫電子信箱" name="email" :class="{ 'is-invalid': errors['email'] }" rules="email|required" v-model="orderData.data.user.email"></v-field>
           <error-message
             name="email"
             class="invalid-feedback"
           ></error-message>
         </div>
-        <p class="mt-4">送件資訊</p>
+        <h4 class="mt-4">送件資訊</h4>
         <div class="mb-2">
-          <label for="ContactName" class="text-muted mb-0">姓名</label>
+          <label for="ContactName" class="text-muted mb-0"><span class="text-danger">*</span>姓名</label>
           <v-field type="text" class="form-control" id="ContactName"  placeholder="請填寫收件人姓名"
           name="姓名"
           :class="{ 'is-invalid': errors['姓名'] }"
@@ -87,7 +87,7 @@
         ></error-message>
         </div>
         <div class="mb-2">
-          <label for="ContactPhone" class="text-muted mb-0">電話</label>
+          <label for="ContactPhone" class="text-muted mb-0"><span class="text-danger">*</span>電話</label>
           <v-field type="tel" class="form-control" id="ContactPhone" placeholder="請填寫手機號碼共十碼" name="電話" :class="{ 'is-invalid': errors['電話'] }" :rules="isPhone" v-model="orderData.data.user.tel"></v-field>
           <error-message
             name="電話"
@@ -95,7 +95,7 @@
           ></error-message>
         </div>
         <div class="mb-3">
-          <label for="address" class="form-label">收件人地址</label>
+          <label for="address" class="form-label"><span class="text-danger">*</span>收件人地址</label>
           <v-field
             id="address"
             name="地址"
@@ -211,6 +211,7 @@ export default {
               this.copyTextToClipboard(res.data.orderId)
               let timerInterval
               Swal.fire({
+                icon: 'success',
                 title: `${res.data.message}\n訂單編號：${res.data.orderId}\n自動複製到剪貼簿`,
                 html: '<b></b>秒後回到產品列表',
                 timer: 3000,

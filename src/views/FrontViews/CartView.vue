@@ -7,47 +7,49 @@
     <h3 class="mt-3 mb-4 fs-1">購物車</h3>
     <div class="p-0 container d-flex" v-if="!(carts.carts?.length)">
       <h4 class="my-auto">購物車無商品</h4>
-      <router-link class="btn btn-danger rounded w-auto mx-2 mb-2" to="products">
+      <RouterLink class="btn btn-danger rounded w-auto mx-2 mb-2" to="products">
         <div class="my-auto">前往產品列表</div>
-      </router-link>
+      </RouterLink>
     </div>
     <div class="row" v-if="carts.carts?.length">
       <div class="col-12 col-xl-9">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col" class="border-0 ps-0 col-4 col-xl-6">品名</th>
-              <th scope="col" class="border-0">數量</th>
-              <th scope="col" class="border-0 col-3 col-xl-2">小計</th>
-              <th scope="col" class="border-0 col-1"></th>
+              <th scope="col" class="border-0 bg-light ps-0 col-4 col-xl-5">品名</th>
+              <th scope="col" class="border-0 bg-light">數量</th>
+              <th scope="col" class="border-0 bg-light col-3 col-lg-2">單價</th>
+              <th scope="col" class="border-0 bg-light col-3 col-lg-2">小計</th>
+              <th scope="col" class="border-0 bg-light col-1"></th>
             </tr>
           </thead>
           <tbody>
             <template v-for="cart in carts.carts" :key="cart.id">
               <tr class="border-bottom border-top">
-                <th scope="row" class="border-0 px-0 font-weight-normal py-4">
-                <router-link :to="{ path: 'product', query: { id: cart.product.id }}">
+                <th scope="row" class="border-0 bg-light px-0 font-weight-normal py-4">
+                <RouterLink :to="{ path: 'product', query: { id: cart.product.id }}">
                   <img :src="cart.product.imageUrl" alt="" style="width: 72px; height: 72px; object-fit: cover;">
                   <p class="mb-0 fw-bold ms-3 d-inline-block">{{cart.product.title}} {{cart.product.unit}}</p>
-                </router-link>
+                </RouterLink>
                 </th>
-                <td class="border-0 align-middle" style="max-width: 160px;">
+                <td class="border-0 bg-light align-middle" style="max-width: 160px;">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <button class="btn btn-outline-dark border-0 py-1" type="button" id="button-addon1" @click="cart.qty--;updateCart(cart,cart.qty)">
+                      <button class="btn btn-outline-dark border-0" type="button" id="button-addon1" @click="cart.qty--;updateCart(cart,cart.qty)">
                         <i class="bi bi-dash"></i>
                       </button>
                     </div>
-                    <input type="text" class="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" v-model="cart.qty" readonly>
+                    <input type="text" class="form-control border-0 text-center my-auto shadow-none bg-light" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" v-model="cart.qty" readonly>
                     <div class="input-group-append">
-                      <button class="btn btn-outline-dark border-0 py-1" type="button" id="button-addon2" @click="cart.qty++;updateCart(cart,cart.qty)">
+                      <button class="btn btn-outline-dark border-0" type="button" id="button-addon2" @click="cart.qty++;updateCart(cart,cart.qty)">
                         <i class="bi bi-plus"></i>
                       </button>
                     </div>
                   </div>
                 </td>
-                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total?.toLocaleString()}}</p></td>
-                <td class="border-0 align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td>
+                <td class="border-0 bg-light align-middle"><p class="mb-0 ms-auto">NT${{cart.product.price?.toLocaleString()}}</p></td>
+                <td class="border-0 bg-light align-middle"><p class="mb-0 ms-auto">NT${{cart.total?.toLocaleString()}}</p></td>
+                <td class="border-0 bg-light align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td>
               </tr>
             </template>
           </tbody>
@@ -90,13 +92,13 @@
           </div>
           <div class="d-flex justify-content-between mt-4" v-if="carts.final_total != carts.total">
             <p class="mb-0 h4 fw-bold">優惠折扣</p>
-            <p class="mb-0 h4 fw-bold">{{ (carts.final_total / carts.total)*100 }} %</p>
+            <p class="mb-0 h4 fw-bold">{{ Math.floor((carts.final_total / carts.total)*100) }} %</p>
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold">總額</p>
-            <p class="mb-0 h4 fw-bold">NT${{ carts.final_total?.toLocaleString() }}</p>
+            <p class="mb-0 h4 fw-bold">NT${{ Math.floor(carts.final_total)?.toLocaleString() }}</p>
           </div>
-          <router-link to="checkout" class="btn btn-primary w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link>
+          <RouterLink to="checkout" class="btn btn-primary w-100 mt-4 fs-4" :class="{disabled : !carts?.carts?.length}">送出訂單</RouterLink>
         </div>
       </div>
     </div>
@@ -111,17 +113,17 @@
       <div class="row">
         <div class="col-12 col-md-3 col-lg-2" v-for="product in products.products" :key="product.id">
           <div class="card border-0 mb-4 position-relative position-relative">
-            <router-link :to="{ path: 'product', query: { id: product.id }}">
+            <RouterLink :to="{ path: 'product', query: { id: product.id }}">
               <img :src="product.imageUrl" class="card-img-top object-fit-contain position-relative rounded border border-1 border-secondary" alt="product.description" style="width: 100%;">
-            </router-link>
+            </RouterLink>
               <!-- {{ favorites.some(item => item.id === product.id) }} -->
             <!-- <btn type="button" href="#" class="text-dark" @click="addToFavorites(product)">
               <i class="far fa-heart position-absolute z-1" style="right: 16px; top: 16px"></i>
             </btn> -->
-            <div class="card-body p-0">
-              <router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
+            <div class="card-body p-0 bg-light">
+              <RouterLink :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">
                 <h4 class="mb-0 mt-3">{{ product.content }} {{ product.unit }}</h4>
-                </router-link>
+                </RouterLink>
               <p class="card-text mb-0">NT${{ product.price?.toLocaleString() }} <span class="text-muted "><del v-if="product.price != product.origin_price">NT${{ product.origin_price?.toLocaleString() }}</del></span></p>
               <p class="text-muted mt-3"></p>
             </div>

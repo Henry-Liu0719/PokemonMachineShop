@@ -7,22 +7,22 @@
 
   <div class="bg-white position-absolute top-100 start-50 border border-3 border-black z-1" style="transform: translate(-50%, -50%);width: 5rem;height: 5rem;border-radius: 100%;"></div>
   <!-- <div class="col-2" style="height:2rem"> -->
-    <router-link class="nav-item nav-link me-lg-4 active col-2 col-lg-1" to="/">
-      <span class="m-2"><strong>回首頁</strong></span>
+    <RouterLink class="nav-item nav-link me-lg-4 active col-2 col-lg-1" to="/">
+      <span class="m-2">回首頁</span>
       <!-- <img src="/src/assets/img/pokemonBall.png" style="" class="img-fluid" alt="" srcset=""> -->
-    </router-link>
+    </RouterLink>
   <!-- </div> -->
   <button class="navbar-toggler col-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end col-6" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="pokemons"><span><strong>寶可夢列表</strong></span></router-link>
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="products"><span><strong>產品列表</strong></span></router-link>
-      <router-link class="nav-item nav-link me-1 text-white m-1" to="searchOrder"><span><strong>訂單查詢</strong></span></router-link>
-      <!-- <router-link class="nav-item nav-link me-1 text-white m-1" to=""><span><strong>寶可夢列表(開發中)</strong></span></router-link> -->
-      <router-link class="nav-item nav-link text-white m-1" to="favorites"><span><i class="bi bi-heart"></i><span class="badge text-bg-secondary">{{ favorites?.length }}</span></span></router-link>
-      <router-link class="nav-item nav-link text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-bg-secondary">{{ carts?.carts?.length }}</span></span></router-link>
+      <RouterLink class="nav-item nav-link me-1 text-white m-1" to="pokemons"><span>寶可夢列表</span></RouterLink>
+      <RouterLink class="nav-item nav-link me-1 text-white m-1" to="products"><span>產品列表</span></RouterLink>
+      <RouterLink class="nav-item nav-link me-1 text-white m-1" to="searchOrder"><span>訂單查詢</span></RouterLink>
+      <!-- <RouterLink class="nav-item nav-link me-1 text-white m-1" to=""><span><strong>寶可夢列表(開發中)</strong></span></RouterLink> -->
+      <RouterLink class="nav-item nav-link text-white m-1" to="favorites"><span><i class="bi bi-heart"></i><span class="badge text-white">{{ favorites?.length }}</span></span></RouterLink>
+      <RouterLink class="nav-item nav-link text-white m-1" to="cart"><span><i class="bi bi-cart2"></i><span class="badge text-white">{{ carts?.carts?.length }}</span></span></RouterLink>
     </div>
   </div>
 </nav>
@@ -54,15 +54,17 @@
       </div> -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start text-white">
         <div class="mb-md-0 mb-1 col-12 col-sm-6 col-md-2">
-          <router-link class="nav-item nav-link me-4 active" to="/">
+          <RouterLink class="nav-item nav-link me-4 active" to="/">
             <!-- <img src="/src/assets/img/pokemonBall.png" style="width:5%" alt="" srcset=""> -->
             <span><strong>回首頁</strong></span>
-          </router-link>
-          <router-link class="nav-item nav-link me-4 text-white" to="products"><span><strong>產品列表</strong></span></router-link>
+          </RouterLink>
+          <RouterLink class="nav-item nav-link me-4 text-white" to="products"><span><strong>產品列表</strong></span></RouterLink>
         </div>
         <div class="mb-md-0 mb-1 col-10">
           <!-- <p class="mb-0">02-3456-7890</p> -->
-          <p class="mb-0">hugnminliu@gmail.com</p>
+          <a href="mailto:hugnminliu@gmail.com" style="color:unset;">
+            <p class="mb-0">hugnminliu@gmail.com</p>
+          </a>
           <p class="mb-0">本網站僅作為個人練習使用，無任何商業用途</p>
           <p class="mb-0">2024 made by 貢波波夫</p>
         </div>

@@ -9,13 +9,13 @@
         <div class="col-md-6 text-center position-absolute" style="z-index: 1">
           <h2>歡迎來到寶可夢招式機商店！</h2>
           <p class="text-muted mb-0">在我們的商店裡，你可以找到各種強大的寶可夢招式機，這些招式將幫助你的寶可夢在戰鬥中更加強大。無論是火、水、雷，還是其他屬性，我們都擁有最新、最強大的招式供你選擇。</p>
-          <router-link class="btn rounded-0 mt-6 popov-btn w-auto" to="products">
+          <RouterLink class="btn rounded-0 mt-6 popov-btn w-auto" to="products">
             <div class="my-auto">前往產品列表</div>
             <svg width="13px" height="10px" viewBox="0 0 13 10">
                 <path d="M1,5 L11,5"></path>
                 <polyline points="8 1 12 5 8 9"></polyline>
             </svg>
-          </router-link>
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -31,9 +31,11 @@
         <loadingOverlay :active="isAttributesLoading"
         :is-full-page="false"><img src="/src/assets/img/Animation - 1710557059960.gif" alt="讀取中" class="img-fluid"></loadingOverlay>
         <!-- {{ typeNameList }} -->
-        <button type="button"  v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-outline-primary" >
+        <!-- {{ typeColorList }} -->
+        <button type="button" v-for="type in Object.entries(typeNameList)" :key="type[0]" class="m-2 py-2 d-inline btn btn-dark w-25 border-0" :style="{'background-color':typeColorList[type[0]]}"
+        >
 
-          <router-link :to="{ path: 'products', query: { category: type[1] }}" class="h4" style="text-decoration: none;">{{ type[1] }}</router-link>
+          <RouterLink :to="{ path: 'products', query: { category: type[1] }}" class="h4" style="text-decoration: none;">{{ type[1] }}</RouterLink>
         </button>
       </div>
     </div>
@@ -57,15 +59,15 @@
       </loadingOverlay>
       <div class="col-12 col-md-4 col-lg-2 mt-md-4" v-for="product in shuffledProducts" :key="product.id">
         <div class="card border-0 mb-4 bg-light">
-          <router-link :to="{ path: 'product', query: { id: product.id }}">
+          <RouterLink :to="{ path: 'product', query: { id: product.id }}">
           <img
             :src="product.imageUrl"
             class="card-img-top rounded border border-1 border-secondary"
             :alt="product.description"
           />
-          </router-link>
+          </RouterLink>
           <div class="card-body text-center bg-light">
-            <h4><router-link :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">{{ product.content }} {{ product.unit }}</router-link></h4>
+            <h4><RouterLink :to="{ path: 'product', query: { id: product.id }}" style="text-decoration: none;">{{ product.content }} {{ product.unit }}</RouterLink></h4>
             <div class="d-flex justify-content-between">
               <p class="card-text text-muted mb-0">
                 {{ product.description }}
@@ -119,49 +121,51 @@
       </div>
     </div>
   </div> -->
-  <swiper
-    :spaceBetween="100"
-    :centeredSlides="true"
-    :autoplay="autoplayConfig"
-    :pagination="paginationConfig"
-    :navigation="true"
-    :modules="modules"
-    class="mySwiper"
-  >
-    <swiper-slide>
-      <div class="row justify-content-between mt-4 ms-6">
-        <div class="col-md-6">
-          <img src="/src/assets/img/Eves.png" alt="各種各樣的寶可夢招式" class="img-fluid">
+  <div class="container">
+    <swiper
+      :spaceBetween="100"
+      :centeredSlides="true"
+      :autoplay="autoplayConfig"
+      :pagination="paginationConfig"
+      :navigation="true"
+      :modules="modules"
+      class="mySwiper mb-4 p-5"
+    >
+      <swiper-slide>
+        <div class="row justify-content-between mt-4 ms-6">
+          <div class="col-md-6">
+            <img src="/src/assets/img/Eves.png" alt="各種各樣的寶可夢招式" class="img-fluid">
+          </div>
+          <div class="col-md-4 m-auto text-center">
+            <h4 class="mt-4">多樣性</h4>
+            <p class="text-muted">我們擁有各種各樣的寶可夢招式，涵蓋了所有屬性和戰鬥風格，無論你是喜歡攻擊、防守還是特殊技能，你都能找到適合你寶可夢的招式。</p>
+          </div>
         </div>
-        <div class="col-md-4 m-auto text-center">
-          <h4 class="mt-4">多樣性</h4>
-          <p class="text-muted">我們擁有各種各樣的寶可夢招式，涵蓋了所有屬性和戰鬥風格，無論你是喜歡攻擊、防守還是特殊技能，你都能找到適合你寶可夢的招式。</p>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="row justify-content-between mt-4 ms-6">
+          <div class="col-md-6">
+            <img src="/src/assets/img/diffBalls.png" alt="品質保證" class="img-fluid">
+          </div>
+          <div class="col-md-4 m-auto text-center">
+            <h4 class="mt-4">品質保證</h4>
+            <p class="text-muted">我們的招式機經過嚴格的測試和品質控制，確保每一個招式的威力和可靠性都是最高水準的。你可以放心購買，讓你的寶可夢在戰鬥中保持領先優勢。</p>
+          </div>
         </div>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="row justify-content-between mt-4 ms-6">
-        <div class="col-md-6">
-          <img src="/src/assets/img/diffBalls.png" alt="品質保證" class="img-fluid">
+      </swiper-slide>
+      <swiper-slide>
+        <div class="row justify-content-between mt-4 ms-6">
+          <div class="col-md-6">
+            <img src="/src/assets/img/trainers.png" alt="專業服務" class="img-fluid">
+          </div>
+          <div class="col-md-4 m-auto text-center">
+            <h4 class="mt-4">專業服務</h4>
+            <p class="text-muted">我們擁有專業的寶可夢訓練師團隊，隨時為你提供專業的建議和支持。無論是選擇適合你寶可夢的招式，還是戰鬥策略的制定，我們都會竭盡全力為你服務。</p>
+          </div>
         </div>
-        <div class="col-md-4 m-auto text-center">
-          <h4 class="mt-4">品質保證</h4>
-          <p class="text-muted">我們的招式機經過嚴格的測試和品質控制，確保每一個招式的威力和可靠性都是最高水準的。你可以放心購買，讓你的寶可夢在戰鬥中保持領先優勢。</p>
-        </div>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="row justify-content-between mt-4 ms-6">
-        <div class="col-md-6">
-          <img src="/src/assets/img/trainers.png" alt="專業服務" class="img-fluid">
-        </div>
-        <div class="col-md-4 m-auto text-center">
-          <h4 class="mt-4">專業服務</h4>
-          <p class="text-muted">我們擁有專業的寶可夢訓練師團隊，隨時為你提供專業的建議和支持。無論是選擇適合你寶可夢的招式，還是戰鬥策略的制定，我們都會竭盡全力為你服務。</p>
-        </div>
-      </div>
-    </swiper-slide>
-  </swiper>
+      </swiper-slide>
+    </swiper>
+  </div>
 </body>
 </template>
 
@@ -198,14 +202,18 @@ export default {
   },
   computed: {
     ...mapState(productStore, ['allProducts', 'isProductsLoading']),
-    ...mapState(pokemonStore, ['typeNameList', 'isAttributesLoading'])
+    ...mapState(pokemonStore, ['typeNameList', 'isAttributesLoading', 'typeColorList'])
   },
   mounted () {
-    this.exportTypeNamesList()
-    this.getAllProducts()
+    this.init()
   },
   methods: {
-    ...mapActions(pokemonStore, ['exportTypeNamesList']),
+    async init () {
+      this.createTypeColorList()
+      await this.getAllProducts()
+      this.exportTypeNamesList()
+    },
+    ...mapActions(pokemonStore, ['exportTypeNamesList', 'createTypeColorList']),
     ...mapActions(productStore, ['getAllProducts'])
   },
   watch: {

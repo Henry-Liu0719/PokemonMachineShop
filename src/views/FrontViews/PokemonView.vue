@@ -22,22 +22,27 @@
     </div>
     <div class="col-12 col-md-6 col-xl-4 row ms-3">
       <nav aria-label="breadcrumb" class="col-12">
-        <ol class="breadcrumb bg-white px-0 mb-0 py-3">
+        <ol class="breadcrumb px-0 mb-0 py-3">
           <li class="breadcrumb-item"><a class="text-muted" href="./index.html">首頁</a></li>
-          <!-- <li class="breadcrumb-item"><router-link class="text-muted" to="pokemons">寶可夢列表</router-link></li> -->
+          <!-- <li class="breadcrumb-item"><RouterLink class="text-muted" to="pokemons">寶可夢列表</RouterLink></li> -->
           <li class="breadcrumb-item active" aria-current="page">{{$route.query.pokemonName}} </li>
         </ol>
       </nav>
       <div class="col-6">
         <h2 class="fw-bold h1 mb-1">{{$route.query.pokemonName}}</h2>
-        <span v-for="type in pokemon.types" :key="type.slot" class="btn btn-dark w-50 py-2 border-0" :style="{'background-color':typeColorList[type.type.name]}" style="pointer-events: none;  cursor: default;">{{ typeNameList[type.type.name] }}</span>
+        <span v-for="type in pokemon.types" :key="type.slot" class="btn btn-dark w-50 py-2 border-0" :style="{'background-color':typeColorList[type.type.name]}">
+
+          <RouterLink :to="{ path: 'products', query: { category: typeNameList[type.type.name] }}" class="h4" style="text-decoration: none;">
+            {{ typeNameList[type.type.name] }}
+          </RouterLink>
+        </span>
 
       </div>
       <div class="col-6">
         <!-- <p class="mb-0 text-muted /*text-end*/"><del>NT${{pokemon?.name}}</del></p> -->
-        <p class="h4 fw-bold /*text-end*/">圖鑑編號：<br>{{ pokemon?.id }}</p>
-        <p class="h4 fw-bold /*text-end*/">身高：<br>{{ pokemon?.height /10 }}  公尺</p>
-        <p class="h4 fw-bold /*text-end*/">體重：<br>{{ pokemon?.weight/10 }}  公斤</p>
+        <p class="h4"><strong>圖鑑編號：</strong><br>{{ pokemon?.id }}</p>
+        <p class="h4"><strong>身高：</strong><br>{{ pokemon?.height /10 }}  公尺</p>
+        <p class="h4"><strong>體重：</strong><br>{{ pokemon?.weight/10 }}  公斤</p>
         <!-- <p class="h4 fw-bold /*text-end*/">：{{ pokemon?.name }}</p> -->
       </div>
       <div class="row align-items-center">
@@ -65,17 +70,17 @@
       </loadingOverlay>
       <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="product in learnedMachines" :key="product.id">
         <div class="card border-0 mb-4">
-          <router-link :to="{ path: 'product', query: { id: product.id }}">
+          <RouterLink :to="{ path: 'product', query: { id: product.id }}">
           <img
             :src="product.imageUrl"
             class="card-img-top rounded-100 rounded border border-1 border-secondary"
             alt="pokemon.name"
           />
-          </router-link>
-          <div class="card-body text-center">
-            <router-link :to="{ path: 'pokemon', query: { id: pokemon.id }}" class=" page-link text-primary">
+          </RouterLink>
+          <div class="card-body text-center bg-light">
+            <RouterLink :to="{ path: 'pokemon', query: { id: pokemon.id }}" class=" page-link text-primary">
               <h4>{{ product.unit }}</h4>
-            </router-link>
+            </RouterLink>
             <div class="d-flex justify-content-between">
               <p class="card-text text-muted mb-0">
                 {{ product.title }}
@@ -194,8 +199,6 @@ export default {
   computed: {
     ...mapState(productStore, ['isProductsLoading', 'allProducts']),
     ...mapState(pokemonStore, ['typeNameList', 'typeColorList'])
-  },
-  watch: {
   },
   methods: {
     ...mapActions(productStore, ['getAllProducts', 'isProductLoading']),

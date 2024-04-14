@@ -31,7 +31,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white px-0 mb-0 py-3">
           <li class="breadcrumb-item"><a class="text-muted" href="./index.html">首頁</a></li>
-          <li class="breadcrumb-item"><router-link class="text-muted" to="products">產品列表</router-link></li>
+          <li class="breadcrumb-item"><RouterLink class="text-muted" to="products">產品列表</RouterLink></li>
           <li class="breadcrumb-item active" aria-current="page">{{product.title}} {{product.unit}}</li>
         </ol>
       </nav>
@@ -80,18 +80,18 @@
       <!-- {{ pokemons }} -->
       <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-md-4" v-for="pokemon in product.pokemons" :key="pokemon.id" :class="{'d-none':!pokemon.name}">
         <div class="card border-0 mb-4" v-if="pokemon.name">
-          <router-link :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}">
-          <!-- <router-link :to="{ path: 'pokemon', query: { id: pokemon.id }}"> -->
+          <RouterLink :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}">
+          <!-- <RouterLink :to="{ path: 'pokemon', query: { id: pokemon.id }}"> -->
           <img
             :src="pokemon.imageUrl"
             class="card-img-top rounded-100 rounded border border-1 border-secondary"
             alt="pokemon.name"
           />
-          </router-link>
-          <div class="card-body text-center">
-            <router-link :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}">
+          </RouterLink>
+          <div class="card-body text-center bg-light">
+            <RouterLink :to="{ path: 'pokemon', query: { id: pokemon.id, pokemonName: pokemon.name }}" style="text-decoration: none;" class=" text-success">
               <h4>{{ pokemon.name }}</h4>
-            </router-link>
+            </RouterLink>
             <!-- <div class="d-flex justify-content-between">
               <p class="card-text text-muted mb-0">
                 {{ product.description }}
@@ -187,6 +187,10 @@ export default {
   },
   mounted () {
     // console.log(this.$route)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // 平滑滚动
+    })
     this.productId = this.$route.query.id
     this.getProduct(this.$route.query.id)
     this.createTypeColorList()

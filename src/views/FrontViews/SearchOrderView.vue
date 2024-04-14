@@ -18,43 +18,43 @@
         ></error-message>
         <span>訂單號碼範例：  -Nv644NM1-bO-LPQafn0</span>
       </div>
-      <button type="button" class="btn btn-dark mt-4 p-2 px-4" @click="getOrder(this.orderId)" :disabled="this.orderId ==='' || Object.keys(errors).length > 0">送出查詢</button>
+      <button type="button" class="btn btn-primary mt-4 p-2 px-4" @click="getOrder(this.orderId)" :disabled="this.orderId ==='' || Object.keys(errors).length > 0">送出查詢</button>
     </v-form>
     <div class="row mt-3" v-if="!(Object.keys(order)?.length === 0)">
       <div class="col-12 col-lg-6 col-xxl-8">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col" class="border-0 ps-0">品名</th>
-              <th scope="col" class="border-0">數量</th>
-              <th scope="col" class="border-0">單價</th>
-              <th scope="col" class="border-0"></th>
+              <th scope="col" class="border-0 ps-0 bg-light">品名</th>
+              <th scope="col" class="border-0 bg-light">數量</th>
+              <th scope="col" class="border-0 bg-light">單價</th>
+              <th scope="col" class="border-0 bg-light"></th>
             </tr>
           </thead>
           <tbody>
             <!-- {{carts}} -->
             <template v-for="cart in carts" :key="cart.id">
               <tr class="border-bottom border-top">
-                <th scope="row" class="border-0 px-0 font-weight-normal py-4">
+                <th scope="row" class="border-0 bg-light px-0 font-weight-normal py-4">
                   <img :src="cart.product.imageUrl" alt="" style="width: 72px; height: 72px; object-fit: cover;">
                   <p class="mb-0 fw-bold ms-3 d-inline-block">{{cart.product.title}} {{cart.product.unit}}</p>
                 </th>
-                <td class="border-0 align-middle" style="max-width: 160px;">
+                <td class="border-0 bg-light align-middle" style="max-width: 160px;">
                   <div class="input-group pe-5">
                     <!-- <div class="input-group-prepend">
                       <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
                         <i class="fas fa-minus"></i>
                       </button>
                     </div> -->
-                    <input type="text" class="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" :value="cart.qty" readonly>
+                    <input type="text" class="form-control border-0 bg-light text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" :value="cart.qty" readonly>
                     <!-- <div class="input-group-append">
-                      <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
+                      <button class="btn btn-outline-dark border-0 bg-light bg-light py-2" type="button" id="button-addon2">
                         <i class="fas fa-plus"></i>
                       </button>
                     </div> -->
                   </div>
                 </td>
-                <td class="border-0 align-middle"><p class="mb-0 ms-auto">NT${{cart.total?.toLocaleString()}}</p></td>
+                <td class="border-0 bg-light align-middle"><p class="mb-0 ms-auto">NT${{cart.total?.toLocaleString()}}</p></td>
                 <!-- <td class="border-0 align-middle"><i class="bi bi-x" @click="deleteCart(cart.id)"></i></td> -->
               </tr>
             </template>
@@ -88,7 +88,7 @@
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold me-1">訂單金額</p>
-            <p class="mb-0 h4 fw-bold" :class="{'d-none':Object.keys(order).length == 0}">NT${{ order?.total?.toLocaleString() }}</p>
+            <p class="mb-0 h4 fw-bold" :class="{'d-none':Object.keys(order).length == 0}">NT${{ Math.floor(order?.total)?.toLocaleString() }}</p>
           </div>
           <div class="d-flex justify-content-between mt-4">
             <p class="mb-0 h4 fw-bold me-1">完成付款</p>
@@ -114,7 +114,7 @@
             <p class="mb-0 h4 fw-bold me-1">備註</p>
             <p class="mb-0 h4 fw-bold">{{ order?.message }}</p>
           </div>
-          <!-- <router-link to="checkout" class="btn btn-dark w-100 mt-4" :class="{disabled : !carts?.carts?.length}">送出訂單</router-link> -->
+          <!-- <RouterLink to="checkout" class="btn btn-dark w-100 mt-4" :class="{disabled : !carts?.carts?.length}">送出訂單</RouterLink> -->
         </div>
       </div>
     </div>
