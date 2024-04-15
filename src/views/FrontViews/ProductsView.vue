@@ -162,7 +162,7 @@ export default {
       if (category !== '') {
         this.typeSelected = category
       }
-      console.log(this.typeSelected)
+      // console.log(this.typeSelected)
       await this.getProducts(1, 0, category)
       this.exportTypeNamesList()
     },
@@ -175,6 +175,7 @@ export default {
     },
     async createSearchedProducts () {
       const keyWord = this.$route.query.keyWord
+      this.typeSelected = keyWord
       // console.log(keyWord)
       // console.log('this.filterdProducts', this.filterdProducts)
       this.searchedProducts = {
